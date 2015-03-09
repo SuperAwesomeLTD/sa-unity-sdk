@@ -7,6 +7,7 @@ import tv.superawesome.mobile.ParentalGate;
 import tv.superawesome.mobile.SuperAwesome;
 import tv.superawesome.mobile.ParentalGate.ParentalGateViewCallback;
 
+import com.adtech.mobilesdk.publisher.ErrorCause;
 import com.adtech.mobilesdk.publisher.configuration.AdtechAdConfiguration;
 import com.adtech.mobilesdk.publisher.view.AdtechInterstitialView;
 import com.adtech.mobilesdk.publisher.view.AdtechInterstitialViewCallback;
@@ -71,7 +72,7 @@ public class InterstitialView extends DisplayAdView implements Observer{
     	}
     	
     	@Override
-    	public void onAdFailure() {
+    	public void onAdFailure(ErrorCause cause) {
     		if(getListener() != null){
     			getListener().onAdError();
     		}

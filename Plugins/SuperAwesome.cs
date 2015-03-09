@@ -17,8 +17,8 @@ public class SuperAwesome : MonoBehaviour {
 		SABridge.setAppId (appId);
 	}
 
-	public static void openVideoAd(){
-		SABridge.openVideoAd();
+	public static void openVideoAd(string placementId){
+		SABridge.openVideoAd(placementId);
 	}
 
 	

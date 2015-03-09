@@ -17,7 +17,7 @@ public class SABridge{
 		sa.Call ("setAppId", appId);
 	}
 
-	public static void openVideoAd(){
+	public static void openVideoAd(string placementId){
 		var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
@@ -27,27 +27,31 @@ public class SABridge{
 
 #elif UNITY_IPHONE && !UNITY_EDITOR
 	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityMethod();
+	private static extern void SuperAwesomeUnityOpenVideoAd(int appId, string placementId);
+
+	private static int appId = 14;
 
 	public static string getVersion(){
+		//TODO get version from SDK
 		return "iOS";
 	}
 	
 	public static void setAppId(int appId){
-		SABridge.SuperAwesomeUnityMethod ();
+		SABridge.appId = appId;
 	}
 	
-	public static void openVideoAd(){
+	public static void openVideoAd(string placementId){
+		SABridge.SuperAwesomeUnityOpenVideoAd (SABridge.appId, placementId);
 	}
 #else
 	public static string getVersion(){
-		return "Unsupported";
+		return "Unsupported Platform";
 	}
 	
 	public static void setAppId(int appId){
 	}
 	
-	public static void openVideoAd(){
+	public static void openVideoAd(string placementId){
 	}
 #endif
 

@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.FrameLayout;
 
+import com.adtech.mobilesdk.publisher.ErrorCause;
 import com.adtech.mobilesdk.publisher.configuration.AdtechAdConfiguration;
 import com.adtech.mobilesdk.publisher.view.AdtechBannerView;
 import com.adtech.mobilesdk.publisher.view.AdtechBannerViewCallback;
@@ -55,7 +56,7 @@ public class BannerView extends DisplayAdView implements Observer {
 		}
 		
 		@Override
-		public void onAdFailure() {
+		public void onAdFailure(ErrorCause cause) {
 			if(getListener() != null){
   			getListener().onAdError();
   		}

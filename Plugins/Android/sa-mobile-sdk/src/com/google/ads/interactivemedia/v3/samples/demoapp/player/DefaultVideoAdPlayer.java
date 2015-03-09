@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 /**
  * An example video player that implements VideoAdPlayer.
  */
-public class DemoPlayer extends RelativeLayout implements VideoAdPlayer {
+public class DefaultVideoAdPlayer extends RelativeLayout implements VideoAdPlayer {
   private TrackingVideoView video;
   private FrameLayout adUiContainer;
   private MediaController mediaController;
@@ -29,17 +29,17 @@ public class DemoPlayer extends RelativeLayout implements VideoAdPlayer {
   private int savedPosition = 0;
   private boolean contentPlaying;
 
-  public DemoPlayer(Context context, AttributeSet attrs, int defStyle) {
+  public DefaultVideoAdPlayer(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
     init();
   }
 
-  public DemoPlayer(Context context, AttributeSet attrs) {
+  public DefaultVideoAdPlayer(Context context, AttributeSet attrs) {
     super(context, attrs);
     init();
   }
 
-  public DemoPlayer(Context context) {
+  public DefaultVideoAdPlayer(Context context) {
     super(context);
     init();
   }

@@ -1,6 +1,5 @@
 package tv.superawesome.mobile.view;
 
-import android.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -14,6 +13,7 @@ public class VideoAdActivity extends Activity{
 	
 	protected static final String TAG = "SuperAwesome SDK - VideoViewActivity";
 	private VideoView videoView;
+	private VideoViewLoader loader;
 	private ProgressDialog progressDialog;
 	
 	private VideoViewListener listener = new VideoViewListener() {
@@ -48,29 +48,30 @@ public class VideoAdActivity extends Activity{
 	@Override
   public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-      // remove title
-      requestWindowFeature(Window.FEATURE_NO_TITLE);
-      getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-      
-      boolean disableLoadingDialog = false;
-      if(getIntent().getExtras() != null){
-      	disableLoadingDialog = getIntent().getExtras().getBoolean("disable_loading_dialog");
-			}
-      if(!disableLoadingDialog){
-	      progressDialog = new ProgressDialog(this);
-	      progressDialog.setMessage("Loading...");
-	      progressDialog.setCancelable(false);
-	      progressDialog.show();
-      }
-      
-      addVideoView();
+    // remove title		
+    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    
+    boolean disableLoadingDialog = false;
+    if(getIntent().getExtras() != null){
+    	disableLoadingDialog = getIntent().getExtras().getBoolean("disable_loading_dialog");
+    	loader = VideoViewLoader.popInstance(getIntent().getExtras().getInt("loader_id"));
+		}
+    if(!disableLoadingDialog){
+      progressDialog = new ProgressDialog(this);
+      progressDialog.setMessage("Loading...");
+      progressDialog.setCancelable(false);
+      progressDialog.show();
+    }
+    
+    addVideoView();
  	}
 	
-	private void addVideoView(){
-		videoView = new VideoView(this, null);
-    videoView.setBackgroundColor(Color.BLACK);
-		videoView.setListener(listener);
-		setContentView(videoView);
+	@Override
+	public void onRestart(){
+		super.onRestart();
+		
+		videoView.play();
 	}
 
 	public static void openInActivity(Activity activity){
@@ -82,4 +83,20 @@ public class VideoAdActivity extends Activity{
 	public void onBackPressed() {
 		
 	}
+	
+	private void addVideoView(){
+		if(loader == null){
+			videoView = new VideoView(this, null);
+		}else{
+			videoView = new VideoView(this, null, loader);
+		}
+    videoView.setBackgroundColor(Color.BLACK);
+		videoView.setListener(listener);
+		setContentView(videoView);
+		if(loader != null && loader.isLoaded()){
+			listener.onLoaded();
+		}
+	}
+	
+	
 }

@@ -16,7 +16,7 @@ import android.util.Log;
 public class SuperAwesome extends Observable implements ISettingsResponse{
 	
 	private static final String TAG = "SuperAwesome SDK";
-	private static final String VERSION = "1.2.0";
+	private static final String VERSION = "1.2.1";
 	private static final int DEFAULT_APP_ID = 14;
 
 	private static SuperAwesome instance = null;

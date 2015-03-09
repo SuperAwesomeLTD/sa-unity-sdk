@@ -11,9 +11,12 @@
 
 extern "C" {
     
-    void SuperAwesomeUnityMethod()
+    void SuperAwesomeUnityOpenVideoAd(int appID, const char* placementID)
     {
-        SAVideoAdViewController *vc = [[SAVideoAdViewController alloc] initWithAppID:@"14" placementID:@"314228"];
+    	NSString *placementIDString = [NSString stringWithUTF8String: placementID];
+        NSString *appIDString = [NSString stringWithFormat:@"%i", appID];
+    	NSLog(@"Unity requested video ad %@ %@", appIDString, placementIDString);
+        SAVideoAdViewController *vc = [[SAVideoAdViewController alloc] initWithAppID:appIDString placementID:placementIDString];
         UIViewController *rvc = [UIApplication sharedApplication].keyWindow.rootViewController;
         [rvc presentViewController:vc animated:YES completion:nil];
     }
