@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/radu/Development/Projects/AdTechSDK-Android/ADTECHMobileSDK/adtech-mobile-sdk/src/main/res/values/attrs.xml -->
+    <eat-comment/>
+    <attr format="string" name="adap_tv_campaign"/>
+    <attr format="string" name="alias"/>
+    <attr format="string" name="app_name"/>
+    <attr format="reference" name="close_button_drawable"/>
+    <attr format="string" name="domain"/>
+    <attr format="integer" name="group_id"/>
+    <attr format="boolean" name="hide_after_refresh_interval"/>
+    <attr format="boolean" name="image_banner_resize_enabled"/>
+    <attr name="linear_ads">
+        <flag name="pre_roll" value="1"/>
+        <flag name="mid_roll" value="2"/>
+        <flag name="post_roll" value="4"/>
+        <flag name="companion" value="8"/>
+        <flag name="companion_top" value="16"/>
+        <flag name="companion_bottom" value="32"/>
+        <flag name="companion_left" value="64"/>
+        <flag name="companion_right" value="128"/>
+    </attr>
+    <attr format="string" name="mpid"/>
+    <attr format="integer" name="network_id"/>
+    <attr format="integer" name="port"/>
+    <attr format="string" name="schema"/>
+    <attr format="integer" name="subnetwork_id"/>
+    <attr format="integer" name="video_bitrate"/>
+    <attr format="string" name="video_encoding"/>
+    <attr format="integer" name="video_height"/>
+    <attr format="integer" name="video_length"/>
+    <attr format="integer" name="video_width"/>
+    <declare-styleable name="AdtechBannerView"><attr name="app_name"/><attr name="schema"/><attr name="domain"/><attr name="port"/><attr name="close_button_drawable"/><attr name="group_id"/><attr name="image_banner_resize_enabled"/><attr name="hide_after_refresh_interval"/><attr name="alias"/><attr name="network_id"/><attr name="subnetwork_id"/><attr name="mpid"/></declare-styleable>
+    <declare-styleable name="AdtechInterstitialView"><attr name="app_name"/><attr name="schema"/><attr name="domain"/><attr name="port"/><attr name="close_button_drawable"/><attr name="group_id"/><attr name="alias"/><attr name="network_id"/><attr name="subnetwork_id"/><attr name="mpid"/></declare-styleable>
+    <declare-styleable name="AdtechVideoView"><attr name="app_name"/><attr name="schema"/><attr name="domain"/><attr name="port"/><attr name="close_button_drawable"/><attr name="alias"/><attr name="network_id"/><attr name="subnetwork_id"/><attr name="linear_ads"/><attr name="video_width"/><attr name="video_height"/><attr name="video_length"/><attr name="video_bitrate"/><attr name="video_encoding"/><attr name="adap_tv_campaign"/></declare-styleable>
+    <!-- From: file:/Users/radu/Development/Projects/AdTechSDK-Android/ADTECHMobileSDK/adtech-mobile-sdk/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="adtech_confirm">OK</string>
+    <string name="adtech_create_calendar_event">Do you want to allow the ad to create an event in your calendar?</string>
+    <string name="adtech_debug_mode_description_title">Landing page debugging</string>
+    <string name="adtech_dont_allow">Don\'t Allow</string>
+    <string name="adtech_label_format">$mm:$ss of ad $current/$total</string>
+    <string name="adtech_location_permission_prompt">Do you want to allow the ad to use your current location?</string>
+    <string name="adtech_no_network">Please check your Internet connectivity.</string>
+    <string name="adtech_store_picture_prompt">Do you want to allow the ad to store a picture in your gallery?</string>
+    <string name="adtech_store_screenshot_prompt">Do you want to allow the ad to take a screenshot and store it in your gallery?</string>
+    <string name="adtech_take_picture_prompt">Do you want to allow the ad to take a picture with your camera and store it in your gallery?</string>
+    <string name="app_name">adtech-mobile-sdk</string>
+</resources>

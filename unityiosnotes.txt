@@ -1,0 +1,8 @@
+Set deployment target in Unity to 6.0 (if it is lower)
+
+pod init
+Podfile
+pod update
+
+1. cocoapods settings needs to be propagated in the build target, but it doesn't since unity already set these values before.  Therefore you will have to manually add "$(inherited)" to all 3 build setting variables: OTHER_LDFLAGS, OTHER_CFLAGS, HEADER_SEARCH_PATHS
+2. Unity did not set the build products path correctly, so you will need to correct it to look for where pods project will drop its libraries.  Set "per-configuration build products path" in build settings to this value: $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

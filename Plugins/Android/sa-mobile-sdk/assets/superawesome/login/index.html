@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SuperAwesome Login</title>
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="sdk.js"></script>
+
+<script type="text/javascript">
+function login(app_name, custom_url){
+	var sa = new SuperAwesome(app_name, null, custom_url);
+	sa.login(function(response){
+		Android.receivedToken(response.token);
+	});
+}
+</script>
+</head>
+<body>
+</body>
+</html>
