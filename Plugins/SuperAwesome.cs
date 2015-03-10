@@ -10,7 +10,7 @@ public class SuperAwesome : MonoBehaviour {
 	}
 
 	public static string getVersion(){
-		return "SuperAwesome Unity SDK version 1.0 ("+SABridge.getVersion()+")";
+		return "SuperAwesome Unity SDK version 1.1 ("+SABridge.getVersion()+")";
 	}
 
 	public static void setAppId(int appId){
