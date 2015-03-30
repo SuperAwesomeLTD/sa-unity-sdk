@@ -1,0 +1,35 @@
+{
+    "name": "Unity SDK",
+    "text": "01 UnitySDK.md",
+    "sections":[
+        {
+            "name": "Getting Started",
+            "text": "02 GettingStarted.md"
+        },
+        {
+            "name": "Display Ads",
+            "text": "03 DisplayAds.md"
+        },
+        {
+            "name": "Awesome3D Ads",
+            "text": "04 Awesome3DAds.md"
+        },
+        {
+            "name": "Video Ads",
+            "sections": [
+                {
+                    "name": "Configuration",
+                    "text": "05 VideoConfiguration.md"
+                },
+                {
+                    "name": "Playing Video Ads",
+                    "text": "06 Video.md"
+                }
+            ]
+        },
+        {
+            "name": "Technical Support",
+            "text": "07 Support.md"
+        }
+    ]
+}

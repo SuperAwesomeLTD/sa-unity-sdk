@@ -1,0 +1,37 @@
+{
+  "name": "sa-unity-sdk-docs",
+  "version": "1.1.0",
+  "description": "SuperAwesome SDK for Unity",
+  "main": "index.js",
+  "dependencies":{
+    "sa-docs-to-json": "SuperAwesomeLTD/sa-docs-to-json"
+  },
+  "devDependencies": {
+    "gulp-imports": "MarcusLongmuir/gulp-imports",
+    "gulp-nodemon": "*",
+    "gulp-util": "^2.2.14",
+    "gulp": "^3.6.1",
+    "gulp-less": "^1.2.3",
+    "gulp-uglify": "^0.2.1",
+    "gulp-concat": "^2.2.0",
+    "gulp-watch": "^0.6.2",
+    "gulp-rename": "^1.2.0",
+    "gulp-plumber": "^0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SuperAwesomeLTD/sa-unity-sdk-sdk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SuperAwesomeLTD/sa-unity-sdk-sdk/issues"
+  },
+  "homepage": "https://github.com/SuperAwesomeLTD/sa-unity-sdk-sdk",
+  "files":[
+    "docs"
+  ]
+}
