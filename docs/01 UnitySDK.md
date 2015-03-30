@@ -1,0 +1,1 @@
+The SuperAwesome Unity SDK (Software Development Kit) lets you to easily add COPPA-compliant display and Awesome3D advertisements to your apps.
