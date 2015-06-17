@@ -12,6 +12,11 @@ namespace SuperAwesome
 		public enum Layout { Manual, Top, Bottom };
 		public Layout layout = Layout.Manual;
 
+		public delegate void BannerWasLoadedHandler();
+		public event BannerWasClickedHandler OnBannerWasLoaded;
+		public delegate void BannerWasClickedHandler();
+		public event BannerWasClickedHandler OnBannerWasClicked;
+
 		private Button button;
 		private Image image;
 		private Dictionary<string, object> ad;
@@ -69,6 +74,8 @@ namespace SuperAwesome
 			this.button.image.sprite = sprite;
 
 			show ();
+
+			if(OnBannerWasLoaded != null) OnBannerWasLoaded();
 		}
 
 		private void OnClick(){
@@ -79,6 +86,8 @@ namespace SuperAwesome
 			String clickURL = creative ["click_url"] as String;
 			Debug.Log (clickURL);
 			Application.OpenURL(clickURL);
+
+			if(OnBannerWasClicked != null) OnBannerWasClicked();
 		}	
 
 	}
