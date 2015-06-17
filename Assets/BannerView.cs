@@ -12,7 +12,13 @@ namespace SuperAwesome
 		public enum Layout { Manual, Top, Bottom };
 		public Layout layout = Layout.Manual;
 
+		public delegate void BannerWasLoadedHandler();
+		public event BannerWasClickedHandler OnBannerWasLoaded;
+		public delegate void BannerWasClickedHandler();
+		public event BannerWasClickedHandler OnBannerWasClicked;
+
 		private Button button;
+		private Image image;
 		private Dictionary<string, object> ad;
 		
 		private Int64 _width;
@@ -22,15 +28,26 @@ namespace SuperAwesome
 		void Start () {
 			StartCoroutine(loadAd());
 
+			this.image = this.GetComponent<Image>();
+
 			this.button = this.GetComponent<Button>();
 			this.button.onClick.AddListener (() => OnClick ());
 
 			align ();
+			hide ();
 		}
 
 		// Update is called once per frame
 		void Update () {
 
+		}
+
+		private void show(){
+			this.image.color = Color.white;
+		}
+
+		private void hide(){
+			this.image.color = Color.clear;
 		}
 
 		private void align(){
@@ -72,6 +89,10 @@ namespace SuperAwesome
 			//Create a new sprite with the texture and apply it to the button
 			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
 			this.button.image.sprite = sprite;
+
+			show ();
+
+			if(OnBannerWasLoaded != null) OnBannerWasLoaded();
 		}
 
 		private void OnClick(){
@@ -82,6 +103,8 @@ namespace SuperAwesome
 			String clickURL = creative ["click_url"] as String;
 			Debug.Log (clickURL);
 			Application.OpenURL(clickURL);
+
+			if(OnBannerWasClicked != null) OnBannerWasClicked();
 		}	
 
 	}
