@@ -26,13 +26,14 @@ namespace SuperAwesome
 		// Use this for initialization
 		void Start ()
 		{
-			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.Load));
 			this.image = this.GetComponent<Image>();
-
 			this.button = this.GetComponent<Button>();
+
 			this.button.onClick.AddListener (() => OnClick ());
 
 			Hide ();
+
+			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.OnAdLoaded));
 		}
 
 		// Update is called once per frame
@@ -74,15 +75,15 @@ namespace SuperAwesome
 			transform.position = new Vector3 (x, y, transform.position.z);
 		}
 
-		public void Load(Ad ad)
+		public void OnAdLoaded(Ad ad)
 		{
 			this.ad = ad;
 			if (this.ad != null) {
-				StartCoroutine (this.ad.LoadImage (this.UpdateTexture));
+				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
 			}
 		}
 
-		public void UpdateTexture() {
+		public void OnTextureLoaded() {
 
 			//Resize button using its RectTransform component
 			this.button.image.rectTransform.sizeDelta = new Vector2 (this.ad.width, this.ad.height);

@@ -19,15 +19,10 @@ namespace SuperAwesome
 
 		private Button interstitialButton;
 		private Button closeButton;
-		private Image image;
-		private Dictionary<string, object> ad;
-		private Int64 width;
-		private Int64 height;
+		private Ad ad;
 
 		// Use this for initialization
-		void Start () {
-			this.image = this.GetComponent<Image>();
-			
+		void Start () {			
 			Button[] buttons = this.GetComponentsInChildren<Button>();
 			foreach(Button button in buttons)
 			{
@@ -39,7 +34,7 @@ namespace SuperAwesome
 			this.interstitialButton.onClick.AddListener (() => OnClick ());
 
 			Hide ();
-			StartCoroutine(Load());
+			Load ();
 		}
 		
 		// Update is called once per frame
@@ -65,42 +60,41 @@ namespace SuperAwesome
 			float x = Screen.width / 2;
 			float y = Screen.height / 2;
 			interstitialButton.transform.position = new Vector3 (x, y, transform.position.z);
-			x += this.width/2;
-			y += this.height/2;
+			x += this.ad.width/2;
+			y += this.ad.height/2;
 			closeButton.transform.position = new Vector3 (x, y, transform.position.z);
 		}
 
-		private IEnumerator Load()
+		private void Load()
 		{
-//			this.ad = SuperAwesome.instance.adManager.getAd (this.placementID);
-//			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
-//			Dictionary<string, object> details = creative ["details"] as Dictionary<string, object>;
-//			string imgurl = (string) details["image"];
-//			this.width = (Int64) details["width"];
-//			this.height = (Int64) details["height"];
-//			
-//			WWW image = new WWW(imgurl);
-//			yield return image;
-//			Texture2D texture = image.texture;
-//		
-//			//Resize button using its RectTransform component
-//			this.interstitialButton.image.rectTransform.sizeDelta = new Vector2 (this.width, this.height);
-//
-//			//Create a new sprite with the texture and apply it to the button
-//			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
-//			this.interstitialButton.image.sprite = sprite;
-//			
-//			if(OnInterstitialWasLoaded != null) OnInterstitialWasLoaded();
-			yield return null;
+			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.OnAdLoaded));
+		}
+
+		private void OnAdLoaded(Ad ad)
+		{
+			this.ad = ad;
+			if (this.ad != null) {
+				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
+			}
+		}
+
+		public void OnTextureLoaded() {
+			
+			//Resize button using its RectTransform component
+			this.interstitialButton.image.rectTransform.sizeDelta = new Vector2 (this.ad.width, this.ad.height);
+			
+			//Create a new sprite with the texture and apply it to the button
+			Sprite sprite = Sprite.Create(this.ad.texture, new Rect(0, 0, this.ad.texture.width, this.ad.texture.height), new Vector2(0.5f,0.5f));
+			this.interstitialButton.image.sprite = sprite;
+			
+			if(OnInterstitialWasLoaded != null) OnInterstitialWasLoaded();
 		}
 
 		private void OnClick()
 		{
-			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
-			String clickURL = creative ["click_url"] as String;
-			Application.OpenURL(clickURL);
+			Application.OpenURL(this.ad.clickURL);
 			
-			if(OnInterstitialWasClosed != null) OnInterstitialWasClosed();
+			if(OnInterstitialWasClicked != null) OnInterstitialWasClicked();
 		}
 
 
