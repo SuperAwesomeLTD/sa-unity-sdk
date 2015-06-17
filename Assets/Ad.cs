@@ -17,7 +17,6 @@ namespace SuperAwesome
 
 		public Ad(string jsonString)
 		{
-			Debug.Log (jsonString);
 			try {
 				Dictionary<string, object> ad = Json.Deserialize(jsonString) as Dictionary<string, object>;
 				Dictionary<string, object> creative = ad ["creative"] as Dictionary<string, object>;

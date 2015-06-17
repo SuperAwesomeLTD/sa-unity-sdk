@@ -4,19 +4,21 @@ using SuperAwesome;
 
 public class BannerViewDelegateExample : MonoBehaviour {
 
+	private BannerView bannerView;
+
 	void OnEnable()
 	{
-		BannerView banner = this.GetComponent<BannerView>();
-		banner.OnBannerWasLoaded += OnLoad;
-		banner.OnBannerWasClicked += OnClick;
+		bannerView = this.GetComponentInChildren<BannerView> ();
+		bannerView.OnBannerWasLoaded += OnLoad;
+		bannerView.OnBannerWasClicked += OnClick;
+		bannerView.OnBannerError += OnError;
 	}
 	
 	
 	void OnDisable()
 	{
-		BannerView banner = this.GetComponent<BannerView>();
-		banner.OnBannerWasLoaded -= OnLoad;
-		banner.OnBannerWasClicked -= OnClick;
+		bannerView.OnBannerWasLoaded -= OnLoad;
+		bannerView.OnBannerWasClicked -= OnClick;
 	}
 
 	void OnLoad()
@@ -28,5 +30,10 @@ public class BannerViewDelegateExample : MonoBehaviour {
 	void OnClick()
 	{
 		Debug.Log ("Banner Clicked");
+	}
+
+	void OnError()
+	{
+		Debug.Log ("Banner Error");
 	}
 }

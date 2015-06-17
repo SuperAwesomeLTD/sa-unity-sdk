@@ -18,6 +18,8 @@ namespace SuperAwesome
 		public event BannerWasClickedHandler OnBannerWasLoaded;
 		public delegate void BannerWasClickedHandler();
 		public event BannerWasClickedHandler OnBannerWasClicked;
+		public delegate void BannerErrorHandler();
+		public event BannerErrorHandler OnBannerError;
 
 		private Button button;
 		private Image image;
@@ -32,8 +34,7 @@ namespace SuperAwesome
 			this.button.onClick.AddListener (() => OnClick ());
 
 			Hide ();
-
-			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.OnAdLoaded));
+			Load ();
 		}
 
 		// Update is called once per frame
@@ -75,10 +76,18 @@ namespace SuperAwesome
 			transform.position = new Vector3 (x, y, transform.position.z);
 		}
 
+		public void Load()
+		{
+			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.OnAdLoaded));
+		}
+
 		public void OnAdLoaded(Ad ad)
 		{
 			this.ad = ad;
-			if (this.ad != null) {
+			if (this.ad == null)
+			{
+				if(OnBannerError != null) OnBannerError();
+			}else{
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
 			}
 		}

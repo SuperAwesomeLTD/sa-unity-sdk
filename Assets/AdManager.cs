@@ -12,7 +12,6 @@ namespace SuperAwesome
 		public AdManager (String baseUrl)
 		{
 			this.baseUrl = baseUrl;
-			
 		}
 
 		public IEnumerator getAd(String placementID, Action<Ad> Callback)
@@ -21,16 +20,17 @@ namespace SuperAwesome
 			WWW ad_data = new WWW(url);
 			yield return ad_data;
 
-			if (ad_data.error != null) {
+			if (ad_data.error != null)
+			{
 				Callback (null);
 				yield return null;
-			}
-
-			try {
-				Ad ad = new Ad (ad_data.text);
-				Callback(ad);
-			} catch {
-				Callback (null);
+			} else {
+				try {
+					Ad ad = new Ad (ad_data.text);
+					Callback (ad);
+				} catch {
+					Callback (null);
+				}
 			}
 		}
 	}
