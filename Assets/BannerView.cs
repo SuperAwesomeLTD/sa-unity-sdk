@@ -57,16 +57,15 @@ namespace SuperAwesome
 				case Layout.Bottom:
 					x = Screen.width / 2;
 					y = this._height / 2;
-					transform.position = new Vector3 (x, y, transform.position.z);
 					break;
 				case Layout.Top:
 					x = Screen.width / 2;
 					y = Screen.height - this._height/2;
-					transform.position = new Vector3 (x, y, transform.position.z);
 					break;
 				default:
 					break;
 			}
+			transform.position = new Vector3 (x, y, transform.position.z);
 		}
 
 		private IEnumerator loadAd(){
