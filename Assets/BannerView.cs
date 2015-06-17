@@ -13,21 +13,33 @@ namespace SuperAwesome
 		public Layout layout = Layout.Manual;
 
 		private Button button;
+		private Image image;
 		private Dictionary<string, object> ad;
 
 		// Use this for initialization
 		void Start () {
 			StartCoroutine(loadAd());
 
+			this.image = this.GetComponent<Image>();
+
 			this.button = this.GetComponent<Button>();
 			this.button.onClick.AddListener (() => OnClick ());
 
 			align ();
+			hide ();
 		}
 
 		// Update is called once per frame
 		void Update () {
 
+		}
+
+		private void show(){
+			this.image.color = Color.white;
+		}
+
+		private void hide(){
+			this.image.color = Color.clear;
 		}
 
 		private void align(){
@@ -55,6 +67,8 @@ namespace SuperAwesome
 			Texture2D texture = image.texture;
 			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
 			this.button.image.sprite = sprite;
+
+			show ();
 		}
 
 		private void OnClick(){
