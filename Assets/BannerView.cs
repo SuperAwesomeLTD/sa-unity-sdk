@@ -27,8 +27,6 @@ namespace SuperAwesome
 		// Use this for initialization
 		void Start ()
 		{
-			StartCoroutine(Load());
-
 			this.image = this.GetComponent<Image>();
 
 			this.button = this.GetComponent<Button>();
@@ -36,6 +34,8 @@ namespace SuperAwesome
 
 			Align ();
 			Hide ();
+
+			StartCoroutine(Load());
 		}
 
 		// Update is called once per frame
