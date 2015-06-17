@@ -32,7 +32,6 @@ namespace SuperAwesome
 			this.button = this.GetComponent<Button>();
 			this.button.onClick.AddListener (() => OnClick ());
 
-			Align ();
 			Hide ();
 		}
 
@@ -45,6 +44,7 @@ namespace SuperAwesome
 		private void Show()
 		{
 			this.image.color = Color.white;
+			this.Align ();
 		}
 
 		private void Hide()
@@ -74,25 +74,27 @@ namespace SuperAwesome
 			transform.position = new Vector3 (x, y, transform.position.z);
 		}
 
-		public IEnumerator Load(Ad ad)
+		public void Load(Ad ad)
 		{
-			Debug.Log ("1");
 			this.ad = ad;
-			WWW image = new WWW(ad.imageURL);
-			yield return image;
+			if (this.ad != null) {
+				StartCoroutine (this.ad.LoadImage (this.UpdateTexture));
+			}
+		}
 
-			Texture2D texture = image.texture;
+		public void UpdateTexture() {
 
 			//Resize button using its RectTransform component
-			this.button.image.rectTransform.sizeDelta = new Vector2 (ad.width, ad.height);
-
+			this.button.image.rectTransform.sizeDelta = new Vector2 (this.ad.width, this.ad.height);
+			
 			//Create a new sprite with the texture and apply it to the button
-			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
+			Sprite sprite = Sprite.Create(this.ad.texture, new Rect(0, 0, this.ad.texture.width, this.ad.texture.height), new Vector2(0.5f,0.5f));
 			this.button.image.sprite = sprite;
-
+			
 			Show ();
-
+			
 			if(OnBannerWasLoaded != null) OnBannerWasLoaded();
+
 		}
 
 		private void OnClick()

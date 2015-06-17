@@ -12,9 +12,12 @@ namespace SuperAwesome
 		public string clickURL { get; private set; }
 		public Int64 width { get; private set; }
 		public Int64 height { get; private set; }
+		public Texture2D texture { get; private set; }
+
 
 		public Ad(string jsonString)
 		{
+			Debug.Log (jsonString);
 			try {
 				Dictionary<string, object> ad = Json.Deserialize(jsonString) as Dictionary<string, object>;
 				Dictionary<string, object> creative = ad ["creative"] as Dictionary<string, object>;
@@ -24,9 +27,17 @@ namespace SuperAwesome
 				this.clickURL = (string) creative["click_url"];
 				this.width = (Int64) details["width"];
 				this.height = (Int64) details["height"];
-			} catch (Exception e) {
+			} catch {
 				throw new ArgumentException("JSON argument not valid");
 			}
+		}
+
+		public IEnumerator LoadImage(Action Callback) {
+			WWW image = new WWW(this.imageURL);
+			yield return image;
+			
+			this.texture = image.texture;
+			Callback ();
 		}
 	}
 }
