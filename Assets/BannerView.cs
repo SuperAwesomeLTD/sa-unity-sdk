@@ -14,6 +14,9 @@ namespace SuperAwesome
 
 		private Button button;
 		private Dictionary<string, object> ad;
+		
+		private Int64 _width;
+		private Int64 _height;
 
 		// Use this for initialization
 		void Start () {
@@ -31,14 +34,21 @@ namespace SuperAwesome
 		}
 
 		private void align(){
-			if (this.layout == Layout.Bottom) {
-				float x = Screen.width / 2;
-				float y = 50 / 2;
-				transform.position = new Vector3 (x, y, transform.position.z);
-			} else if (this.layout == Layout.Top) {
-				float x = Screen.width / 2;
-				float y = Screen.height - 50/2;
-				transform.position = new Vector3 (x, y, transform.position.z);
+			float x;
+			float y;
+			switch (this.layout) {
+				case Layout.Bottom:
+					x = Screen.width / 2;
+					y = this._height / 2;
+					transform.position = new Vector3 (x, y, transform.position.z);
+					break;
+				case Layout.Top:
+					x = Screen.width / 2;
+					y = Screen.height - this._height/2;
+					transform.position = new Vector3 (x, y, transform.position.z);
+					break;
+				default:
+					break;
 			}
 		}
 
@@ -47,12 +57,19 @@ namespace SuperAwesome
 			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
 			Dictionary<string, object> details = creative ["details"] as Dictionary<string, object>;
 			string imgurl = (string) details["image"];
+			this._width = (Int64) details["width"];
+			this._height = (Int64) details["height"];
 			Debug.Log (imgurl);
 			
 			WWW image = new WWW(imgurl);
 			yield return image;
-			
+			Debug.Log (details ["width"].GetType());
 			Texture2D texture = image.texture;
+
+			//Resize button using its RectTransform component
+			this.button.image.rectTransform.sizeDelta = new Vector2 (this._width, this._height);
+
+			//Create a new sprite with the texture and apply it to the button
 			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
 			this.button.image.sprite = sprite;
 		}
