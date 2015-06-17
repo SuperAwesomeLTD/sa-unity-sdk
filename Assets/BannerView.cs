@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,26 +9,42 @@ namespace SuperAwesome
 	public class BannerView : MonoBehaviour {
 
 		public String placementID = "Your Placement ID";
+		public enum Layout { Manual, Top, Bottom };
+		public Layout layout = Layout.Manual;
+
+		private Button button;
+		private Dictionary<string, object> ad;
 
 		// Use this for initialization
 		void Start () {
 			StartCoroutine(loadAd());
+
+			this.button = this.GetComponent<Button>();
+			this.button.onClick.AddListener (() => OnClick ());
+
+			align ();
 		}
 
 		// Update is called once per frame
 		void Update () {
-//			if (GUIUtility.hotControl==0) { //dont click through GUI
-//				if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) {
-//					checkTouch(Input.GetTouch(0).position);
-//				} else if (Input.GetMouseButtonDown(0)) {
-//					checkTouch(Input.mousePosition);
-//				}
-//			}
+
+		}
+
+		private void align(){
+			if (this.layout == Layout.Bottom) {
+				float x = Screen.width / 2;
+				float y = 50 / 2;
+				transform.position = new Vector3 (x, y, transform.position.z);
+			} else if (this.layout == Layout.Top) {
+				float x = Screen.width / 2;
+				float y = Screen.height - 50/2;
+				transform.position = new Vector3 (x, y, transform.position.z);
+			}
 		}
 
 		private IEnumerator loadAd(){
-			Dictionary<string, object> ad = SuperAwesome.instance.adManager.getAd (this.placementID);
-			Dictionary<string, object> creative = ad ["creative"] as Dictionary<string, object>;
+			this.ad = SuperAwesome.instance.adManager.getAd (this.placementID);
+			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
 			Dictionary<string, object> details = creative ["details"] as Dictionary<string, object>;
 			string imgurl = (string) details["image"];
 			Debug.Log (imgurl);
@@ -36,38 +53,19 @@ namespace SuperAwesome
 			yield return image;
 			
 			Texture2D texture = image.texture;
-			SpriteRenderer sr = this.GetComponent<SpriteRenderer>(); 
-//			MaterialPropertyBlock block = new MaterialPropertyBlock();
-//			block.AddTexture("_MainTex",texture);
-//			sr.SetPropertyBlock(block);
-
-			Sprite sprite = new Sprite ();
+			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
+			this.button.image.sprite = sprite;
 		}
 
-//		private void checkTouch(Vector2 pos) {
-//			Debug.Log ("check touch");
-//			if (!gameObject.GetComponent<GUITexture>()) {
-//				Ray ray = Camera.main.ScreenPointToRay (pos);
-//				RaycastHit hit;
-//				
-//				if (Physics.Raycast(ray, out hit)) {
-//					if (GetComponent<Renderer>().enabled && hit.transform.gameObject == gameObject) {
-//						gameObject.SendMessage("adClicked", null, SendMessageOptions.DontRequireReceiver);
-//					}
-//				}
-//			} else {
-//				if (GetComponent<GUITexture>().HitTest(pos)) {
-//					if (GetComponent<GUITexture>().enabled) {
-//						GetComponent<GUITexture>().transform.SendMessage("adClicked", null, SendMessageOptions.DontRequireReceiver);
-//					}
-//				}
-//			}
-//		}
-//
-//		void adClicked() {
-//			Debug.Log ("AD CLICKED");
-//		}
-		
+		private void OnClick(){
+			Debug.Log ("KLIKK");
+
+			this.ad = SuperAwesome.instance.adManager.getAd (this.placementID);
+			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
+			String clickURL = creative ["click_url"] as String;
+			Debug.Log (clickURL);
+			Application.OpenURL(clickURL);
+		}	
 
 	}
 }
