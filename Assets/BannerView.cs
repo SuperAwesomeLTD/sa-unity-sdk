@@ -62,7 +62,9 @@ namespace SuperAwesome
 					x = Screen.width / 2;
 					y = Screen.height - this._height/2;
 					break;
-				default:
+			default:
+					x = transform.position.x;
+					y = transform.position.y;
 					break;
 			}
 			transform.position = new Vector3 (x, y, transform.position.z);
