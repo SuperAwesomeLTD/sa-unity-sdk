@@ -27,7 +27,6 @@ namespace SuperAwesome
 		void Start ()
 		{
 			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.Load));
-
 			this.image = this.GetComponent<Image>();
 
 			this.button = this.GetComponent<Button>();
@@ -35,6 +34,8 @@ namespace SuperAwesome
 
 			Align ();
 			Hide ();
+
+			StartCoroutine(Load());
 		}
 
 		// Update is called once per frame
