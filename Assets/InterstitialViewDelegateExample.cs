@@ -6,10 +6,11 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		InterstitialView banner = this.GetComponentInChildren<InterstitialView> ();
-		banner.OnInterstitialWasLoaded += OnLoad;
-		banner.OnInterstitialWasClicked += OnClick;
-		banner.OnInterstitialWasClosed += OnClosed;
+		InterstitialView interstitial = this.GetComponentInChildren<InterstitialView> ();
+		interstitial.OnInterstitialWasLoaded += OnLoad;
+		interstitial.OnInterstitialWasClicked += OnClick;
+		interstitial.OnInterstitialWasClosed += OnClosed;
+		interstitial.OnInterstitialError += OnError;
 	}
 	
 	// Update is called once per frame
@@ -33,5 +34,10 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 	void OnClosed()
 	{
 		Debug.Log ("Interstitial Closed");
+	}
+
+	void OnError()
+	{
+		Debug.Log ("Interstitial Error");
 	}
 }

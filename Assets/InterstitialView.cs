@@ -16,6 +16,8 @@ namespace SuperAwesome
 		public event InterstitialWasClickedHandler OnInterstitialWasClicked;
 		public delegate void InterstitialWasClosedHandler();
 		public event InterstitialWasClosedHandler OnInterstitialWasClosed;
+		public delegate void InterstitialErrorHandler();
+		public event InterstitialErrorHandler OnInterstitialError;
 
 		private Button interstitialButton;
 		private Button closeButton;
@@ -73,7 +75,10 @@ namespace SuperAwesome
 		private void OnAdLoaded(Ad ad)
 		{
 			this.ad = ad;
-			if (this.ad != null) {
+			if (this.ad == null)
+			{
+				if(OnInterstitialError != null) OnInterstitialError();
+			}else{
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
 			}
 		}
