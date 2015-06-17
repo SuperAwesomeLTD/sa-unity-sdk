@@ -105,7 +105,6 @@ namespace SuperAwesome
 
 		private void OnClick()
 		{
-			this.ad = SuperAwesome.instance.adManager.getAd (this.placementID);
 			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
 			String clickURL = creative ["click_url"] as String;
 			Application.OpenURL(clickURL);
