@@ -12,11 +12,6 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 		interstitial.OnInterstitialWasClosed += OnClosed;
 		interstitial.OnInterstitialError += OnError;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	void OnLoad()
 	{

@@ -19,6 +19,7 @@ public class BannerViewDelegateExample : MonoBehaviour {
 	{
 		bannerView.OnBannerWasLoaded -= OnLoad;
 		bannerView.OnBannerWasClicked -= OnClick;
+		bannerView.OnBannerError -= OnError;
 	}
 
 	void OnLoad()
