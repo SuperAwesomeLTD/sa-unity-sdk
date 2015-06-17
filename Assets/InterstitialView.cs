@@ -72,25 +72,26 @@ namespace SuperAwesome
 
 		private IEnumerator Load()
 		{
-			this.ad = SuperAwesome.instance.adManager.getAd (this.placementID);
-			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
-			Dictionary<string, object> details = creative ["details"] as Dictionary<string, object>;
-			string imgurl = (string) details["image"];
-			this.width = (Int64) details["width"];
-			this.height = (Int64) details["height"];
-			
-			WWW image = new WWW(imgurl);
-			yield return image;
-			Texture2D texture = image.texture;
-		
-			//Resize button using its RectTransform component
-			this.interstitialButton.image.rectTransform.sizeDelta = new Vector2 (this.width, this.height);
-
-			//Create a new sprite with the texture and apply it to the button
-			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
-			this.interstitialButton.image.sprite = sprite;
-			
-			if(OnInterstitialWasLoaded != null) OnInterstitialWasLoaded();
+//			this.ad = SuperAwesome.instance.adManager.getAd (this.placementID);
+//			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
+//			Dictionary<string, object> details = creative ["details"] as Dictionary<string, object>;
+//			string imgurl = (string) details["image"];
+//			this.width = (Int64) details["width"];
+//			this.height = (Int64) details["height"];
+//			
+//			WWW image = new WWW(imgurl);
+//			yield return image;
+//			Texture2D texture = image.texture;
+//		
+//			//Resize button using its RectTransform component
+//			this.interstitialButton.image.rectTransform.sizeDelta = new Vector2 (this.width, this.height);
+//
+//			//Create a new sprite with the texture and apply it to the button
+//			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
+//			this.interstitialButton.image.sprite = sprite;
+//			
+//			if(OnInterstitialWasLoaded != null) OnInterstitialWasLoaded();
+			yield return null;
 		}
 
 		private void OnClick()

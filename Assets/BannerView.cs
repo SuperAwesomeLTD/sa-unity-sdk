@@ -34,8 +34,6 @@ namespace SuperAwesome
 
 			Align ();
 			Hide ();
-
-			StartCoroutine(Load());
 		}
 
 		// Update is called once per frame
