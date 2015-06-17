@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using MiniJSON;
 
 namespace SuperAwesome
 {
@@ -20,14 +21,12 @@ namespace SuperAwesome
 
 		private Button button;
 		private Image image;
-		private Dictionary<string, object> ad;
-		private Int64 width;
-		private Int64 height;
+		private Ad ad;
 
 		// Use this for initialization
 		void Start ()
 		{
-			StartCoroutine(Load());
+			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.Load));
 
 			this.image = this.GetComponent<Image>();
 
@@ -62,11 +61,11 @@ namespace SuperAwesome
 			{
 				case Layout.Bottom:
 					x = Screen.width / 2;
-					y = this.height / 2;
+					y = this.ad.height / 2;
 					break;
 				case Layout.Top:
 					x = Screen.width / 2;
-					y = Screen.height - this.height/2;
+					y = Screen.height - this.ad.height/2;
 					break;
 				default:
 					x = transform.position.x;
@@ -76,23 +75,17 @@ namespace SuperAwesome
 			transform.position = new Vector3 (x, y, transform.position.z);
 		}
 
-		private IEnumerator Load()
+		public IEnumerator Load(Ad ad)
 		{
-			this.ad = SuperAwesome.instance.adManager.getAd (this.placementID);
-			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
-			Dictionary<string, object> details = creative ["details"] as Dictionary<string, object>;
-			string imgurl = (string) details["image"];
-			this.width = (Int64) details["width"];
-			this.height = (Int64) details["height"];
-			Debug.Log (imgurl);
-			
-			WWW image = new WWW(imgurl);
+			Debug.Log ("1");
+			this.ad = ad;
+			WWW image = new WWW(ad.imageURL);
 			yield return image;
-			Debug.Log (details ["width"].GetType());
+
 			Texture2D texture = image.texture;
 
 			//Resize button using its RectTransform component
-			this.button.image.rectTransform.sizeDelta = new Vector2 (this.width, this.height);
+			this.button.image.rectTransform.sizeDelta = new Vector2 (ad.width, ad.height);
 
 			//Create a new sprite with the texture and apply it to the button
 			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
@@ -105,9 +98,7 @@ namespace SuperAwesome
 
 		private void OnClick()
 		{
-			Dictionary<string, object> creative = this.ad ["creative"] as Dictionary<string, object>;
-			String clickURL = creative ["click_url"] as String;
-			Application.OpenURL(clickURL);
+			Application.OpenURL(this.ad.clickURL);
 
 			if(OnBannerWasClicked != null) OnBannerWasClicked();
 		}	
