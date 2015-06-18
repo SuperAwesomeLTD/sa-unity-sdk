@@ -22,6 +22,7 @@ namespace SuperAwesome
 
 			if (ad_data.error != null)
 			{
+				Debug.Log (ad_data.error);
 				Callback (null);
 				yield return null;
 			} else {
