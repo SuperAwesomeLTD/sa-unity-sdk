@@ -24,7 +24,9 @@ public class BannerViewDelegateExample : MonoBehaviour {
 
 	void OnLoad()
 	{
-		Debug.Log ("Banner Loaded");
+		Debug.Log ("Banner Loaded; starting new delayed load (currently " +
+		           Time.realtimeSinceStartup + " seconds after startup)");
+		StartCoroutine (this.bannerView.DelayedLoad ());
 	}
 	
 	

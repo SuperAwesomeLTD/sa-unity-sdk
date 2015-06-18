@@ -14,6 +14,7 @@ namespace SuperAwesome
 
 		public String placementID = "Your Placement ID";
 		public Layout layout = Layout.Manual;
+		public int refreshAfterSeconds = 30;
 
 		public delegate void BannerWasLoadedHandler();
 		public event BannerWasLoadedHandler OnBannerWasLoaded;
@@ -76,10 +77,21 @@ namespace SuperAwesome
 			}
 			transform.position = new Vector3 (x, y, transform.position.z);
 		}
-
+		
 		public void Load()
 		{
 			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.OnAdLoaded));
+		}
+		
+		public IEnumerator DelayedLoad()
+		{
+			if (this.ad == null)
+			{
+				yield return null;
+			} else {
+				yield return new WaitForSeconds (this.refreshAfterSeconds);
+				this.Load ();
+			}
 		}
 
 		public void OnAdLoaded(Ad ad)
