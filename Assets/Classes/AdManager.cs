@@ -26,6 +26,7 @@ namespace SuperAwesome
 				Callback (null);
 				yield return null;
 			} else {
+				Debug.Log (ad_data.text);
 				try {
 					Ad ad = new Ad (ad_data.text);
 					Callback (ad);

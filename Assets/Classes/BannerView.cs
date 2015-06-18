@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using MiniJSON;
+using UnityEngine.EventSystems;
 
 namespace SuperAwesome
 {
@@ -15,7 +16,7 @@ namespace SuperAwesome
 		public Layout layout = Layout.Manual;
 
 		public delegate void BannerWasLoadedHandler();
-		public event BannerWasClickedHandler OnBannerWasLoaded;
+		public event BannerWasLoadedHandler OnBannerWasLoaded;
 		public delegate void BannerWasClickedHandler();
 		public event BannerWasClickedHandler OnBannerWasClicked;
 		public delegate void BannerErrorHandler();
