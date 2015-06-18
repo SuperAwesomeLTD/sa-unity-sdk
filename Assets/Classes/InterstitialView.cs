@@ -10,6 +10,9 @@ namespace SuperAwesome
 
 		public String placementID = "Your Placement ID";
 		public bool testMode = true;
+		
+		public bool display { get; set; }
+		public bool isReady { get; set; }
 
 		public delegate void InterstitialWasLoadedHandler();
 		public event InterstitialWasLoadedHandler OnInterstitialWasLoaded;
@@ -24,8 +27,6 @@ namespace SuperAwesome
 		private Button closeButton;
 		private Image backgroundImage;
 		private Ad ad;
-		private bool display;
-		private bool isReady;
 
 		// Use this for initialization
 		void Start () {			
@@ -40,22 +41,25 @@ namespace SuperAwesome
 			this.interstitialButton.onClick.AddListener (() => OnClick ());
 			this.backgroundImage = gameObject.GetComponent<Image> ();
 
-			this.display = true;
 			Hide ();
-			Load ();
+			this.display = true;
 		}
 		
 		// Update is called once per frame
 		void Update () {
-			
+			if(Input.GetKey(KeyCode.X)) this.Show ();	//Remove when ready for production; use to test re-opening of the interstitial
 		}
 
 		public void Show()
 		{
-			Align ();
-			this.backgroundImage.enabled = true;
-			this.interstitialButton.gameObject.SetActive (true);
-			this.closeButton.gameObject.SetActive (true);
+			this.display = true;
+			if (this.isReady)
+			{
+				Align ();
+				this.backgroundImage.enabled = true;
+				this.interstitialButton.gameObject.SetActive (true);
+				this.closeButton.gameObject.SetActive (true);
+			}
 		}
 		
 		private void Hide()
@@ -63,6 +67,8 @@ namespace SuperAwesome
 			this.interstitialButton.gameObject.SetActive (false);
 			this.closeButton.gameObject.SetActive (false);
 			this.backgroundImage.enabled = false;
+			this.display = false;
+			this.Load ();
 		}
 
 		private void Align()
@@ -70,13 +76,14 @@ namespace SuperAwesome
 			float x = Screen.width / 2;
 			float y = Screen.height / 2;
 			interstitialButton.transform.position = new Vector3 (x, y, transform.position.z);
-			x += this.ad.width/2;
-			y += this.ad.height/2;
+			x += this.ad.width / 2;
+			y += this.ad.height / 2;
 			closeButton.transform.position = new Vector3 (x, y, transform.position.z);
 		}
 
 		private void Load()
 		{
+			this.isReady = false;
 			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.testMode, this.OnAdLoaded));
 		}
 

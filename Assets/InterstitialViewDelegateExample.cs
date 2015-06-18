@@ -16,8 +16,16 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 	void OnLoad()
 	{
 		Debug.Log ("Interstitial Loaded");
-		InterstitialView banner = this.GetComponentInChildren<InterstitialView> ();
-		banner.Show ();
+		InterstitialView interstitial = this.GetComponentInChildren<InterstitialView> ();
+		interstitial.isReady = true;
+
+		// interstitial.display is true if Show() was called; it means we want to
+		// display the ad when it's ready (ie. now). If the ad was ready at the time,
+		// then it would have been displayed straight away.
+		if (interstitial.display)
+		{
+			interstitial.Show ();
+		}
 	}
 
 	void OnClick()
