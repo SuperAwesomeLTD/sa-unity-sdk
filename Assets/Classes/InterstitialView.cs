@@ -48,6 +48,8 @@ namespace SuperAwesome
 		public void Show()
 		{
 			Align ();
+			Image image = gameObject.AddComponent<Image>();
+			image.color = new Color(1.0f, 1.0f, 1.0f, 0.392f);
 			this.interstitialButton.gameObject.SetActive (true);
 			this.closeButton.gameObject.SetActive (true);
 		}
@@ -56,6 +58,7 @@ namespace SuperAwesome
 		{
 			this.interstitialButton.gameObject.SetActive (false);
 			this.closeButton.gameObject.SetActive (false);
+			Destroy (gameObject.GetComponent<Image> ());
 		}
 
 		private void Align()
