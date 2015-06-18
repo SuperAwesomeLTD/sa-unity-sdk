@@ -8,6 +8,7 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 	void Start () {
 		InterstitialView interstitial = this.GetComponentInChildren<InterstitialView> ();
 		interstitial.OnInterstitialWasLoaded += OnLoad;
+		interstitial.OnInterstitialWasOpened += OnOpened;
 		interstitial.OnInterstitialWasClicked += OnClick;
 		interstitial.OnInterstitialWasClosed += OnClosed;
 		interstitial.OnInterstitialError += OnError;
@@ -17,17 +18,24 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 	{
 		Debug.Log ("Interstitial Loaded");
 		InterstitialView interstitial = this.GetComponentInChildren<InterstitialView> ();
-		interstitial.isReady = true;
 
-		// interstitial.display is true if Show() was called; it means we want to
-		// display the ad when it's ready (ie. now). If the ad was ready at the time,
-		// then it would have been displayed straight away.
+		/*
+		 * interstitial.display is true if Show() was called; it means we want to
+		 * display the ad when it's ready (ie. now). If the ad was ready at the time,
+		 * then it would have been displayed straight away.
+		 */
+		interstitial.isReady = true;
 		if (interstitial.display)
 		{
 			interstitial.Show ();
 		}
 	}
-
+	
+	void OnOpened()
+	{
+		Debug.Log ("Interstitial Shown");
+	}
+	
 	void OnClick()
 	{
 		Debug.Log ("Interstitial Clicked");

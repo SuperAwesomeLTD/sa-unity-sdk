@@ -13,7 +13,9 @@ namespace SuperAwesome
 		
 		public bool display { get; set; }
 		public bool isReady { get; set; }
-
+		
+		public delegate void InterstitialWasOpenedHandler();
+		public event InterstitialWasOpenedHandler OnInterstitialWasOpened;
 		public delegate void InterstitialWasLoadedHandler();
 		public event InterstitialWasLoadedHandler OnInterstitialWasLoaded;
 		public delegate void InterstitialWasClickedHandler();
@@ -29,20 +31,23 @@ namespace SuperAwesome
 		private Ad ad;
 
 		// Use this for initialization
-		void Start () {			
+		void Start () {
 			Button[] buttons = this.GetComponentsInChildren<Button>();
-			foreach(Button button in buttons)
+			foreach (Button button in buttons)
 			{
-				if(button.name == "CloseButton") this.closeButton = button;
-				if(button.name == "Button") this.interstitialButton = button;
+				if (button.name == "CloseButton") this.closeButton = button;
+				if (button.name == "Button") this.interstitialButton = button;
 			}
 
 			this.closeButton.onClick.AddListener (() => OnClose ());
 			this.interstitialButton.onClick.AddListener (() => OnClick ());
 			this.backgroundImage = gameObject.GetComponent<Image> ();
 
-			Hide ();
-			this.display = true;
+			Texture2D closeTexture = Resources.Load<Texture2D>("close");
+			this.closeButton.GetComponent<Image> ().sprite = Sprite.Create (closeTexture, new Rect(0, 0, closeTexture.width, closeTexture.height), new Vector2(0.5f, 0.5f));
+
+			this.Hide ();
+			this.Show ();
 		}
 		
 		// Update is called once per frame
@@ -52,13 +57,17 @@ namespace SuperAwesome
 
 		public void Show()
 		{
-			this.display = true;
-			if (this.isReady)
+			if (!isReady)
 			{
+				this.display = true;
+			} else {
 				Align ();
 				this.backgroundImage.enabled = true;
 				this.interstitialButton.gameObject.SetActive (true);
 				this.closeButton.gameObject.SetActive (true);
+
+				if (OnInterstitialWasOpened != null)
+					OnInterstitialWasOpened ();
 			}
 		}
 		
