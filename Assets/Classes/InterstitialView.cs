@@ -22,7 +22,10 @@ namespace SuperAwesome
 
 		private Button interstitialButton;
 		private Button closeButton;
+		private Image backgroundImage;
 		private Ad ad;
+		private bool display;
+		private bool isReady;
 
 		// Use this for initialization
 		void Start () {			
@@ -35,7 +38,9 @@ namespace SuperAwesome
 
 			this.closeButton.onClick.AddListener (() => OnClose ());
 			this.interstitialButton.onClick.AddListener (() => OnClick ());
+			this.backgroundImage = gameObject.GetComponent<Image> ();
 
+			this.display = true;
 			Hide ();
 			Load ();
 		}
@@ -48,8 +53,7 @@ namespace SuperAwesome
 		public void Show()
 		{
 			Align ();
-			Image image = gameObject.AddComponent<Image>();
-			image.color = new Color(1.0f, 1.0f, 1.0f, 0.392f);
+			this.backgroundImage.enabled = true;
 			this.interstitialButton.gameObject.SetActive (true);
 			this.closeButton.gameObject.SetActive (true);
 		}
@@ -58,7 +62,7 @@ namespace SuperAwesome
 		{
 			this.interstitialButton.gameObject.SetActive (false);
 			this.closeButton.gameObject.SetActive (false);
-			Destroy (gameObject.GetComponent<Image> ());
+			this.backgroundImage.enabled = false;
 		}
 
 		private void Align()

@@ -19,8 +19,7 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 		InterstitialView banner = this.GetComponentInChildren<InterstitialView> ();
 		banner.Show ();
 	}
-	
-	
+
 	void OnClick()
 	{
 		Debug.Log ("Interstitial Clicked");
