@@ -12,6 +12,8 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 		interstitial.OnInterstitialWasClicked += OnClick;
 		interstitial.OnInterstitialWasClosed += OnClosed;
 		interstitial.OnInterstitialError += OnError;
+		
+		GetComponent<Canvas> ().sortingOrder = 1000;
 	}
 
 	void OnLoad()

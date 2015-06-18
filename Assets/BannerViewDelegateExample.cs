@@ -12,6 +12,8 @@ public class BannerViewDelegateExample : MonoBehaviour {
 		bannerView.OnBannerWasLoaded += OnLoad;
 		bannerView.OnBannerWasClicked += OnClick;
 		bannerView.OnBannerError += OnError;
+		
+		GetComponent<Canvas> ().sortingOrder = 1000;
 	}
 	
 	
