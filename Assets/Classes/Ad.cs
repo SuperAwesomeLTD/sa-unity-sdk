@@ -21,11 +21,16 @@ namespace SuperAwesome
 				Dictionary<string, object> ad = Json.Deserialize(jsonString) as Dictionary<string, object>;
 				Dictionary<string, object> creative = ad ["creative"] as Dictionary<string, object>;
 				Dictionary<string, object> details = creative ["details"] as Dictionary<string, object>;
-				
+
 				this.imageURL = (string) details["image"];
-				this.clickURL = (string) creative["click_url"];
 				this.width = (Int64) details["width"];
 				this.height = (Int64) details["height"];
+				if ((bool) ad["test"])
+				{
+					this.clickURL = null;
+				} else {
+					this.clickURL = (string) creative["click_url"];
+				}
 			} catch {
 				throw new ArgumentException("JSON argument not valid");
 			}

@@ -15,6 +15,7 @@ namespace SuperAwesome
 		public String placementID = "Your Placement ID";
 		public Layout layout = Layout.Manual;
 		public int refreshAfterSeconds = 30;
+		public bool testMode = true;
 
 		public delegate void BannerWasLoadedHandler();
 		public event BannerWasLoadedHandler OnBannerWasLoaded;
@@ -80,7 +81,7 @@ namespace SuperAwesome
 		
 		public void Load()
 		{
-			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.OnAdLoaded));
+			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.testMode, this.OnAdLoaded));
 		}
 		
 		public IEnumerator DelayedLoad()
@@ -100,7 +101,7 @@ namespace SuperAwesome
 			if (this.ad == null)
 			{
 				if(OnBannerError != null) OnBannerError();
-			}else{
+			} else {
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
 			}
 		}

@@ -14,9 +14,11 @@ namespace SuperAwesome
 			this.baseUrl = baseUrl;
 		}
 
-		public IEnumerator getAd(String placementID, Action<Ad> Callback)
+		public IEnumerator getAd(String placementID, bool testMode, Action<Ad> Callback)
 		{
 			string url = "http://staging.beta.ads.superawesome.tv/v2/ad/" + placementID;
+			url = testMode ? url + "?test=true" : url;
+
 			WWW ad_data = new WWW(url);
 			yield return ad_data;
 

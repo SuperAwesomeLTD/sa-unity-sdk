@@ -9,6 +9,7 @@ namespace SuperAwesome
 	public class InterstitialView : MonoBehaviour {
 
 		public String placementID = "Your Placement ID";
+		public bool testMode = true;
 
 		public delegate void InterstitialWasLoadedHandler();
 		public event InterstitialWasLoadedHandler OnInterstitialWasLoaded;
@@ -69,7 +70,7 @@ namespace SuperAwesome
 
 		private void Load()
 		{
-			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.OnAdLoaded));
+			StartCoroutine(SuperAwesome.instance.adManager.getAd (this.placementID, this.testMode, this.OnAdLoaded));
 		}
 
 		private void OnAdLoaded(Ad ad)
