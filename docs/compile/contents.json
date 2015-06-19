@@ -4,7 +4,7 @@
     "sections": [
         {
             "name": "Getting Started",
-            "text": "<p>Grab the SDK from Github: <a href=\"https://github.com/SuperAwesomeLTD/sa-unity-sdk\">https://github.com/SuperAwesomeLTD/sa-unity-sdk</a></p>\n<p>The SDK contains:</p>\n<ul>\n<li>2 class files (ad and MiniJSON)</li>\n<li>A resources folder</li>\n</ul>\n"
+            "text": "<p>If you haven&#39;t registered your app on the SuperAwesome Dashboard yet, you can do that by going to <a href=\"http://beta.dashboard.superawesome.tv\">http://beta.dashboard.superawesome.tv</a> and creating a new app.</p>\n<p><img src=\"img/dashboard.png\" alt=\"\" title=\"Registering an app on the dashboard\"></p>\n<p>Add your app on the dashboard and create the placements with the format that you want to use in your app. To get SuperAwesome ads working in your app you will only have to note down your placement ID from our dashboard.</p>\n<p>To integrate the SDK into you app, first download it from Github: <a href=\"https://github.com/SuperAwesomeLTD/sa-unity-sdk/tree/develop_awesomeads\">https://github.com/SuperAwesomeLTD/sa-unity-sdk/tree/develop_awesomeads</a></p>\n<p>Drag and drop the SuperAwesome.unitypackage file into your Unity project.</p>\n"
         },
         {
             "name": "Banner Ads",
