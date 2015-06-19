@@ -7,29 +7,16 @@
             "text": "02 GettingStarted.md"
         },
         {
-            "name": "Display Ads",
-            "text": "03 DisplayAds.md"
+            "name": "Banner Ads",
+            "text": "03 BannerAds.md"
         },
         {
-            "name": "Awesome3D Ads",
-            "text": "04 Awesome3DAds.md"
-        },
-        {
-            "name": "Video Ads",
-            "sections": [
-                {
-                    "name": "Configuration",
-                    "text": "05 VideoConfiguration.md"
-                },
-                {
-                    "name": "Playing Video Ads",
-                    "text": "06 Video.md"
-                }
-            ]
+            "name": "Interstitial Ads",
+            "text": "04 InterstitialAds.md"
         },
         {
             "name": "Technical Support",
-            "text": "07 Support.md"
+            "text": "05 Support.md"
         }
     ]
 }
