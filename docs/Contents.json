@@ -15,8 +15,12 @@
             "text": "04 InterstitialAds.md"
         },
         {
+            "name": "Troubleshooting",
+            "text": "05 Troubleshooting.md"
+        },
+        {
             "name": "Technical Support",
-            "text": "05 Support.md"
+            "text": "06 Support.md"
         }
     ]
 }

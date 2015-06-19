@@ -15,6 +15,10 @@
             "text": "<p>After importing the SuperAwesome Unity package, navigate to the Assets/SuperAwesome directory in the Project tab, locate the &#39;SuperAwesome Interstitial&#39; prefab:</p>\n<p><img src=\"img/sa_interstitial_prefab.png\" alt=\"\" title=\"SuperAwesome Interstitial Prefab\"></p>\n<p>Drag the prefab into your scene; you should see a canvas containing the interstitial ad. Select the interstitial ad in order to modify its options in the Inspector tab.</p>\n<p><img src=\"img/interstitial_inspector.png\" alt=\"\" title=\"Interstitial Inspector\"></p>\n<p>Note: Make sure you select the Interstitial object, not the &#39;SuperAwesome Interstitial&#39; parent, as seen in the hierarchy tab:</p>\n<p><img src=\"img/interstitial_hierarchy.png\" alt=\"\" title=\"Interstitial Object in Hierarchy\"></p>\n<p>In the inspector tab you can change the options for your interstitial ad. Possible options include:</p>\n<table>\n<thead>\n<tr>\n<th>Option</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Placement ID</td>\n<td>This is your placement ID, as found on the SuperAwesome Dashboard.</td>\n</tr>\n<tr>\n<td>Test Mode</td>\n<td>If selected, the interstitial will only load test ads from the server. Use this option while developing, and turn it off when your app is ready for production.</td>\n</tr>\n</tbody>\n</table>\n"
         },
         {
+            "name": "Troubleshooting",
+            "text": "<h2 id=\"click-events-are-not-triggered\">Click events are not triggered</h2>\n<p>The click events are not triggered at all unless there is an EventSystem UI object. If this doesn&#39;t exist in the Hierarchy, add one from the GameObject &gt; UI menu.</p>\n"
+        },
+        {
             "name": "Technical Support",
             "text": "<p>If you have any questions or you need technical support, please, do not hesitate to contact us at <a href=\"mailto:devsupport@superawesome.tv\">devsupport@superawesome.tv</a>. We will make every attempt to answer your inquiry as quickly as possible.</p>\n"
         }
