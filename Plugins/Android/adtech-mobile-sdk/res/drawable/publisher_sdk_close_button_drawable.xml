@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@drawable/publisher_sdk_close_button_active" android:state_selected="true"></item>
-    <item android:drawable="@drawable/publisher_sdk_close_button_active" android:state_pressed="true"></item>
-    <item android:drawable="@drawable/publisher_sdk_close_button_empty" android:state_enabled="false"></item>
-    <item android:drawable="@drawable/publisher_sdk_close_button_idle"></item>
-
-</selector><!-- From: file:/Users/radu/Development/Projects/AdTechSDK-Android/ADTECHMobileSDK/adtech-mobile-sdk/src/main/res/drawable/publisher_sdk_close_button_drawable.xml -->
