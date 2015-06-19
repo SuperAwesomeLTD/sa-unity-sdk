@@ -16,20 +16,21 @@ namespace SuperAwesome
 
 		public IEnumerator getAd(String placementID, bool testMode, Action<Ad> Callback)
 		{
-			string url = "http://staging.beta.ads.superawesome.tv/v2/ad/" + placementID;
+			string url = this.baseUrl + "/ad/" + placementID;
 			url = testMode ? url + "?test=true" : url;
 
-			WWW ad_data = new WWW(url);
-			yield return ad_data;
+			WWW adData = new WWW(url);
+			yield return adData;
 
-			if (ad_data.error != null)
+			if (adData.error != null)
 			{
-				Debug.Log (ad_data.error);
+				Debug.Log (adData.error);
 				Callback (null);
 				yield return null;
 			} else {
 				try {
-					Ad ad = new Ad (ad_data.text);
+					Debug.Log (adData.text);
+					Ad ad = new Ad (adData.text);
 					Callback (ad);
 				} catch {
 					Callback (null);
