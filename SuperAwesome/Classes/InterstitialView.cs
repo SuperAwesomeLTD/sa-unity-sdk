@@ -43,9 +43,6 @@ namespace SuperAwesome
 			this.interstitialButton.onClick.AddListener (() => OnClick ());
 			this.backgroundImage = gameObject.GetComponent<Image> ();
 
-			Texture2D closeTexture = Resources.Load<Texture2D>("close");
-			this.closeButton.GetComponent<Image> ().sprite = Sprite.Create (closeTexture, new Rect(0, 0, closeTexture.width, closeTexture.height), new Vector2(0.5f, 0.5f));
-
 			this.Hide ();
 			this.Show ();
 		}
