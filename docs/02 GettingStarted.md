@@ -1,4 +1,4 @@
-If you haven't registered your app on the SuperAwesome Dashboard yet, you can do that by going to [http://dashboard.superawesome.tv](http://dashboard.superawesome.tv) and creating a new app. Before we approve your user, you can start testing with our [demo placements](/docs/iossdk/Demo%20Placements).
+If you haven't registered your app on the SuperAwesome Dashboard yet, you can do that by going to [http://beta.dashboard.superawesome.tv](http://beta.dashboard.superawesome.tv) and creating a new app.
 
 ![](img/dashboard.png "Registering an app on the dashboard")
 
