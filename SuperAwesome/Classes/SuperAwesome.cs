@@ -22,7 +22,7 @@ namespace SuperAwesome
 
 		public SuperAwesome(){
 			Debug.Log (SuperAwesome.getVersion ());
-			adManager = new AdManager ("http://beta.ads.superawesome.tv/v2");
+			adManager = new AdManager ("https://beta.ads.superawesome.tv/v2");
 		}
 
 		public static string getVersion(){
