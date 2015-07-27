@@ -24,7 +24,9 @@ public class SABridge{
 		AndroidJavaClass ajc2 = new AndroidJavaClass ("tv.superawesome.mobile.view.VideoAdActivity");
 		ajc2.CallStatic ("openInActivity", jo);
 	}
-	public static void openParentalGate(string url){
+	public static bool openParentalGate(string url){
+		//Return false because not implemented; the application will take care of the event
+		return false;
 	}
 
 #elif UNITY_IPHONE && !UNITY_EDITOR
@@ -49,8 +51,9 @@ public class SABridge{
 		SABridge.SuperAwesomeUnityOpenVideoAd (SABridge.appId, placementId);
 	}
 	
-	public static void openParentalGate(string url){
+	public static bool openParentalGate(string url){
 		SABridge.SuperAwesomeUnityOpenParentalGate(url);
+		return true;
 	}
 #else
 	public static string getVersion(){
@@ -63,7 +66,9 @@ public class SABridge{
 	public static void openVideoAd(string placementId){
 	}
 
-	public static void openParentalGate(string url){
+	public static bool openParentalGate(string url){
+		//Return false because not implemented; the application will take care of the event
+		return false;
 	}
 #endif
 

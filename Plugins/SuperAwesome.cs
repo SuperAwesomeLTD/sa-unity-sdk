@@ -22,8 +22,8 @@ public class SuperAwesome : MonoBehaviour {
 	}
 
 
-	public static void openParentalGate(string url){
-		SABridge.openParentalGate(url);
+	public static bool openParentalGate(string url){
+		return SABridge.openParentalGate(url);
 	}
 
 	

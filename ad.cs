@@ -182,8 +182,8 @@ namespace superawesome {
 			string clickThrough = click.text;
 			var dict = Json.Deserialize(clickThrough) as Dictionary<string, object>;
 			
-			if (this.parentalGate) {
-				SuperAwesome.openParentalGate((string) dict["link"]);
+			if (this.parentalGate && SuperAwesome.openParentalGate((string) dict["link"])) {
+				//Parental gate will open link; do nothing.
 			} else {
 				Application.OpenURL((string) dict["link"]);
 			}
