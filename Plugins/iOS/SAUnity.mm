@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SuperAwesome.h"
+#import "SAParentalGateOpener.h"
 
 extern "C" {
     
@@ -19,6 +20,12 @@ extern "C" {
         SAVideoAdViewController *vc = [[SAVideoAdViewController alloc] initWithAppID:appIDString placementID:placementIDString];
         UIViewController *rvc = [UIApplication sharedApplication].keyWindow.rootViewController;
         [rvc presentViewController:vc animated:YES completion:nil];
+    }
+
+    void SuperAwesomeUnityOpenParentalGate(const char* url) {
+        NSString *urlString = [NSString stringWithUTF8String: url];
+        SAParentalGateOpener *opener = [[SAParentalGateOpener alloc] initWithUrl:urlString];
+        [opener openGate];
     }
     
 }

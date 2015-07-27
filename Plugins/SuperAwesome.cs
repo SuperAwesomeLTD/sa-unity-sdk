@@ -21,6 +21,11 @@ public class SuperAwesome : MonoBehaviour {
 		SABridge.openVideoAd(placementId);
 	}
 
+
+	public static void openParentalGate(string url){
+		SABridge.openParentalGate(url);
+	}
+
 	
 	// Update is called once per frame
 	void Update () {

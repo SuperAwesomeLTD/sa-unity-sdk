@@ -24,10 +24,15 @@ public class SABridge{
 		AndroidJavaClass ajc2 = new AndroidJavaClass ("tv.superawesome.mobile.view.VideoAdActivity");
 		ajc2.CallStatic ("openInActivity", jo);
 	}
+	public static void openParentalGate(string url){
+	}
 
 #elif UNITY_IPHONE && !UNITY_EDITOR
 	[DllImport ("__Internal")]
 	private static extern void SuperAwesomeUnityOpenVideoAd(int appId, string placementId);
+
+	[DllImport ("__Internal")]
+	private static extern void SuperAwesomeUnityOpenParentalGate(string url);
 
 	private static int appId = 14;
 
@@ -43,6 +48,10 @@ public class SABridge{
 	public static void openVideoAd(string placementId){
 		SABridge.SuperAwesomeUnityOpenVideoAd (SABridge.appId, placementId);
 	}
+	
+	public static void openParentalGate(string url){
+		SABridge.SuperAwesomeUnityOpenParentalGate(url);
+	}
 #else
 	public static string getVersion(){
 		return "Unsupported Platform";
@@ -52,6 +61,9 @@ public class SABridge{
 	}
 	
 	public static void openVideoAd(string placementId){
+	}
+
+	public static void openParentalGate(string url){
 	}
 #endif
 

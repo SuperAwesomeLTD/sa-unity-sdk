@@ -10,6 +10,7 @@ namespace superawesome {
 		public enum fixPlacement { NotFixed, Top, Bottom, Center };
 		public bool hide = false;
 		public bool closable = false;
+		public bool parentalGate = false;
 		public fixPlacement FixPlacement;
 		private bool closeButton = true;
 		private string imgurl = "";
@@ -181,7 +182,11 @@ namespace superawesome {
 			string clickThrough = click.text;
 			var dict = Json.Deserialize(clickThrough) as Dictionary<string, object>;
 			
-			Application.OpenURL((string) dict["link"]);
+			if (this.parentalGate) {
+				SuperAwesome.openParentalGate((string) dict["link"]);
+			} else {
+				Application.OpenURL((string) dict["link"]);
+			}
 		}
 		
 	}
