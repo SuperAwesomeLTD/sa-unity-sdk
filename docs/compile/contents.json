@@ -28,6 +28,10 @@
             ]
         },
         {
+            "name": "Parental Gate (iOS)",
+            "text": "<p>Parental gates can be used within the Unity SDK, but currently only for apps that are deployed to iOS. The parental gate will not work for other apps, and all links will simply exit the application as usual.\nA parental gate presents an adult level task which must be completed in order to continue, thus preventing kids from engaging in commerce or following links out of an app to websites, social networks, or other apps without the knowledge of their parent or guardian.</p>\n<p>In order to implement the parental gate you must first follow the same instructions under the <strong>iOS</strong> section here in order for the native SDK to work with your app: <a href=\"https://developers.superawesome.tv/docs/unitysdk/Video%20Ads/Configuration\">https://developers.superawesome.tv/docs/unitysdk/Video%20Ads/Configuration</a></p>\n<p>Once this is done, you can simply toggle the parental gate for each ad using the check box for the ad.cs script on your object:</p>\n<p><img src=\"img/script_parental_gate.png\" alt=\"\" title=\"Parental Gate checkbox in the script options\"></p>\n<p>If this checkbox is toggled in an iOS app the user will be presented with the parental gate before leaving your application by clicking on an ad, and the browser will not open if the problem is not solved correctly.</p>\n<p><img src=\"img/parental_gate.png\" alt=\"\" title=\"Unity Parental Gate on iOS\"></p>\n"
+        },
+        {
             "name": "Technical Support",
             "text": "<p>If you have any questions or you need technical support, please, do not hesitate to contact us at <a href=\"mailto:devsupport@superawesome.tv\">devsupport@superawesome.tv</a>. We will make every attempt to answer your inquiry as quickly as possible.</p>\n"
         }

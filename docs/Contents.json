@@ -28,8 +28,12 @@
             ]
         },
         {
+            "name": "Parental Gate (iOS)",
+            "text": "07 ParentalGate.md"
+        },
+        {
             "name": "Technical Support",
-            "text": "07 Support.md"
+            "text": "08 Support.md"
         }
     ]
 }
