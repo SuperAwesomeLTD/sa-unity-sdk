@@ -27,7 +27,7 @@
 }
 
 
-- (BOOL)openGate
+- (void)openGate
 {
     if(self.gate == nil){
         self.gate = [[SAParentalGate alloc] init];

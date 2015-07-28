@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SAPlacementView.h"
 #import "SAParentalGate.h"
 
 /**
@@ -19,7 +18,6 @@
 
 - (instancetype)initWithUrl:(NSString *)urlString;
 
-- (BOOL)openGate;
-
+- (void)openGate;
 
 @end
