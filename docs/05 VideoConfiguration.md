@@ -1,5 +1,7 @@
 At the moment video ads are only available on iOS and Android. If you deploy to an other platform the video playing methods will have no effect.
 
+To use the native plugins for video you will first need to include the "Plugins" folder from the SDK in the "Assets" folder of your project. This includes native Android and iOS code that Unity can call to make use of features from these platforms.
+
 Android
 -------
 In the Player Settings pane set the minimum API level setting to Android 2.3.3 (API level 10) if it is lower.
