@@ -24,9 +24,23 @@ public class SABridge{
 		AndroidJavaClass ajc2 = new AndroidJavaClass ("tv.superawesome.mobile.view.VideoAdActivity");
 		ajc2.CallStatic ("openInActivity", jo);
 	}
+
+
 	public static bool openParentalGate(string url){
-		//Return false because not implemented; the application will take care of the event
-		return false;
+
+		var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+		var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+		activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaObject parentalGate = new AndroidJavaObject("tv.superawesome.mobile.ParentalGate", jo);
+
+				ParentalGateViewCallback cb = new ParentalGateViewCallback();
+				cb.setUrl(url);
+				parentalGate.Call("setViewCallback", cb);
+			})
+		);
+		return true;
 	}
 
 #elif UNITY_IPHONE && !UNITY_EDITOR
