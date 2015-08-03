@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+1.3:
+ - Added native parental gate to Android plugin
+
 1.2:
  - Added native parental gate to iOS plugin
 
