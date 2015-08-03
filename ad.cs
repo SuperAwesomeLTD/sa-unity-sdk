@@ -129,9 +129,10 @@ namespace superawesome {
 		
 		void Update() {
 			if (GUIUtility.hotControl==0) { //dont click through GUI
-				if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) {
-					checkTouch(Input.GetTouch(0).position);
-				} else if (Input.GetMouseButtonDown(0)) {
+//				if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) {
+//					checkTouch(Input.GetTouch(0).position);
+//				} else 
+				if (Input.GetMouseButtonDown(0)) {
 					checkTouch(Input.mousePosition);
 				}
 			}

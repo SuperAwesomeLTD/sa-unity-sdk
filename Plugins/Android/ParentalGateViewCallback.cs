@@ -1,3 +1,5 @@
+#if UNITY_ANDROID  && !UNITY_EDITOR
+
 using UnityEngine;
 using System;
 
@@ -15,3 +17,5 @@ class ParentalGateViewCallback : AndroidJavaProxy {
 		Application.OpenURL(clickurl);
 	}
 }
+
+#endif
