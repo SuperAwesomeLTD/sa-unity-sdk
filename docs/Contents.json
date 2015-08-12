@@ -15,12 +15,25 @@
             "text": "04 InterstitialAds.md"
         },
         {
+            "name": "Video Ads",
+            "sections":[
+                {
+                    "name": "Video Ads With Code",
+                    "text": "05 Video Ads/01 Configuration.md"
+                },
+                {
+                    "name": "Fullscreen Video Ads",
+                    "text": "05 Video Ads/02 Video.md"
+                }
+            ]
+        },
+        {
             "name": "Troubleshooting",
-            "text": "05 Troubleshooting.md"
+            "text": "06 Troubleshooting.md"
         },
         {
             "name": "Technical Support",
-            "text": "06 Support.md"
+            "text": "07 Support.md"
         }
     ]
 }
