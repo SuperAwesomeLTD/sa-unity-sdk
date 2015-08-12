@@ -25,12 +25,7 @@ namespace SuperAwesome
 				this.imageURL = (string) details["image"];
 				this.width = (Int64) details["width"];
 				this.height = (Int64) details["height"];
-				if ((bool) ad["test"])
-				{
-					this.clickURL = null;
-				} else {
-					this.clickURL = (string) creative["click_url"];
-				}
+				this.clickURL = (string) creative["click_url"];
 			} catch {
 				throw new ArgumentException("JSON argument not valid");
 			}

@@ -12,7 +12,7 @@ After Unity has exported your Android project, add an empty `settings.gradle` fi
 
 ![](img/import_project.png "Importing your Unity project to Android Studio")
 
-Now you will have an Android Studio project set up using Gradle; with this you can import the SuperAwesome SDK for Android. First make sure you have the SDK downloaded - you can get it here: https://github.com/SuperAwesomeLTD/sa-mobile-sdk-android
+Now you will have an Android Studio project set up using Gradle; with this you can import the SuperAwesome SDK for Android. First make sure you have the SDK downloaded - you can get it here: https://github.com/SuperAwesomeLTD/sa-mobile-sdk-android/tree/2.0.1-beta-1
 
 In Android Studio, go to "File > New > Import Module..." and, when prompted, select the 'superawesomesdk' directory from the files you just downloaded. This will import the SDK files into your project.
 
