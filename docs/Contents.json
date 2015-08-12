@@ -18,11 +18,11 @@
             "name": "Video Ads",
             "sections":[
                 {
-                    "name": "Video Ads With Code",
+                    "name": "Configuration",
                     "text": "05 Video Ads/01 Configuration.md"
                 },
                 {
-                    "name": "Fullscreen Video Ads",
+                    "name": "Playing Video Ads",
                     "text": "05 Video Ads/02 Video.md"
                 }
             ]

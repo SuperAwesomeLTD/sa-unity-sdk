@@ -1,4 +1,4 @@
-At the moment video ads are only available on iOS and Android. If you deploy to an other platform the video playing methods will have no effect.
+At the moment video ads are only available on iOS and Android. If you deploy to any other platform the video playing methods will have no effect.
 
 The video ads make calls to native iOS and Android libraries through our SDKs, and as such you will need to include the native SDK into your project after Unity has built it. Instructions to do so vary depending on the platform, and can be found below: 
 
@@ -40,10 +40,10 @@ After you have built your iOS project, you have to manually add the SuperAwesome
 
 https://developers.superawesome.tv/docs/iossdk_v2/Getting%20Started/Integrating%20the%20SDK
 
-After the CocoaPod dependency has been added, open the xcworkspace file in your project's directory (not the xcodeproj file) with XCode. You have to make some changes to the default Unity build configuration, as the CocoaPods settings need to be propagated in the build target but won't have done so since Unity has already set these values. You should have also received a message when running `pod update`, warning you of this.
+After the CocoaPod dependency has been added, open the `xcworkspace` file in your project's directory (not the `xcodeproj` file) with Xcode. You have to make some changes to the default Unity build configuration, as the CocoaPods settings need to be propagated in the build target but won't have done so since Unity has already set these values.
 
 ![](img/xcode_build_settings.png "Find the Build Settings and change the values mentioned below.")
 
-You will need to search for each of `OTHER_LDFLAGS`, `OTHER_CFLAGS` and `HEADER_SEARCH_PATHS`, double-click on them, and add `$(inherited)` to the existing values. 
+You will need to search for each of `OTHER_LDFLAGS`, `OTHER_CFLAGS` and `HEADER_SEARCH_PATHS`, double-click on them, and add `$(inherited)` to the list of existing values for these settings. You likely will have also received a message when running `pod update`, warning you to do this.
 
 Once this is done your iOS project will be ready to use and any calls to the native SDK from your Unity project will work as expected.
