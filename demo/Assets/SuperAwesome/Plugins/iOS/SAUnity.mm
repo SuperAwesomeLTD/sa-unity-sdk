@@ -5,7 +5,6 @@
 //
 //
 
-
 #import <Foundation/Foundation.h>
 #import "SuperAwesome.h"
 
@@ -29,5 +28,10 @@ extern "C" {
         UIViewController *rvc = [UIApplication sharedApplication].keyWindow.rootViewController;
         [rvc presentViewController:vc animated:YES completion:nil];
     }
-
+    
+    void SuperAwesomeUnityOpenParentalGate() {
+        SAParentalGate *gate = [[SAParentalGate alloc] init];
+        gate.delegate = nil;
+        [gate show];
+    }
 }

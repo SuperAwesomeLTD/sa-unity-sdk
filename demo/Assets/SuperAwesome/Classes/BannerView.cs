@@ -16,6 +16,7 @@ namespace SuperAwesome
 		public Layout layout = Layout.Manual;
 		public int refreshAfterSeconds = 30;
 		public bool testMode = true;
+		public bool isParentalGateEnabled = false;
 
 		public delegate void BannerWasLoadedHandler();
 		public event BannerWasLoadedHandler OnBannerWasLoaded;
@@ -123,10 +124,15 @@ namespace SuperAwesome
 
 		private void OnClick()
 		{
-			Application.OpenURL(this.ad.clickURL);
-
-			if(OnBannerWasClicked != null) OnBannerWasClicked();
+			// case with parental gate
+			if (this.isParentalGateEnabled == true) {
+				SABridge.showParentalGate();
+			} 
+			// case no parental gate
+			else {
+				Application.OpenURL(this.ad.clickURL);
+				if(OnBannerWasClicked != null) OnBannerWasClicked();
+			}
 		}	
-
 	}
 }
