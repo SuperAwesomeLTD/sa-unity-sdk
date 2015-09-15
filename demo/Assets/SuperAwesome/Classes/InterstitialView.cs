@@ -29,6 +29,7 @@ namespace SuperAwesome
 
 		private Button interstitialButton;
 		private Button closeButton;
+		private Button padlockButton;
 		private Image backgroundImage;
 		private Ad ad;
 		private GameObject backgroundPlane;
@@ -39,12 +40,14 @@ namespace SuperAwesome
 			Button[] buttons = this.GetComponentsInChildren<Button>();
 			foreach (Button button in buttons)
 			{
-				if (button.name == "CloseButton") this.closeButton = button;
 				if (button.name == "Button") this.interstitialButton = button;
+				if (button.name == "CloseButton") this.closeButton = button;
+				if (button.name == "PadlockButton") this.padlockButton = button; 
 			}
 
 			this.closeButton.onClick.AddListener (() => OnClose ());
 			this.interstitialButton.onClick.AddListener (() => OnClick ());
+			this.padlockButton.onClick.AddListener (() => OnPadlockClick ());
 			this.backgroundImage = gameObject.GetComponent<Image> ();
 
 			this.Hide ();
@@ -69,6 +72,7 @@ namespace SuperAwesome
 				this.backgroundImage.enabled = true;
 				this.interstitialButton.gameObject.SetActive (true);
 				this.closeButton.gameObject.SetActive (true);
+				this.padlockButton.gameObject.SetActive(true);
 
 				if (OnInterstitialWasOpened != null)
 					OnInterstitialWasOpened ();
@@ -79,6 +83,7 @@ namespace SuperAwesome
 		{
 			this.interstitialButton.gameObject.SetActive (false);
 			this.closeButton.gameObject.SetActive (false);
+			this.padlockButton.gameObject.SetActive (false);
 			this.backgroundImage.enabled = false;
 			this.display = false;
 			this.Load ();
@@ -86,12 +91,14 @@ namespace SuperAwesome
 
 		private void Align()
 		{
-			float x = Screen.width / 2;
-			float y = Screen.height / 2;
-			interstitialButton.transform.position = new Vector3 (x, y, transform.position.z);
-			x += this.ad.width / 2;
-			y += this.ad.height / 2;
-			closeButton.transform.position = new Vector3 (x, y, transform.position.z);
+			float x_mid = Screen.width / 2;
+			float y_mid = Screen.height / 2;
+			float x_top_right = x_mid + this.ad.width / 2;
+			float y_top_right = y_mid + this.ad.height / 2;
+			float y_bottom_right = y_mid - this.ad.height / 2;
+			interstitialButton.transform.position = new Vector3 (x_mid, y_mid, transform.position.z);
+			closeButton.transform.position = new Vector3 (x_top_right, y_top_right, transform.position.z);
+			padlockButton.transform.position = new Vector3 (x_top_right - 15.0f, y_bottom_right + 15.0f, transform.position.z);
 		}
 
 		private void Load()
@@ -134,6 +141,10 @@ namespace SuperAwesome
 				this.goDirectlyToAdURL();
 			}
 		}
+
+		public void OnPadlockClick() {
+			SABridge.showPadlockView ();
+		}
 		
 		public void goDirectlyToAdURL(){
 			Application.OpenURL(this.ad.clickURL);
@@ -157,13 +168,10 @@ namespace SuperAwesome
 			Quaternion cameraRot = Camera.main.transform.rotation;
 			
 			Material m = new Material(Shader.Find("Legacy Shaders/Transparent/Diffuse"));
-//			Material m = new Material (Shader.Find ("Legacy Shaders/Diffuse"));
 			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
-//			
+
 			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			backgroundPlane.GetComponent<Renderer>().material = m;
-
-//			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
 			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
 			backgroundPlane.transform.rotation = cameraRot;
 			backgroundPlane.transform.position = cubePos;

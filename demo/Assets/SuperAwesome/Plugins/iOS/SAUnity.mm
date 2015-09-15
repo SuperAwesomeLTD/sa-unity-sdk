@@ -46,4 +46,10 @@ extern "C" {
         }];
         [gate show];
     }
+    
+    void SuperAwesomeUnityShowPadlockView(){
+        // do nothing so far
+        SAPadlockView *pad = [[SAPadlockView alloc] init];
+        [[[[UIApplication sharedApplication] delegate] window] addSubview:pad];
+    }
 }

@@ -30,6 +30,10 @@ public class SABridge {
 		// do nothing
 	}
 
+	public static void showPadlockView(){
+		// do nothing
+	}
+
 //	public static bool openParentalGate(string url){
 //
 //		var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
@@ -56,6 +60,8 @@ public class SABridge {
 	private static extern void SuperAwesomeUnityOpenVideoAdTestmode (string placementId);
 	[DllImport ("__Internal")]
 	private static extern void SuperAwesomeUnityOpenParentalGate(string adName);
+	[DllImport ("__Internal")]
+	private static extern void SuperAwesomeUnityShowPadlockView();
 
 //	[DllImport ("__Internal")]
 //	private static extern void SuperAwesomeUnityOpenParentalGate(string url);
@@ -83,6 +89,10 @@ public class SABridge {
 		SABridge.SuperAwesomeUnityOpenParentalGate(adName);
 	}
 
+	public static void showPadlockView(){
+		SABridge.SuperAwesomeUnityShowPadlockView();
+	}
+
 //	public static bool openParentalGate(string url){
 //		SABridge.SuperAwesomeUnityOpenParentalGate(url);
 //		return true;
@@ -102,6 +112,10 @@ public class SABridge {
 	}
 
 	public static void showParentalGate(string adName) {
+		// do nothing
+	}
+
+	public static void showPadlockView(){
 		// do nothing
 	}
 
