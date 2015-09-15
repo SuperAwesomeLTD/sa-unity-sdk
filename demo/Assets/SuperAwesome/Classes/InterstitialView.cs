@@ -145,12 +145,13 @@ namespace SuperAwesome
 			cubePos.z += 1.0f;
 			Quaternion cameraRot = Camera.main.transform.rotation;
 			
-			Material m = new Material(Shader.Find("Transparent/Diffuse"));
-			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
-			
+//			Material m = new Material(Shader.Find("Transparent/Diffuse"));
+//			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+//			
 			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			backgroundPlane.GetComponent<Renderer>().material = m;
-			
+//			backgroundPlane.GetComponent<Renderer>().material = m;
+
+			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
 			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
 			backgroundPlane.transform.rotation = cameraRot;
 			backgroundPlane.transform.position = cubePos;

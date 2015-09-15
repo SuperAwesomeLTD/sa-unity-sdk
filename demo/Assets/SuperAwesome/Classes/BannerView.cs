@@ -130,13 +130,13 @@ namespace SuperAwesome
 			} 
 			// case no parental gate
 			else {
-				Application.OpenURL(this.ad.clickURL);
-				if(OnBannerWasClicked != null) OnBannerWasClicked();
+				this.goDirectlyToAdURL();
 			}
 		}
 
-		public void getParamFromObjC(){
-			SABridge.testMessageSend();
+		public void goDirectlyToAdURL(){
+			Application.OpenURL(this.ad.clickURL);
+			if(OnBannerWasClicked != null) OnBannerWasClicked();
 		}
 	}
 }

@@ -32,12 +32,16 @@ extern "C" {
     void SuperAwesomeUnityOpenParentalGate() {
         SAParentalGate *gate = [[SAParentalGate alloc] init];
         gate.delegate = nil;
+        [gate addSuccessBlock:^(){
+            // go to add
+            UnitySendMessage("Banner", "goDirectlyToAdURL", "");
+        }];
+        [gate addErrorBlock:^(){
+           // do nothing here really
+        }];
+        [gate addCancelBlock:^(){
+            // do nothing here really
+        }];
         [gate show];
-        // where "Banner" should actually be like the object's dynamic name
-        UnitySendMessage("Banner", "getParamFromObjC", "50");
-    }
-    
-    void SuperAwesomeTestMessage() {
-        NSLog(@"Just received correct message from ObjC and sent back to Unity");
     }
 }
