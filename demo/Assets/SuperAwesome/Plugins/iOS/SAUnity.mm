@@ -29,17 +29,19 @@ extern "C" {
         [rvc presentViewController:vc animated:YES completion:nil];
     }
     
-    void SuperAwesomeUnityOpenParentalGate() {
+    void SuperAwesomeUnityOpenParentalGate(const char *adName) {
         SAParentalGate *gate = [[SAParentalGate alloc] init];
         gate.delegate = nil;
-        [gate addSuccessBlock:^(){
+        NSString *name = [NSString stringWithUTF8String:adName];
+        [gate setAdName:name];
+        [gate addSuccessBlock:^(NSString *adname){
             // go to add
-            UnitySendMessage("Banner", "goDirectlyToAdURL", "");
+            UnitySendMessage([adname UTF8String], "goDirectlyToAdURL", "");
         }];
-        [gate addErrorBlock:^(){
+        [gate addErrorBlock:^(NSString *adname){
            // do nothing here really
         }];
-        [gate addCancelBlock:^(){
+        [gate addCancelBlock:^(NSString *adname){
             // do nothing here really
         }];
         [gate show];

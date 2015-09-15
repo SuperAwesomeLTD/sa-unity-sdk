@@ -26,7 +26,7 @@ public class SABridge {
 		videoActivity.CallStatic ("start", jo, "5740");
 	}
 
-	public static void showParentalGate() {
+	public static void showParentalGate(string adName) {
 		// do nothing
 	}
 
@@ -55,7 +55,7 @@ public class SABridge {
 	[DllImport ("__Internal")]
 	private static extern void SuperAwesomeUnityOpenVideoAdTestmode (string placementId);
 	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityOpenParentalGate();
+	private static extern void SuperAwesomeUnityOpenParentalGate(string adName);
 
 //	[DllImport ("__Internal")]
 //	private static extern void SuperAwesomeUnityOpenParentalGate(string url);
@@ -79,8 +79,8 @@ public class SABridge {
 		}
 	}
 
-	public static void showParentalGate() {
-		SABridge.SuperAwesomeUnityOpenParentalGate();
+	public static void showParentalGate(string adName) {
+		SABridge.SuperAwesomeUnityOpenParentalGate(adName);
 	}
 
 //	public static bool openParentalGate(string url){
@@ -101,7 +101,7 @@ public class SABridge {
 		// do nothing
 	}
 
-	public static void showParentalGate() {
+	public static void showParentalGate(string adName) {
 		// do nothing
 	}
 

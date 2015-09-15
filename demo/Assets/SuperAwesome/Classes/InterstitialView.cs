@@ -14,6 +14,7 @@ namespace SuperAwesome
 
 		public bool display { get; set; }
 		public bool isReady { get; set; }
+		public bool isParentalGateEnabled = false;
 		
 		public delegate void InterstitialWasOpenedHandler();
 		public event InterstitialWasOpenedHandler OnInterstitialWasOpened;
@@ -124,8 +125,18 @@ namespace SuperAwesome
 
 		private void OnClick()
 		{
+			// case with parental gate
+			if (this.isParentalGateEnabled == true) {
+				SABridge.showParentalGate(this.name);
+			} 
+			// case no parental gate
+			else {
+				this.goDirectlyToAdURL();
+			}
+		}
+		
+		public void goDirectlyToAdURL(){
 			Application.OpenURL(this.ad.clickURL);
-			
 			if(OnInterstitialWasClicked != null) OnInterstitialWasClicked();
 		}
 
@@ -145,13 +156,14 @@ namespace SuperAwesome
 			cubePos.z += 1.0f;
 			Quaternion cameraRot = Camera.main.transform.rotation;
 			
-//			Material m = new Material(Shader.Find("Transparent/Diffuse"));
-//			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+			Material m = new Material(Shader.Find("Legacy Shaders/Transparent/Diffuse"));
+//			Material m = new Material (Shader.Find ("Legacy Shaders/Diffuse"));
+			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 //			
 			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
-//			backgroundPlane.GetComponent<Renderer>().material = m;
+			backgroundPlane.GetComponent<Renderer>().material = m;
 
-			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
+//			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
 			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
 			backgroundPlane.transform.rotation = cameraRot;
 			backgroundPlane.transform.position = cubePos;

@@ -126,7 +126,7 @@ namespace SuperAwesome
 		{
 			// case with parental gate
 			if (this.isParentalGateEnabled == true) {
-				SABridge.showParentalGate();
+				SABridge.showParentalGate(this.name);
 			} 
 			// case no parental gate
 			else {
