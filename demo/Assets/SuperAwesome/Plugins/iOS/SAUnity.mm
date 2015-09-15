@@ -33,5 +33,11 @@ extern "C" {
         SAParentalGate *gate = [[SAParentalGate alloc] init];
         gate.delegate = nil;
         [gate show];
+        // where "Banner" should actually be like the object's dynamic name
+        UnitySendMessage("Banner", "getParamFromObjC", "50");
+    }
+    
+    void SuperAwesomeTestMessage() {
+        NSLog(@"Just received correct message from ObjC and sent back to Unity");
     }
 }

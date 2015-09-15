@@ -133,6 +133,10 @@ namespace SuperAwesome
 				Application.OpenURL(this.ad.clickURL);
 				if(OnBannerWasClicked != null) OnBannerWasClicked();
 			}
-		}	
+		}
+
+		public void getParamFromObjC(){
+			SABridge.testMessageSend();
+		}
 	}
 }

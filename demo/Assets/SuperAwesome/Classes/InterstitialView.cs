@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,7 +11,7 @@ namespace SuperAwesome
 
 		public String placementID = "Your Placement ID";
 		public bool testMode = true;
-		
+
 		public bool display { get; set; }
 		public bool isReady { get; set; }
 		
@@ -29,9 +30,11 @@ namespace SuperAwesome
 		private Button closeButton;
 		private Image backgroundImage;
 		private Ad ad;
+		private GameObject backgroundPlane;
 
 		// Use this for initialization
 		void Start () {
+
 			Button[] buttons = this.GetComponentsInChildren<Button>();
 			foreach (Button button in buttons)
 			{
@@ -58,6 +61,9 @@ namespace SuperAwesome
 			{
 				this.display = true;
 			} else {
+				// create the background as well
+				this.createFakeBackground();
+
 				Align ();
 				this.backgroundImage.enabled = true;
 				this.interstitialButton.gameObject.SetActive (true);
@@ -126,9 +132,34 @@ namespace SuperAwesome
 
 		private void OnClose()
 		{
+			this.destroyFakeBackground ();
 			Hide ();
-
 			if(OnInterstitialWasClosed != null) OnInterstitialWasClosed();
 		}
+
+		// part background
+		private void createFakeBackground() {
+			// make the background plane (the one that keeps clicks out)
+			Vector3 cameraPos = Camera.main.transform.position;
+			Vector3 cubePos = cameraPos;
+			cubePos.z += 1.0f;
+			Quaternion cameraRot = Camera.main.transform.rotation;
+			
+			Material m = new Material(Shader.Find("Transparent/Diffuse"));
+			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+			
+			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			backgroundPlane.GetComponent<Renderer>().material = m;
+			
+			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
+			backgroundPlane.transform.rotation = cameraRot;
+			backgroundPlane.transform.position = cubePos;
+		}
+
+		private void destroyFakeBackground() {
+			// just destroy the component
+			Destroy (backgroundPlane);
+		}
 	}
+
 }

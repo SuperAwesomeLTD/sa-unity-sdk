@@ -5,7 +5,7 @@ using SuperAwesome;
 public class BannerViewDelegateExample : MonoBehaviour {
 
 	private BannerView bannerView;
-
+	
 	void OnEnable()
 	{
 		bannerView = this.GetComponentInChildren<BannerView> ();
