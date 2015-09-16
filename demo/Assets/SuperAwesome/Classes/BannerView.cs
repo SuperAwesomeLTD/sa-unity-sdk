@@ -26,16 +26,25 @@ namespace SuperAwesome
 		public event BannerErrorHandler OnBannerError;
 
 		private Button button;
+		private Button padlockButton;
 		private Image image;
 		private Ad ad;
 
 		// Use this for initialization
 		void Start ()
 		{
+
 			this.image = this.GetComponent<Image>();
-			this.button = this.GetComponent<Button>();
+
+			Button[] buttons = this.GetComponentsInChildren<Button>();
+			foreach (Button button in buttons)
+			{
+				if (button.name == "Banner") this.button = button;
+				if (button.name == "PadlockButton") this.padlockButton = button; 
+			}
 
 			this.button.onClick.AddListener (() => OnClick ());
+			this.padlockButton.onClick.AddListener (() => OnClick ());
 
 			Hide ();
 			Load ();
@@ -120,6 +129,10 @@ namespace SuperAwesome
 			
 			if(OnBannerWasLoaded != null) OnBannerWasLoaded();
 
+		}
+
+		public void OnPadlockClick() {
+			SABridge.showPadlockView ();
 		}
 
 		private void OnClick()
