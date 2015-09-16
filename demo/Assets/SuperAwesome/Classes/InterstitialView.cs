@@ -61,13 +61,12 @@ namespace SuperAwesome
 		
 		public void Show()
 		{
+			this.createFakeBackground();
+
 			if (!isReady)
 			{
 				this.display = true;
 			} else {
-				// create the background as well
-//				this.createFakeBackground();
-				
 				Align ();
 				this.backgroundImage.enabled = true;
 				this.interstitialButton.gameObject.SetActive (true);
@@ -154,7 +153,7 @@ namespace SuperAwesome
 		
 		private void OnClose()
 		{
-//			this.destroyFakeBackground ();
+			this.destroyFakeBackground ();
 			Hide ();
 			if(OnInterstitialWasClosed != null) OnInterstitialWasClosed();
 		}

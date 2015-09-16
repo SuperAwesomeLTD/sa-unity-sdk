@@ -87,6 +87,14 @@ namespace SuperAwesome
 				break;
 			}
 			transform.position = new Vector3 (x, y, transform.position.z);
+
+			float adwidth = this.ad.width, adheight = this.ad.height;
+			float padwidth = 30.0f, padheight = 30.0f;
+
+			float posx = x + (adwidth/2 - (padwidth / 2.0f));
+			float posy = y - ((adheight - padheight) / 2.0f);
+
+			this.padlockButton.transform.position = new Vector3 (posx, posy, transform.position.z);
 		}
 		
 		public void Load()
