@@ -9,74 +9,92 @@ using UnityEngine.EventSystems;
 namespace SuperAwesome
 {
 	public class BannerView : MonoBehaviour {
-
+		
 		public enum Layout { Manual, Top, Bottom };
-
+		
 		public String placementID = "Your Placement ID";
 		public Layout layout = Layout.Manual;
 		public int refreshAfterSeconds = 30;
 		public bool testMode = true;
-
+		public bool isParentalGateEnabled = false;
+		
 		public delegate void BannerWasLoadedHandler();
 		public event BannerWasLoadedHandler OnBannerWasLoaded;
 		public delegate void BannerWasClickedHandler();
 		public event BannerWasClickedHandler OnBannerWasClicked;
 		public delegate void BannerErrorHandler();
 		public event BannerErrorHandler OnBannerError;
-
+		
 		private Button button;
+		private Button padlockButton;
 		private Image image;
 		private Ad ad;
-
+		
 		// Use this for initialization
 		void Start ()
 		{
+			
 			this.image = this.GetComponent<Image>();
-			this.button = this.GetComponent<Button>();
-
+			
+			Button[] buttons = this.GetComponentsInChildren<Button>();
+			foreach (Button button in buttons)
+			{
+				if (button.name == "Banner") this.button = button;
+				if (button.name == "PadlockButton") this.padlockButton = button; 
+			}
+			
 			this.button.onClick.AddListener (() => OnClick ());
-
+			this.padlockButton.onClick.AddListener (() => OnPadlockClick ());
+			
 			Hide ();
 			Load ();
 		}
-
+		
 		// Update is called once per frame
 		void Update ()
 		{
-
+			
 		}
-
+		
 		private void Show()
 		{
 			this.image.color = Color.white;
 			this.Align ();
 		}
-
+		
 		private void Hide()
 		{
 			this.image.color = Color.clear;
 		}
-
+		
 		private void Align()
 		{
 			float x;
 			float y;
 			switch (this.layout)
 			{
-				case Layout.Bottom:
-					x = Screen.width / 2;
-					y = this.ad.height / 2;
-					break;
-				case Layout.Top:
-					x = Screen.width / 2;
-					y = Screen.height - this.ad.height/2;
-					break;
-				default:
-					x = transform.position.x;
-					y = transform.position.y;
-					break;
+			case Layout.Bottom:
+				x = Screen.width / 2;
+				y = this.ad.height / 2;
+				break;
+			case Layout.Top:
+				x = Screen.width / 2;
+				y = Screen.height - this.ad.height/2;
+				break;
+			default:
+				x = transform.position.x;
+				y = transform.position.y;
+				break;
 			}
 			transform.position = new Vector3 (x, y, transform.position.z);
+
+			float adwidth = this.ad.width, adheight = this.ad.height;
+			float padwidth = 30.0f, padheight = 30.0f;
+
+			float posx = x + (adwidth/2 - (padwidth / 2.0f));
+			float posy = y - ((adheight - padheight) / 2.0f);
+
+			this.padlockButton.transform.position = new Vector3 (posx, posy, transform.position.z);
 		}
 		
 		public void Load()
@@ -94,7 +112,7 @@ namespace SuperAwesome
 				this.Load ();
 			}
 		}
-
+		
 		public void OnAdLoaded(Ad ad)
 		{
 			this.ad = ad;
@@ -105,9 +123,9 @@ namespace SuperAwesome
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
 			}
 		}
-
+		
 		public void OnTextureLoaded() {
-
+			
 			//Resize button using its RectTransform component
 			this.button.image.rectTransform.sizeDelta = new Vector2 (this.ad.width, this.ad.height);
 			
@@ -118,15 +136,29 @@ namespace SuperAwesome
 			Show ();
 			
 			if(OnBannerWasLoaded != null) OnBannerWasLoaded();
-
+			
 		}
-
+		
+		public void OnPadlockClick() {
+			SABridge.showPadlockView ();
+		}
+		
 		private void OnClick()
 		{
+			Debug.Log ("This happens on banner");
+			// case with parental gate
+			if (this.isParentalGateEnabled == true) {
+				SABridge.showParentalGate(this.name);
+			} 
+			// case no parental gate
+			else {
+				this.goDirectlyToAdURL();
+			}
+		}
+		
+		public void goDirectlyToAdURL(){
 			Application.OpenURL(this.ad.clickURL);
-
 			if(OnBannerWasClicked != null) OnBannerWasClicked();
-		}	
-
+		}
 	}
 }
