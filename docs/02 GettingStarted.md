@@ -4,6 +4,4 @@ If you haven't registered your app on the SuperAwesome Dashboard yet, you can do
 
 Add your app on the dashboard and create the placements with the format that you want to use in your app. To get SuperAwesome ads working in your app you will only have to note down your placement ID from our dashboard.
 
-To integrate the SDK into you app, first download it from Github: https://github.com/SuperAwesomeLTD/sa-unity-sdk/tree/develop_awesomeads
-
-Drag and drop the SuperAwesome.unitypackage file into your Unity project.
+To integrate the SDK into your app, first download the SuperAwesome.unitypackage file from https://github.com/SuperAwesomeLTD/sa-unity-sdk/raw/develop_awesomeads_gabriel_unity4/SuperAwesome.unitypackage and then drag and drop it into your current Unity project.
