@@ -61,12 +61,13 @@ namespace SuperAwesome
 		
 		public void Show()
 		{
-			this.createFakeBackground();
 
 			if (!isReady)
 			{
 				this.display = true;
 			} else {
+				this.createFakeBackground();
+
 				Align ();
 				this.backgroundImage.enabled = true;
 				this.interstitialButton.gameObject.SetActive (true);
@@ -153,7 +154,7 @@ namespace SuperAwesome
 		
 		private void OnClose()
 		{
-			this.destroyFakeBackground ();
+			destroyFakeBackground ();
 			Hide ();
 			if(OnInterstitialWasClosed != null) OnInterstitialWasClosed();
 		}
@@ -166,12 +167,13 @@ namespace SuperAwesome
 			cubePos.z += 1.0f;
 			Quaternion cameraRot = Camera.main.transform.rotation;
 			
-//			Material m = new Material(Shader.Find("Legacy Shaders/Transparent/Diffuse"));
-//			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+//			Material m = new Material(Shader.Find("Transparent/Diffuse"));
+//			m.color = new Color(0.0f, 0.0f, 1.0f, 1.0f);
 			
 			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
 //			backgroundPlane.GetComponent<Renderer>().material = m;
-			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
+			backgroundPlane.renderer.materials[0].color = Color.blue;
+//			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
 			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
 			backgroundPlane.transform.rotation = cameraRot;
 			backgroundPlane.transform.position = cubePos;
@@ -179,7 +181,7 @@ namespace SuperAwesome
 		
 		private void destroyFakeBackground() {
 			// just destroy the component
-			Destroy (backgroundPlane);
+			Destroy (this.backgroundPlane);
 		}
 	}
 	

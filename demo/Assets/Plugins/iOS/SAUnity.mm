@@ -49,7 +49,7 @@ extern "C" {
     
     void SuperAwesomeUnityShowPadlockView(){
         // do nothing so far
-        SAPadlockView *pad = [[SAPadlockView alloc] init];
-        [[[[UIApplication sharedApplication] delegate] window] addSubview:pad];
+//        SAPadlockView *pad = [[SAPadlockView alloc] init];
+//        [[[[UIApplication sharedApplication] delegate] window] addSubview:pad];
     }
 }

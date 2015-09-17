@@ -27,7 +27,34 @@ public class SABridge {
 	}
 
 	public static void showParentalGate(string adName) {
-		// do nothing
+		var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+		var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+		activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+			AndroidJavaObject parentalGate = new AndroidJavaObject("tv.superawesome.sdk.parentalgate.SAParentalGate", jo);
+			parentalGate.Call("show");
+		}));
+
+
+		//SAParentalGate gate = new SAParentalGate(context);
+        //gate.setListener(new SAParentalGateListener() {
+         //   @Override
+         //   public void onPressCancel() {
+         //       // do nothing
+         //   }
+
+         //   @Override
+         //   public void onPressContinueWithError() {
+         //       // do nothing
+         //   }
+
+         //   @Override
+         //   public void onPressContinueWithSuccess() {
+         //       context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+         //   }
+        //});
+        //gate.show();
 	}
 
 	public static void showPadlockView(){
