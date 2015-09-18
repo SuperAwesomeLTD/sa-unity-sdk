@@ -87,14 +87,6 @@ namespace SuperAwesome
 				break;
 			}
 			transform.position = new Vector3 (x, y, transform.position.z);
-
-			float adwidth = this.ad.width, adheight = this.ad.height;
-			float padwidth = 30.0f, padheight = 30.0f;
-
-			float posx = x + (adwidth/2 - (padwidth / 2.0f));
-			float posy = y - ((adheight - padheight) / 2.0f);
-
-//			this.padlockButton.transform.position = new Vector3 (posx, posy, transform.position.z);
 		}
 		
 		public void Load()
@@ -140,12 +132,16 @@ namespace SuperAwesome
 		}
 		
 		public void OnPadlockClick() {
-			SABridge.showPadlockView ();
+#if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
+			if (!this.ad.fallback){
+				SABridge.showPadlockView ();
+			}
+#endif
 		}
 		
 		private void OnClick()
 		{
-			Debug.Log ("This happens on banner");
+#if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
 			// case with parental gate
 			if (this.isParentalGateEnabled == true) {
 				SABridge.showParentalGate(this.name);
@@ -154,6 +150,9 @@ namespace SuperAwesome
 			else {
 				this.goDirectlyToAdURL();
 			}
+#else
+			this.goDirectlyToAdURL();
+#endif
 		}
 		
 		public void goDirectlyToAdURL(){

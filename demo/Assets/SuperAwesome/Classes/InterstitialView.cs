@@ -97,12 +97,7 @@ namespace SuperAwesome
 		{
 			float x_mid = Screen.width / 2;
 			float y_mid = Screen.height / 2;
-			float x_top_right = x_mid + this.ad.width / 2;
-			float y_top_right = y_mid + this.ad.height / 2;
-			float y_bottom_right = y_mid - this.ad.height / 2;
 			interstitialButton.transform.position = new Vector3 (x_mid, y_mid, transform.position.z);
-//			closeButton.transform.position = new Vector3 (x_top_right, y_top_right, transform.position.z);
-//			padlockButton.transform.position = new Vector3 (x_top_right - 15.0f, y_bottom_right + 15.0f, transform.position.z);
 		}
 		
 		private void Load()
@@ -136,25 +131,32 @@ namespace SuperAwesome
 		
 		private void OnClick()
 		{
+#if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
 			// case with parental gate
 			if (this.isParentalGateEnabled == true) {
-				SABridge.showParentalGate(this.name);
+				SABridge.showParentalGate(this.ad.clickURL);
 			} 
 			// case no parental gate
 			else {
 				this.goDirectlyToAdURL();
 			}
+#else
+			this.goDirectlyToAdURL();
+#endif
 		}
 		
 		public void OnPadlockClick() {
-			SABridge.showPadlockView ();
+#if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
+			if (!this.ad.fallback) {
+				SABridge.showPadlockView ();
+			}
+#endif
 		}
 		
 		public void goDirectlyToAdURL(){
 			Application.OpenURL(this.ad.clickURL);
 			if(OnInterstitialWasClicked != null) OnInterstitialWasClicked();
 		}
-		
 		
 		private void OnClose()
 		{
@@ -171,12 +173,13 @@ namespace SuperAwesome
 			cubePos.z += 1.0f;
 			Quaternion cameraRot = Camera.main.transform.rotation;
 			
-//			Material m = new Material(Shader.Find("Transparent/Diffuse"));
-//			m.color = new Color(0.0f, 0.0f, 1.0f, 1.0f);
+//			Material m = new Material(Shader.Find("Mobile/Diffuse"));
+//			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 			
 			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
 //			backgroundPlane.GetComponent<Renderer>().material = m;
-			backgroundPlane.renderer.materials[0].color = new Color(0,0,0,0.5f);
+//			backgroundPlane.renderer.materials[0] = m;
+			backgroundPlane.renderer.materials [0].color = new Color (1, 0, 0);
 //			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
 			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
 			backgroundPlane.transform.rotation = cameraRot;

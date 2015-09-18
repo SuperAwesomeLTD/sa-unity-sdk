@@ -13,6 +13,7 @@ namespace SuperAwesome
 		public Int64 width { get; private set; }
 		public Int64 height { get; private set; }
 		public Texture2D texture { get; private set; }
+		public bool fallback { get; private set; }
 
 
 		public Ad(string jsonString)
@@ -22,11 +23,13 @@ namespace SuperAwesome
 				Dictionary<string, object> creative = ad ["creative"] as Dictionary<string, object>;
 				Dictionary<string, object> details = creative ["details"] as Dictionary<string, object>;
 
+				this.fallback = (bool) ad["is_fallback"];
 				this.imageURL = (string) details["image"];
 				this.width = (Int64) details["width"];
 				this.height = (Int64) details["height"];
 				this.clickURL = (string) creative["click_url"];
-			} catch {
+
+ 			} catch {
 				throw new ArgumentException("JSON argument not valid");
 			}
 		}
