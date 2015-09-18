@@ -11,6 +11,7 @@ namespace SuperAwesome
 		
 		public String placementID = "Your Placement ID";
 		public bool testMode = true;
+		public bool openInstantly = true;
 		
 		public bool display { get; set; }
 		public bool isReady { get; set; }
@@ -33,6 +34,8 @@ namespace SuperAwesome
 		private Image backgroundImage;
 		private Ad ad;
 		private GameObject backgroundPlane;
+
+		private float timescale;
 		
 		// Use this for initialization
 		void Start () {
@@ -51,7 +54,9 @@ namespace SuperAwesome
 			this.backgroundImage = gameObject.GetComponent<Image> ();
 			
 			this.Hide ();
-			this.Show ();
+			if (this.openInstantly) {
+				this.Show ();
+			}
 		}
 		
 		// Update is called once per frame
@@ -61,7 +66,6 @@ namespace SuperAwesome
 		
 		public void Show()
 		{
-
 			if (!isReady)
 			{
 				this.display = true;
@@ -97,8 +101,8 @@ namespace SuperAwesome
 			float y_top_right = y_mid + this.ad.height / 2;
 			float y_bottom_right = y_mid - this.ad.height / 2;
 			interstitialButton.transform.position = new Vector3 (x_mid, y_mid, transform.position.z);
-			closeButton.transform.position = new Vector3 (x_top_right, y_top_right, transform.position.z);
-			padlockButton.transform.position = new Vector3 (x_top_right - 15.0f, y_bottom_right + 15.0f, transform.position.z);
+//			closeButton.transform.position = new Vector3 (x_top_right, y_top_right, transform.position.z);
+//			padlockButton.transform.position = new Vector3 (x_top_right - 15.0f, y_bottom_right + 15.0f, transform.position.z);
 		}
 		
 		private void Load()
@@ -132,6 +136,7 @@ namespace SuperAwesome
 		
 		private void OnClick()
 		{
+			Event.current.Use();
 			// case with parental gate
 			if (this.isParentalGateEnabled == true) {
 				SABridge.showParentalGate(this.name);
@@ -172,7 +177,7 @@ namespace SuperAwesome
 			
 			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
 //			backgroundPlane.GetComponent<Renderer>().material = m;
-			backgroundPlane.renderer.materials[0].color = Color.blue;
+			backgroundPlane.renderer.materials[0].color = new Color(0,0,0,0.5f);
 //			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
 			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
 			backgroundPlane.transform.rotation = cameraRot;
