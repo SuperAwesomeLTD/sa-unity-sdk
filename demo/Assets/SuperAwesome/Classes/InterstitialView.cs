@@ -136,7 +136,6 @@ namespace SuperAwesome
 		
 		private void OnClick()
 		{
-			Event.current.Use();
 			// case with parental gate
 			if (this.isParentalGateEnabled == true) {
 				SABridge.showParentalGate(this.name);

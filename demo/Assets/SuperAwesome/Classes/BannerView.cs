@@ -94,7 +94,7 @@ namespace SuperAwesome
 			float posx = x + (adwidth/2 - (padwidth / 2.0f));
 			float posy = y - ((adheight - padheight) / 2.0f);
 
-			this.padlockButton.transform.position = new Vector3 (posx, posy, transform.position.z);
+//			this.padlockButton.transform.position = new Vector3 (posx, posy, transform.position.z);
 		}
 		
 		public void Load()
