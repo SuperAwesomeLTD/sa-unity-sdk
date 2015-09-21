@@ -31,6 +31,7 @@ namespace SuperAwesome
 				try {
 					Debug.Log (adData.text);
 					Ad ad = new Ad (adData.text);
+					ad.placementId = placementID;
 					Callback (ad);
 				} catch {
 					Callback (null);

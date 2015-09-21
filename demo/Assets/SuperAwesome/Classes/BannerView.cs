@@ -107,7 +107,14 @@ namespace SuperAwesome
 		
 		public void OnAdLoaded(Ad ad)
 		{
+
 			this.ad = ad;
+
+			// send some events
+			SABannerEventManager.Instance.LogSAEventAdReady (ad);
+			SAInterstitialEventManager.Instance.LogSAEventAdFetched (ad);
+			SAVideoEventManager.Instance.LogSAEventUserCanceledParentalGate (ad);
+
 			if (this.ad == null)
 			{
 				if(OnBannerError != null) OnBannerError();
