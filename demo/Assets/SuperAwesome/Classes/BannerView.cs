@@ -111,9 +111,9 @@ namespace SuperAwesome
 			this.ad = ad;
 
 			// send some events
-			SABannerEventManager.Instance.LogSAEventAdReady (ad);
-			SAInterstitialEventManager.Instance.LogSAEventAdFetched (ad);
-			SAVideoEventManager.Instance.LogSAEventUserCanceledParentalGate (ad);
+			EventManager.Instance.LogUserCanceledParentalGate (ad);
+			EventManager.Instance.LogAdStop (ad);
+			EventManager.Instance.LogAdReady (ad); 
 
 			if (this.ad == null)
 			{
