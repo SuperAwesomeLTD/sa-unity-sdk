@@ -70,6 +70,7 @@ namespace SuperAwesome
 			{
 				this.display = true;
 			} else {
+				EventManager.Instance.LogAdReady(this.ad);
 				this.createFakeBackground();
 
 				Align ();
@@ -111,6 +112,7 @@ namespace SuperAwesome
 			this.ad = ad;
 			if (this.ad == null)
 			{
+				EventManager.Instance.LogAdFailed(this.ad);
 				if(OnInterstitialError != null) OnInterstitialError();
 			}else{
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
@@ -154,6 +156,7 @@ namespace SuperAwesome
 		}
 		
 		public void goDirectlyToAdURL(){
+			EventManager.Instance.LogClick (this.ad);
 			Application.OpenURL(this.ad.clickURL);
 			if(OnInterstitialWasClicked != null) OnInterstitialWasClicked();
 		}

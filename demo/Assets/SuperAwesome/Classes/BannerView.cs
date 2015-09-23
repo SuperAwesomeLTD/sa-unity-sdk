@@ -111,6 +111,7 @@ namespace SuperAwesome
 
 			if (this.ad == null)
 			{
+				EventManager.Instance.LogAdFailed(this.ad);
 				if(OnBannerError != null) OnBannerError();
 			} else {
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
@@ -118,12 +119,14 @@ namespace SuperAwesome
 		}
 		
 		public void OnTextureLoaded() {
+			// log ad ready
+			EventManager.Instance.LogAdReady (this.ad);
 
 			// send some events
-			EventManager.Instance.LogUserCanceledParentalGate (this.ad);
-			EventManager.Instance.LogAdStop (this.ad);
-			EventManager.Instance.LogAdReady (this.ad); 
-			EventManager.Instance.LogRating (this.ad, 3);
+//			EventManager.Instance.LogUserCanceledParentalGate (this.ad);
+//			EventManager.Instance.LogAdStop (this.ad);
+//			EventManager.Instance.LogAdReady (this.ad); 
+//			EventManager.Instance.LogRating (this.ad, 3);
 
 			//Resize button using its RectTransform component
 			this.button.image.rectTransform.sizeDelta = new Vector2 (this.ad.width, this.ad.height);
@@ -163,6 +166,7 @@ namespace SuperAwesome
 		}
 		
 		public void goDirectlyToAdURL(){
+			EventManager.Instance.LogClick (this.ad);
 			Application.OpenURL(this.ad.clickURL);
 			if(OnBannerWasClicked != null) OnBannerWasClicked();
 		}
