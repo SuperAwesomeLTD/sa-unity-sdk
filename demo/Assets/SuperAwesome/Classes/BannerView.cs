@@ -107,13 +107,7 @@ namespace SuperAwesome
 		
 		public void OnAdLoaded(Ad ad)
 		{
-
 			this.ad = ad;
-
-			// send some events
-			EventManager.Instance.LogUserCanceledParentalGate (ad);
-			EventManager.Instance.LogAdStop (ad);
-			EventManager.Instance.LogAdReady (ad); 
 
 			if (this.ad == null)
 			{
@@ -124,7 +118,13 @@ namespace SuperAwesome
 		}
 		
 		public void OnTextureLoaded() {
-			
+
+			// send some events
+			EventManager.Instance.LogUserCanceledParentalGate (this.ad);
+			EventManager.Instance.LogAdStop (this.ad);
+			EventManager.Instance.LogAdReady (this.ad); 
+			EventManager.Instance.LogRating (this.ad, 3);
+
 			//Resize button using its RectTransform component
 			this.button.image.rectTransform.sizeDelta = new Vector2 (this.ad.width, this.ad.height);
 			

@@ -5,6 +5,8 @@ namespace SuperAwesome
 {
 	public class SuperAwesome {
 
+		private string baseURL = "https://beta.ads.superawesome.tv/v2";
+
 		private static SuperAwesome _instance;
 
 		public static SuperAwesome instance
@@ -22,11 +24,15 @@ namespace SuperAwesome
 
 		public SuperAwesome(){
 			Debug.Log (SuperAwesome.getVersion ());
-			adManager = new AdManager ("https://beta.ads.superawesome.tv/v2");
+			adManager = new AdManager (this.baseURL);
 		}
 
 		public static string getVersion(){
 			return "SuperAwesome Unity SDK version 2.0";
+		}
+
+		public string getBaseURL() {
+			return this.baseURL;
 		}
 	}
 }

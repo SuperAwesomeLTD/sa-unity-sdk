@@ -2,12 +2,16 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using MiniJSON;
+using System.Net;
+using System.IO;
 
 namespace SuperAwesome
 {
 	// event names
 	public enum SAEventType {
+		NoAd = -1,
 		AdFetched = 0,
 		AdLoaded,
 		AdReady,
@@ -15,6 +19,7 @@ namespace SuperAwesome
 		AdStart,
 		AdStop,
 		AdResume,
+		AdRate,
 		UserCanceledParentalGate,
 		UserSuccessWithParentalGate,
 		UserErrorWithParentalGate
@@ -51,26 +56,33 @@ namespace SuperAwesome
 			this.request.creativeId = ad.creativeId;
 			this.request.lineItemId = ad.lineItemId;
 			this.request.placementId = ad.placementId;
+			this.request.detailValue = -1;
 		}
 
-		// transform to dict
-		private Dictionary<string, object> transformSAEventRequestToDictionary(EventRequest req) {
-			Dictionary<string, object> evdict = new Dictionary<string, object>();
-			evdict.Add("line_item", req.lineItemId);
-			evdict.Add("creative", req.creativeId);
-			evdict.Add("placement", req.placementId);
-			evdict.Add("type", req.type.ToString());
-			return evdict;
+		private Dictionary<string, object> transfromSAEventRequestToDictionary(EventRequest req) {
+			Dictionary<string, object> dict = new Dictionary<string, object>();
+			dict.Add ("line_item", req.lineItemId);
+			dict.Add ("creative", req.creativeId);
+			dict.Add ("placement", Int64.Parse(req.placementId));
+			if (req.type != SAEventType.NoAd) {
+				dict.Add ("type", req.type.ToString ());
+			}
+			if (req.detailValue > 0) {
+				Dictionary<string, object> mdict = new Dictionary<string, object>();
+				mdict.Add("value", req.detailValue);
+				dict.Add("details", mdict);
+			}
+			return dict;
 		}
 
 		private void sendRequestWithEvent(EventRequest request) {
-			Dictionary<string, object> evdict = transformSAEventRequestToDictionary (request);
+			Dictionary<string, object> requestDict = this.transfromSAEventRequestToDictionary (request);
+			NetManager.sendPOSTRequest ("/event", requestDict);
+		}
 
-			foreach (KeyValuePair<string, object> kvp in evdict)
-			{
-				//textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-				Debug.Log(string.Format("Key = {0}, Value = {1}", kvp.Key, kvp.Value));
-			}
+		private void sendClickWithEvent(EventRequest request){
+			Dictionary<string, object> requestDict = this.transfromSAEventRequestToDictionary (request);
+			NetManager.sendPOSTRequest ("/click", requestDict);
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,6 +146,19 @@ namespace SuperAwesome
 			this.request.type = SAEventType.UserErrorWithParentalGate;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+		}
+
+		public void LogClick(Ad ad) {
+			this.request.type = SAEventType.NoAd;
+			assignRequestFromResponse (ad);
+			sendClickWithEvent (this.request);
+		}
+
+		public void LogRating(Ad ad, Int64 value) {
+			assignRequestFromResponse (ad);
+			this.request.type = SAEventType.AdRate;
+			this.request.detailValue = value;
+			sendClickWithEvent (this.request);
 		}
 	}
 }
