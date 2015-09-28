@@ -28,7 +28,7 @@ namespace SuperAwesome
 		}
 
 		public static string getVersion(){
-			return "SuperAwesome Unity SDK version 2.0";
+			return "SuperAwesome Unity SDK version 2.1";
 		}
 
 		public string getBaseURL() {
