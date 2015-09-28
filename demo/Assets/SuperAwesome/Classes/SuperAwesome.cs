@@ -5,7 +5,7 @@ namespace SuperAwesome
 {
 	public class SuperAwesome {
 
-		private string baseURL = "https://beta.ads.superawesome.tv/v2";
+		private string baseURL = "https://ads.superawesome.tv/v2";
 
 		private static SuperAwesome _instance;
 

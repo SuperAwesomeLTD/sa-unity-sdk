@@ -70,7 +70,7 @@ namespace SuperAwesome
 			{
 				this.display = true;
 			} else {
-				EventManager.Instance.LogAdReady(this.ad);
+				StartCoroutine(EventManager.Instance.LogViewableImpression(this.ad));
 				this.createFakeBackground();
 
 				Align ();
@@ -112,7 +112,7 @@ namespace SuperAwesome
 			this.ad = ad;
 			if (this.ad == null)
 			{
-				EventManager.Instance.LogAdFailed(this.ad);
+//				StartCoroutine(EventManager.Instance.LogAdFailed(this.ad));
 				if(OnInterstitialError != null) OnInterstitialError();
 			}else{
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
@@ -136,7 +136,7 @@ namespace SuperAwesome
 #if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
 			// case with parental gate
 			if (this.isParentalGateEnabled == true) {
-				SABridge.showParentalGate(this.ad.clickURL);
+				SABridge.showParentalGate(this.name, this.ad.placementId, this.ad.creativeId, this.ad.lineItemId);
 			} 
 			// case no parental gate
 			else {
@@ -156,7 +156,7 @@ namespace SuperAwesome
 		}
 		
 		public void goDirectlyToAdURL(){
-			EventManager.Instance.LogClick (this.ad);
+			StartCoroutine(EventManager.Instance.LogClick (this.ad));
 			Application.OpenURL(this.ad.clickURL);
 			if(OnInterstitialWasClicked != null) OnInterstitialWasClicked();
 		}

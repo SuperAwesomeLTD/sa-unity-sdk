@@ -6,7 +6,7 @@ public class SABridge {
 
 #if UNITY_ANDROID  && !UNITY_EDITOR
 
-	public static void openVideoAd(string placementId, bool testMode){
+	public static void openVideoAd(string placementId, bool gateEnabled, bool testMode){
 		var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
@@ -14,7 +14,7 @@ public class SABridge {
 		videoActivity.CallStatic ("start", jo, "5740");
 	}
 
-	public static void showParentalGate(string adName) {
+	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
 		var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
@@ -41,24 +41,24 @@ public class SABridge {
 #elif UNITY_IPHONE && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityOpenVideoAd(string placementId);
+	private static extern void SuperAwesomeUnityOpenVideoAd(string placementId, bool gateEnabled, bool testMode);
+	// [DllImport ("__Internal")]
+	// private static extern void SuperAwesomeUnityOpenVideoAdTestmode (string placementId);
 	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityOpenVideoAdTestmode (string placementId);
-	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityOpenParentalGate(string adName);
+	private static extern void SuperAwesomeUnityOpenParentalGate(string adName, string placementId, long creativeId, long lineItemId);
 	[DllImport ("__Internal")]
 	private static extern void SuperAwesomeUnityShowPadlockView();
 
-	public static void openVideoAd(string placementId, bool testMode){
-		if (testMode) {
-			SABridge.SuperAwesomeUnityOpenVideoAdTestmode (placementId);
-		} else {
-			SABridge.SuperAwesomeUnityOpenVideoAd (placementId);
-		}
+	public static void openVideoAd(string placementId, bool gateEnabled, bool testMode){
+		// if (testMode) {
+		//	SABridge.SuperAwesomeUnityOpenVideoAdTestmode (placementId, gateEnabled, testMode);
+		// } else {
+			SABridge.SuperAwesomeUnityOpenVideoAd (placementId, gateEnabled, testMode);
+		// }
 	}
 
-	public static void showParentalGate(string adName) {
-		SABridge.SuperAwesomeUnityOpenParentalGate(adName);
+	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
+		SABridge.SuperAwesomeUnityOpenParentalGate(adName, placementId, creativeId, lineItemId);
 	}
 
 	public static void showPadlockView(){
@@ -67,11 +67,11 @@ public class SABridge {
 
 #else
 
-	public static void openVideoAd(string placementId, bool testMode){
+	public static void openVideoAd(string placementId, bool gateEnabled, bool testMode){
 		// do nothing
 	}
 
-	public static void showParentalGate(string adName) {
+	public static void showParentalGate(string adNam, string placementId, long creativeId, long lineItemId) {
 		// do nothing
 	}
 

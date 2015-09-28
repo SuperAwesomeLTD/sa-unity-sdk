@@ -111,7 +111,7 @@ namespace SuperAwesome
 
 			if (this.ad == null)
 			{
-				EventManager.Instance.LogAdFailed(this.ad);
+//				EventManager.Instance.LogAdFailed(this.ad);
 				if(OnBannerError != null) OnBannerError();
 			} else {
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
@@ -120,13 +120,13 @@ namespace SuperAwesome
 		
 		public void OnTextureLoaded() {
 			// log ad ready
-			EventManager.Instance.LogAdReady (this.ad);
+			StartCoroutine (EventManager.Instance.LogViewableImpression (this.ad));
 
 			// send some events
-//			EventManager.Instance.LogUserCanceledParentalGate (this.ad);
-//			EventManager.Instance.LogAdStop (this.ad);
-//			EventManager.Instance.LogAdReady (this.ad); 
-//			EventManager.Instance.LogRating (this.ad, 3);
+			StartCoroutine(EventManager.Instance.LogUserCanceledParentalGate (this.ad));
+			StartCoroutine(EventManager.Instance.LogAdStop (this.ad));
+			StartCoroutine(EventManager.Instance.LogViewableImpression (this.ad)); 
+			StartCoroutine(EventManager.Instance.LogRating (this.ad, 3));
 
 			//Resize button using its RectTransform component
 			this.button.image.rectTransform.sizeDelta = new Vector2 (this.ad.width, this.ad.height);
@@ -151,10 +151,11 @@ namespace SuperAwesome
 		
 		private void OnClick()
 		{
+
 #if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
 			// case with parental gate
 			if (this.isParentalGateEnabled == true) {
-				SABridge.showParentalGate(this.name);
+				SABridge.showParentalGate(this.name, this.ad.placementId, this.ad.creativeId, this.ad.lineItemId);
 			} 
 			// case no parental gate
 			else {
@@ -166,7 +167,7 @@ namespace SuperAwesome
 		}
 		
 		public void goDirectlyToAdURL(){
-			EventManager.Instance.LogClick (this.ad);
+			StartCoroutine(EventManager.Instance.LogClick (this.ad));
 			Application.OpenURL(this.ad.clickURL);
 			if(OnBannerWasClicked != null) OnBannerWasClicked();
 		}

@@ -14,7 +14,7 @@ namespace SuperAwesome
 		NoAd = -1,
 		AdFetched = 0,
 		AdLoaded,
-		AdReady,
+		viewable_impression,
 		AdFailed,
 		AdStart,
 		AdStop,
@@ -33,10 +33,12 @@ namespace SuperAwesome
 
 		// other variables
 		public EventRequest request; // request
+		private NetManager nmanager;
 
 		// private constructor
 		protected EventManager() {
 			this.request = new EventRequest ();
+			nmanager = new NetManager ();
 		}
 
 		// instance bs
@@ -61,104 +63,123 @@ namespace SuperAwesome
 
 		private Dictionary<string, object> transfromSAEventRequestToDictionary(EventRequest req) {
 			Dictionary<string, object> dict = new Dictionary<string, object>();
-			dict.Add ("line_item", req.lineItemId);
-			dict.Add ("creative", req.creativeId);
-			dict.Add ("placement", Int64.Parse(req.placementId));
-			if (req.type != SAEventType.NoAd) {
-				dict.Add ("type", req.type.ToString ());
-			}
-			if (req.detailValue > 0) {
-				Dictionary<string, object> mdict = new Dictionary<string, object>();
-				mdict.Add("value", req.detailValue);
-				dict.Add("details", mdict);
+			if (req != null) {
+				dict.Add ("line_item", req.lineItemId);
+				dict.Add ("creative", req.creativeId);
+				dict.Add ("placement", Int64.Parse (req.placementId));
+				if (req.type != SAEventType.NoAd) {
+					if (req.type == SAEventType.viewable_impression) {
+						dict.Add("type", req.type.ToString());
+					}
+					else {
+						dict.Add ("type", "custom."+req.type.ToString ());
+					}
+				}
+				if (req.detailValue > 0) {
+					Dictionary<string, object> mdict = new Dictionary<string, object> ();
+					mdict.Add ("value", req.detailValue);
+					dict.Add ("details", mdict);
+				}
 			}
 			return dict;
 		}
 
 		private void sendRequestWithEvent(EventRequest request) {
 			Dictionary<string, object> requestDict = this.transfromSAEventRequestToDictionary (request);
-			NetManager.sendPOSTRequest ("/event", requestDict);
+			nmanager.sendPOSTRequest ("/event", requestDict);
 		}
 
 		private void sendClickWithEvent(EventRequest request){
 			Dictionary<string, object> requestDict = this.transfromSAEventRequestToDictionary (request);
-			NetManager.sendPOSTRequest ("/click", requestDict);
+			nmanager.sendPOSTRequest ("/click", requestDict);
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		// The main functions that actually send the event
 		////////////////////////////////////////////////////////////////////////////////////////////////
-		public void LogAdFetched(Ad ad) {
+		public IEnumerator LogAdFetched(Ad ad) {
 			this.request.type = SAEventType.AdFetched;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogAdLoaded(Ad ad) {
+		public IEnumerator LogAdLoaded(Ad ad) {
 			this.request.type = SAEventType.AdLoaded;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogAdReady(Ad ad) {
-			this.request.type = SAEventType.AdReady;
+		public IEnumerator LogViewableImpression(Ad ad) {
+			this.request.type = SAEventType.viewable_impression;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogAdFailed(Ad ad) {
+		public IEnumerator LogAdFailed(Ad ad) {
 			this.request.type = SAEventType.AdFailed;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogAdStart(Ad ad) {
+		public IEnumerator LogAdStart(Ad ad) {
 			this.request.type = SAEventType.AdStart;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogAdStop(Ad ad) {
+		public IEnumerator LogAdStop(Ad ad) {
 			this.request.type = SAEventType.AdStop;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogAdResume(Ad ad) {
+		public IEnumerator LogAdResume(Ad ad) {
 			this.request.type = SAEventType.AdResume;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogUserCanceledParentalGate(Ad ad) {
+		public IEnumerator LogUserCanceledParentalGate(Ad ad) {
 			this.request.type = SAEventType.UserCanceledParentalGate;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogUserSuccessWithParentalGate(Ad ad) {
+		public IEnumerator LogUserSuccessWithParentalGate(Ad ad) {
 			this.request.type = SAEventType.UserSuccessWithParentalGate;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 		
-		public void LogUserErrorWithParentalGate(Ad ad) {
+		public IEnumerator LogUserErrorWithParentalGate(Ad ad) {
 			this.request.type = SAEventType.UserErrorWithParentalGate;
 			assignRequestFromResponse(ad);
 			sendRequestWithEvent(this.request);
+			yield return null;
 		}
 
-		public void LogClick(Ad ad) {
+		public IEnumerator LogClick(Ad ad) {
 			this.request.type = SAEventType.NoAd;
 			assignRequestFromResponse (ad);
 			sendClickWithEvent (this.request);
+			yield return null;
 		}
 
-		public void LogRating(Ad ad, Int64 value) {
+		public IEnumerator LogRating(Ad ad, Int64 value) {
 			assignRequestFromResponse (ad);
 			this.request.type = SAEventType.AdRate;
 			this.request.detailValue = value;
 			sendClickWithEvent (this.request);
+			yield return null;
 		}
 	}
 }
