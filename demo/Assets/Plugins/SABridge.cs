@@ -10,8 +10,11 @@ public class SABridge {
 		var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-		AndroidJavaClass videoActivity = new AndroidJavaClass ("tv.superawesome.superawesomesdk.activities.SAVideoActivity");
-		videoActivity.CallStatic ("start", jo, "5740");
+		var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+		activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+			AndroidJavaClass videoActivity = new AndroidJavaClass ("tv.superawesome.sdk.activities.SAVideoActivity");
+			videoActivity.CallStatic ("start", jo, "5740");
+		}));
 	}
 
 	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
