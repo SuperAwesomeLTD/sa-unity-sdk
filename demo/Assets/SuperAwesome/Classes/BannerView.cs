@@ -59,6 +59,11 @@ namespace SuperAwesome
 		private void Show()
 		{
 			this.image.color = Color.white;
+			if (this.ad.fallback == true) {
+				this.padlockButton.gameObject.SetActive (false);
+			} else {
+				this.padlockButton.gameObject.SetActive (true);
+			}
 			this.Align ();
 		}
 		

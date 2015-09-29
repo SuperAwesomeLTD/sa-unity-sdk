@@ -53,11 +53,7 @@ public class SABridge {
 	private static extern void SuperAwesomeUnityShowPadlockView();
 
 	public static void openVideoAd(string placementId, bool gateEnabled, bool testMode){
-		// if (testMode) {
-		//	SABridge.SuperAwesomeUnityOpenVideoAdTestmode (placementId, gateEnabled, testMode);
-		// } else {
-			SABridge.SuperAwesomeUnityOpenVideoAd (placementId, gateEnabled, testMode);
-		// }
+		SABridge.SuperAwesomeUnityOpenVideoAd (placementId, gateEnabled, testMode);
 	}
 
 	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
