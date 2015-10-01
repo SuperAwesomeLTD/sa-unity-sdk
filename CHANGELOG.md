@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-2.1:
+2.1.1:
  - Updated banner & interstitials to work with v2 of the web API
  - Updated video ads to work
  - added Parental Gate (using native iOS / Android integration)
