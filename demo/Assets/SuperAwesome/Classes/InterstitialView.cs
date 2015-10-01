@@ -77,8 +77,14 @@ namespace SuperAwesome
 				this.backgroundImage.enabled = true;
 				this.interstitialButton.gameObject.SetActive (true);
 				this.closeButton.gameObject.SetActive (true);
-				this.padlockButton.gameObject.SetActive(true);
-				
+
+				// the ad fallback part
+				if (this.ad.fallback == true) {
+					this.padlockButton.gameObject.SetActive(false);
+				} else {
+					this.padlockButton.gameObject.SetActive(true);
+				}
+
 				if (OnInterstitialWasOpened != null)
 					OnInterstitialWasOpened ();
 			}
@@ -176,14 +182,8 @@ namespace SuperAwesome
 			cubePos.z += 1.0f;
 			Quaternion cameraRot = Camera.main.transform.rotation;
 			
-//			Material m = new Material(Shader.Find("Mobile/Diffuse"));
-//			m.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
-			
 			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
-//			backgroundPlane.GetComponent<Renderer>().material = m;
-//			backgroundPlane.renderer.materials[0] = m;
-			backgroundPlane.renderer.materials [0].color = new Color (1, 0, 0);
-//			backgroundPlane.GetComponent<Renderer> ().material.color = Color.red;
+			backgroundPlane.renderer.materials [0].color = new Color (0, 0, 0);
 			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
 			backgroundPlane.transform.rotation = cameraRot;
 			backgroundPlane.transform.position = cubePos;
