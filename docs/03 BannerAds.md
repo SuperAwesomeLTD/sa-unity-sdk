@@ -22,3 +22,4 @@ In the inspector tab you can change the options for your banner ad. Possible opt
 | Layout                | Can be selected from Manual, Top or Bottom. If Manual is selected, the ad will be show wherever you choose to place it. Otherwise it will appear at the top or bottom of the screen. |
 | Refresh After Seconds | The banner will reload with a new ad every 30 seconds by default. You can change the rate using this option.                                                                         |
 | Test Mode             | If selected, the banner will only load test ads from the server. Use this option while developing, and turn it off when your app is ready for production.                            |
+| is Parental Gate Enabled | When set to true, a parental gate will appear when users press on an ad. If users can solve a basic math question, they will be allowed to pass through. Else they will remain in the application |

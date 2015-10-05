@@ -16,4 +16,6 @@ In the inspector tab you can change the options for your interstitial ad. Possib
 | Option                | Description                                                                                                                                                                          |
 |-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Placement ID          | This is your placement ID, as found on the SuperAwesome Dashboard.                                                                                                                   |
-| Test Mode             | If selected, the interstitial will only load test ads from the server. Use this option while developing, and turn it off when your app is ready for production.                            |
+| Test Mode             | If selected, the interstitial will only load test ads from the server. Use this option while developing, and turn it off when your app is ready for production.                      |
+| Open Instantly		| If selected, the interstitial will load and show instantly. If not, you will have to manually play it using the Show() function |
+| is Parental Gate Enabled | When set to true, a parental gate will appear when users press on an ad. If users can solve a basic math question, they will be allowed to pass through. Else they will remain in the application | 
