@@ -15,25 +15,41 @@
             "text": "04 InterstitialAds.md"
         },
         {
-            "name": "Video Ads",
-            "sections":[
+            "name": "iOS and Android Configuration",
+            "sections": [
                 {
-                    "name": "Configuration",
-                    "text": "05 Video Ads/01 Configuration.md"
+                    "name":"Advanced features",
+                    "text":"05 iOS and Android configuration/01 Intro.md"
                 },
                 {
-                    "name": "Playing Video Ads",
-                    "text": "05 Video Ads/02 Video.md"
+                    "name":"iOS",
+                    "text":"05 iOS and Android configuration/02 iOS.md"
+                },
+                {
+                    "name":"Android",
+                    "text":"05 iOS and Android configuration/03 Android.md"
                 }
             ]
         },
         {
-            "name": "Troubleshooting",
-            "text": "06 Troubleshooting.md"
+            "name": "Video Ads",
+            "text": "06 Video Ads.md"
         },
         {
-            "name": "Technical Support",
-            "text": "07 Support.md"
+            "name": "Parental Gate",
+            "text": "07 Parental Gate.md"
+        },
+        {
+            "name": "Testing Placements",
+            "text": "08 Testing Placements.md"
+        },
+        {
+            "name": "Troubleshooting",
+            "text": "09 Troubleshooting.md"
+        },
+        {
+            "name": "Support",
+            "text": "10 Support.md"
         }
     ]
 }
