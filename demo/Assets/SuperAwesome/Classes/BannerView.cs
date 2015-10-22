@@ -33,7 +33,7 @@ namespace SuperAwesome
 		// Use this for initialization
 		void Start ()
 		{
-			
+
 			this.image = this.GetComponent<Image>();
 			
 			Button[] buttons = this.GetComponentsInChildren<Button>();
@@ -116,7 +116,6 @@ namespace SuperAwesome
 
 			if (this.ad == null)
 			{
-//				EventManager.Instance.LogAdFailed(this.ad);
 				if(OnBannerError != null) OnBannerError();
 			} else {
 				StartCoroutine (this.ad.LoadImage (this.OnTextureLoaded));
@@ -128,11 +127,6 @@ namespace SuperAwesome
 			StartCoroutine (EventManager.Instance.LogViewableImpression (this.ad));
 
 			// send some events
-			StartCoroutine(EventManager.Instance.LogUserCanceledParentalGate (this.ad));
-			StartCoroutine(EventManager.Instance.LogAdStop (this.ad));
-			StartCoroutine(EventManager.Instance.LogViewableImpression (this.ad)); 
-			StartCoroutine(EventManager.Instance.LogRating (this.ad, 3));
-
 			//Resize button using its RectTransform component
 			this.button.image.rectTransform.sizeDelta = new Vector2 (this.ad.width, this.ad.height);
 			

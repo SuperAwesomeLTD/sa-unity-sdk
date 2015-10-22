@@ -30,9 +30,35 @@ namespace SuperAwesome {
 			// constructor
 		}
 
+		public void sendGETRequest(string endpoint, Dictionary<string, object> GETdata) {
+
+			var interURL = SuperAwesome.instance.getBaseURL () + endpoint;
+			List <string> arr = new List<string> ();
+			foreach (string key in GETdata.Keys) {
+				arr.Add(key+"="+GETdata[key]);
+			}
+			string query = string.Join ("&", arr.ToArray ());
+			var finalURL = interURL + (arr.Capacity > 0 ? ("?" + query) : "");
+
+			WWW adData = new WWW(finalURL);
+
+			if (adData.error != null) {
+				Debug.Log ("ERROR");
+			} else {
+				try {
+					Debug.Log (finalURL + " clicked");
+				} catch {
+//					Callback (null);
+				}
+			}
+		}
+
 		public void sendPOSTRequest(string endpoint, Dictionary<string, object> POSTdata) {
+
 			// form final URL
 			var finalURL = SuperAwesome.instance.getBaseURL () + endpoint;
+
+			Debug.Log ("Attempting to POST to " + finalURL);
 			
 			// form data
 			var postData = Json.Serialize (POSTdata);
@@ -56,7 +82,7 @@ namespace SuperAwesome {
 			// log status
 			Debug.Log(string.Format("POST to {0} with payload {1} returned {2}", finalURL, postData, responseString));
 			
-//			yield return null; 
+//			yield return new StreamReader(response.GetResponseStream()).ReadToEnd(); 
 		}
 
 //		public void sendPOSTRequest(string endpoint, Dictionary<string, object> POSTdata) {

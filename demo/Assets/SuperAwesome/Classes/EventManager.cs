@@ -81,6 +81,7 @@ namespace SuperAwesome
 					dict.Add ("details", mdict);
 				}
 			}
+			Debug.Log (dict);
 			return dict;
 		}
 
@@ -91,7 +92,7 @@ namespace SuperAwesome
 
 		private void sendClickWithEvent(EventRequest request){
 			Dictionary<string, object> requestDict = this.transfromSAEventRequestToDictionary (request);
-			nmanager.sendPOSTRequest ("/click", requestDict);
+			nmanager.sendGETRequest ("/click", requestDict);
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////

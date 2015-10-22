@@ -47,6 +47,7 @@ extern "C" {
         [gate setAdName:name];
         [gate addSuccessBlock:^(NSString *adname){
             // go to add
+            NSLog(@"AD: %@ requests goto URL", adname);
             UnitySendMessage([adname UTF8String], "goDirectlyToAdURL", "");
         }];
         [gate addErrorBlock:^(NSString *adname){
