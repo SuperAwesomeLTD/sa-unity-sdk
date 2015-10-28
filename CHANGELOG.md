@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+2.1.2
+ - Fix some small video issues
+ - Do a bit of code cleanup
+
 2.1.1:
  - Updated banner & interstitials to work with v2 of the web API
  - Updated video ads to work
