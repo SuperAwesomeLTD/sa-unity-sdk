@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-2.1.2
+2.2.1
  - Fix some small video issues
  - Do a bit of code cleanup
 
