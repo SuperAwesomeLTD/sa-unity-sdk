@@ -171,18 +171,33 @@ namespace SuperAwesome {
 
 		private void createFakeBackground() {
 			// Get the camera pos and such, because we're creating the 
-			// background "From literally scratch"
-			Vector3 cameraPos = Camera.main.transform.position;
-			Vector3 cubePos = cameraPos;
-			cubePos.z += 1.0f;
-			Quaternion cameraRot = Camera.main.transform.rotation;
-
-			// init the Interstitials subview
-			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			backgroundPlane.renderer.materials [0].color = new Color (0, 0, 0);
-			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
-			backgroundPlane.transform.rotation = cameraRot;
-			backgroundPlane.transform.position = cubePos;
+//			// background "From literally scratch"
+//			Vector3 cameraPos = Camera.main.transform.position;
+//			Vector3 cubePos = cameraPos;
+//			cubePos.z += 1.0f;
+//			Quaternion cameraRot = Camera.main.transform.rotation;
+//
+//			// init the Interstitials subview
+//			backgroundPlane = GameObject.CreatePrimitive(PrimitiveType.Cube);
+//
+////			backgroundPlane.transform.renderer.material.color = new Color (0.0f, 1.0f, 0.0f, 0.5f); // Color.red;
+////			Color color = backgroundPlane.transform.renderer.material.color;
+////			color.a = 0.5f;
+////			backgroundPlane.transform.renderer.material.color = color;
+////			backgroundPlane.renderer.materials [0].shader = Shader.Find( "Transparent/Diffuse");
+//
+//			backgroundPlane.renderer.materials [0].color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
+//			backgroundPlane.transform.localScale = new Vector3 (100, 100, 1);
+//			backgroundPlane.transform.rotation = cameraRot;
+//			backgroundPlane.transform.position = cubePos;
+////			backgroundPlane.gameObject.o
+//
+//
+////			backgroundPlane.AddComponent<Button> ();
+//
+			Button brn = gameObject.AddComponent<Button> ();
+			brn.onClick.AddListener (() => OnClose ());
+//			backgroundPlane.AddComponent(brn);
 		}
 
 		////////////////////////////////////////////////////
