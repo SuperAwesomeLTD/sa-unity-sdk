@@ -6,7 +6,7 @@ public class SABridge {
 
 #if UNITY_ANDROID  && !UNITY_EDITOR
 
-	public static void openVideoAd(string placementId, bool gateEnabled, bool testMode){
+	public static void openVideoAd(string adName, string placementId, bool gateEnabled, bool testMode){
 		var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
@@ -44,16 +44,14 @@ public class SABridge {
 #elif UNITY_IPHONE && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityOpenVideoAd(string placementId, bool gateEnabled, bool testMode);
-	// [DllImport ("__Internal")]
-	// private static extern void SuperAwesomeUnityOpenVideoAdTestmode (string placementId);
+	private static extern void SuperAwesomeUnityOpenVideoAd(string adName, string placementId, bool gateEnabled, bool testMode);
 	[DllImport ("__Internal")]
 	private static extern void SuperAwesomeUnityOpenParentalGate(string adName, string placementId, long creativeId, long lineItemId);
 	[DllImport ("__Internal")]
 	private static extern void SuperAwesomeUnityShowPadlockView();
 
-	public static void openVideoAd(string placementId, bool gateEnabled, bool testMode){
-		SABridge.SuperAwesomeUnityOpenVideoAd (placementId, gateEnabled, testMode);
+	public static void openVideoAd(string adName, string placementId, bool gateEnabled, bool testMode){
+		SABridge.SuperAwesomeUnityOpenVideoAd (adName, placementId, gateEnabled, testMode);
 	}
 
 	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
@@ -66,11 +64,11 @@ public class SABridge {
 
 #else
 
-	public static void openVideoAd(string placementId, bool gateEnabled, bool testMode){
+	public static void openVideoAd(string adName, string placementId, bool gateEnabled, bool testMode){
 		// do nothing
 	}
 
-	public static void showParentalGate(string adNam, string placementId, long creativeId, long lineItemId) {
+	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
 		// do nothing
 	}
 

@@ -229,6 +229,7 @@ namespace SuperAwesome {
 		}
 		
 		public void goDirectlyToAdURL(){
+			Debug.Log ("Was called from parental gate");
 			StartCoroutine(EventManager.Instance.LogClick (this.ad));
 			Application.OpenURL(this.ad.clickURL);
 			if(OnInterstitialWasClicked != null) OnInterstitialWasClicked();

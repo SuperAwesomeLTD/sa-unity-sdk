@@ -18,7 +18,7 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 
 	void OnLoad()
 	{
-		Debug.Log ("Interstitial Loaded");
+		Debug.Log ("Delegate - Interstitial Loaded");
 		InterstitialView interstitial = this.GetComponentInChildren<InterstitialView> ();
 
 		/*
@@ -35,21 +35,21 @@ public class InterstitialViewDelegateExample : MonoBehaviour {
 	
 	void OnOpened()
 	{
-		Debug.Log ("Interstitial Shown");
+		Debug.Log ("Delegate - Interstitial Shown");
 	}
 	
 	void OnClick()
 	{
-		Debug.Log ("Interstitial Clicked");
+		Debug.Log ("Delegate - Interstitial Clicked");
 	}
 
 	void OnClosed()
 	{
-		Debug.Log ("Interstitial Closed");
+		Debug.Log ("Delegate - Interstitial Closed");
 	}
 
 	void OnError()
 	{
-		Debug.Log ("Interstitial Error");
+		Debug.Log ("Delegate - Interstitial Error");
 	}
 }
