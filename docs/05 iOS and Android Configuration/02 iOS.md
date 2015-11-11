@@ -30,4 +30,15 @@ After the CocoaPod dependency has been added, open the `xcworkspace` file in you
 
 You will need to search for each of `OTHER_LDFLAGS`, `OTHER_CFLAGS` and `HEADER_SEARCH_PATHS`, double-click on them, and add `$(inherited)` to the list of existing values for these settings. You likely will have also received a message when running `pod update`, warning you to do this.
 
+Finally, when targeting devices for iOS 9 onwards, don't forget to add, for the moment, the following key to your plist file:
+
+```
+<dict>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
+</dict>
+```
+
+to be able to load data over both HTTPS and HTTP.
+
 Once this is done your iOS project will be ready to use and any calls to the native SDK from your Unity project will work as expected.

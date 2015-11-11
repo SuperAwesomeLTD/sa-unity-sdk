@@ -8,9 +8,9 @@ To do so, go to File -> Build Settings and from the pop-up window select `Androi
 ![](img/export_android.png "Exporting project to Android")
 
 Then press on the `Player settings` button and make sure:
-  * Target iOS version is at least 6.0 
+  * Minimum API level Android Ice Cream Sandwish 4.0
 
-![](img/export_android2.png "Configuring Player settings for iOS")
+![](img/export_android2.png "Configuring Player settings for Android")
 
 Next, press on `Build` and save your project in a separate folder, for example `UnityAndroidSADemo`. The folder will be populated by Android Studio files.
 
