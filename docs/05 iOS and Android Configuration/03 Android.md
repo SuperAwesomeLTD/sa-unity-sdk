@@ -27,17 +27,28 @@ First make sure you have the SDK downloaded - you can get it here: https://githu
 
 In Android Studio, go to "File > New > Import Module..." and, when prompted, select the 'superawesomesdk' directory from the files you just downloaded. This will import the SDK files into your project.
 
-The last step is to add a dependency on the SDK for your project. The simplest way to do this is to open the `build.gradle` file for your project, find the `dependencies` section and add the following line:
+The last step is to add a dependency on the SDK for your project. The simplest way to do this is to open the `build.gradle` file in the `app` folder of your project (not the global project one), find the `dependencies` section and add the following line:
 ```
+compile project(':bee7androidsdkgamewall')
 compile project(':superawesomesdk')
 ```
 
 It can also be done by adding a 'Module dependency' in the settings for your project and choosing the 'superawesomesdk' module. Whichever way you do it, your `build.gradle` file should have a dependencies section like this:
+
 ```
 dependencies {
     compile files('libs/unity-classes.jar')
+    compile project(':bee7androidsdkgamewall')
     compile project(':superawesomesdk')
 }
+```
+
+Additionally you may want to add two lines to your global `build.gradle` file, in the dependencies part:
+
+```
+classpath 'com.github.dcendents:android-maven-plugin:1.2'
+classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.3.1'
+
 ```
 
 Now your Android project will be ready to use and any calls to the native SDK from your Unity project will work as expected.

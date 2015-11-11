@@ -81,42 +81,42 @@ namespace SuperAwesome {
 		////////////////////////////////////////////////////
 
 		public void videoAdLoaded() {
-			Debug.Log ("videoAdLoaded = Was called from iOS");
+			Debug.Log ("videoAdLoaded = Was called from Android");
 
 			if (OnVideoAdWasLoaded != null)
 				OnVideoAdWasLoaded ();
 		}
 
 		public void videoAdFailedToLoad() {
-			Debug.Log ("videoAdFailedToLoad - Was called from iOS");
+			Debug.Log ("videoAdFailedToLoad - Was called from Android");
 
 			if (OnVideoAdFailedToLoad != null)
 				OnVideoAdFailedToLoad ();
 		}
 
 		public void videoAdStartedPlaying() {
-			Debug.Log ("videoAdStartedPlaying- Was called from iOS");
+			Debug.Log ("videoAdStartedPlaying- Was called from Android");
 
 			if (OnVideoStartedPlaying != null) 
 				OnVideoStartedPlaying ();
 		}
 
 		public void videoAdStoppedPlaying() {
-			Debug.Log ("videoAdStoppedPlaying- Was called from iOS");
+			Debug.Log ("videoAdStoppedPlaying- Was called from Android");
 
 			if (OnVideoStoppedPlaying != null) 
 				OnVideoStoppedPlaying ();
 		}
 
 		public void videoAdFailedToPlay() {
-			Debug.Log ("videoAdFailedToPlay - Was called from iOS");
+			Debug.Log ("videoAdFailedToPlay - Was called from Android");
 
 			if (OnVideoFailedToPlay != null) 
 				OnVideoFailedToPlay ();
 		}
 
 		public void videoAdClicked() {
-			Debug.Log ("videoAdClicked - Was called from iOS");
+			Debug.Log ("videoAdClicked - Was called from Android");
 
 			if (OnVideoClicked != null)
 				OnVideoClicked ();

@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+2.2.3
+ - Add video callbacks for Android
+
 2.2.1
  - Fix some small video issues
  - Do a bit of code cleanup
