@@ -9,10 +9,8 @@ namespace SuperAwesome
 
 		private static SuperAwesome _instance;
 
-		public static SuperAwesome instance
-		{
-			get
-			{
+		public static SuperAwesome instance {
+			get {
 				if(_instance == null){
 					_instance = new SuperAwesome();
 				}
@@ -20,15 +18,25 @@ namespace SuperAwesome
 			}
 		}
 
-		public AdManager adManager { get; private set; }
+		public AdManager adManager { 
+			get; private set; 
+		}
 
 		public SuperAwesome(){
-			Debug.Log (SuperAwesome.getVersion ());
+			Debug.Log (SuperAwesome.getSdkVersion ());
 			adManager = new AdManager (this.baseURL);
 		}
 
-		public static string getVersion(){
-			return "SuperAwesome Unity SDK version 2.2.3";
+		private static string getVersion(){
+			return "2.2.3";
+		}
+
+		private static string getSdk() {
+			return "unity";
+		}
+
+		public static string getSdkVersion() {
+			return SuperAwesome.getSdk () + "_" + SuperAwesome.getVersion ();
 		}
 
 		public string getBaseURL() {
