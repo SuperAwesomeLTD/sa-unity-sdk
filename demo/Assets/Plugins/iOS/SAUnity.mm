@@ -12,69 +12,75 @@ extern "C" {
     
     void SuperAwesomeUnityOpenVideoAd(const char *adName, const char* placementID, BOOL gateEnabled, BOOL testMode)
     {
-        [[SuperAwesome sharedManager] setTestModeEnabled:testMode];
+        // set staging config
+        [[SuperAwesome getInstance] setConfigurationStaging];
+        
+        // parse sent data
         NSString *placementIDString = [NSString stringWithUTF8String: placementID];
-        NSLog(@"Unity requested video ad %@", placementIDString);
-        SAVideoAdViewController *vc = [[SAVideoAdViewController alloc] initWithPlacementId:placementIDString];
-        vc.parentalGateEnabled = gateEnabled;
-        vc.view.backgroundColor = [UIColor blackColor];
-        UIViewController *rvc = [UIApplication sharedApplication].keyWindow.rootViewController;
-        
-        vc.delegate = nil;
         NSString *name = [NSString stringWithUTF8String:adName];
-        [vc setAdName:name];
-        [vc addLoadVideoBlock:^(NSString *adname) {
-            UnitySendMessage([adname UTF8String], "videoAdLoaded", "");
+        BOOL isTest = testMode;
+        BOOL isParentalGate = gateEnabled;
+        
+        // start the linker
+        SAFullscreenVideoAdUnityLinker *linker = [[SAFullscreenVideoAdUnityLinker alloc] initWithVideoAd:[placementIDString intValue]
+                                                                                            andUnityName:name
+                                                                                                withGate:isParentalGate
+                                                                                              inTestMode:isTest
+                                                                                          hasCloseButton:true
+                                                                                          andClosesAtEnd:true];
+        [linker addLoadVideoBlock:^(NSString *unityAd) {
+            UnitySendMessage([unityAd UTF8String], "videoAdLoaded", "");
         }];
-        [vc addFailToLoadVideoBlock:^(NSString *adname) {
-            UnitySendMessage([adname UTF8String], "videoAdFailedToLoad", "");
+        [linker addFailToLoadVideoBlock:^(NSString *unityAd) {
+            UnitySendMessage([unityAd UTF8String], "videoAdFailedToLoad", "");
         }];
-        [vc addStartVideoBlock:^(NSString *adname) {
-            UnitySendMessage([adname UTF8String], "videoAdStartedPlaying", "");
+        [linker addStartVideoBlock:^(NSString *unityAd) {
+            UnitySendMessage([unityAd UTF8String], "videoAdStartedPlaying", "");
         }];
-        [vc addStopVideoBlock:^(NSString *adname) {
-            UnitySendMessage([adname UTF8String], "videoAdStoppedPlaying", "");
+        [linker addStopVideoBlock:^(NSString *unityAd) {
+            UnitySendMessage([unityAd UTF8String], "videoAdStoppedPlaying", "");
         }];
-        [vc addFailToPlayVideoBlock:^(NSString *adname) {
-            UnitySendMessage([adname UTF8String], "videoAdFailedToPlay", "");
+        [linker addClickVideoBlock:^(NSString *unityAd) {
+            UnitySendMessage([unityAd UTF8String], "videoAdClicked", "");
         }];
-        [vc addClickVideoBlock:^(NSString *adname) {
-            UnitySendMessage([adname UTF8String], "videoAdClicked", "");
+        [linker addFailToPlayVideoBlock:^(NSString *unityAd) {
+            UnitySendMessage([unityAd UTF8String], "videoAdFailedToPlay", "");
         }];
         
-        [rvc presentViewController:vc animated:YES completion:nil];
+        // start!!!!
+        [linker start];
     }
     
     void SuperAwesomeUnityOpenParentalGate(const char *adName, const char *placementID, long creativeId, long lineItemId) {
         
-        NSString *_placementId = [NSString stringWithUTF8String:placementID];
-        NSString *_lineItemId = [NSString stringWithFormat:@"%ld", lineItemId];
-        NSString *_creativeId = [NSString stringWithFormat:@"%ld", creativeId];;
-        
-        // init the gate
-        SAParentalGate *gate = [[SAParentalGate alloc] initWithPlacementId:_placementId
-                                                             andCreativeId:_creativeId
-                                                             andLineItemId:_lineItemId];
-        gate.delegate = nil;
-        NSString *name = [NSString stringWithUTF8String:adName];
-        [gate setAdName:name];
-        [gate addSuccessBlock:^(NSString *adname){
-            // go to add
-            NSLog(@"AD: %@ requests goto URL", adname);
-            UnitySendMessage([adname UTF8String], "goDirectlyToAdURL", "");
-        }];
-        [gate addErrorBlock:^(NSString *adname){
-            // do nothing here really
-        }];
-        [gate addCancelBlock:^(NSString *adname){
-            // do nothing here really
-        }];
-        [gate show];
+//        NSString *_placementId = [NSString stringWithUTF8String:placementID];
+//        NSString *_lineItemId = [NSString stringWithFormat:@"%ld", lineItemId];
+//        NSString *_creativeId = [NSString stringWithFormat:@"%ld", creativeId];;
+//        
+//        // init the gate
+//        SAParentalGate *gate = [[SAParentalGate alloc] initWithPlacementId:_placementId
+//                                                             andCreativeId:_creativeId
+//                                                             andLineItemId:_lineItemId];
+//        gate.delegate = nil;
+//        NSString *name = [NSString stringWithUTF8String:adName];
+//        [gate setAdName:name];
+//        [gate addSuccessBlock:^(NSString *adname){
+//            // go to add
+//            NSLog(@"AD: %@ requests goto URL", adname);
+//            UnitySendMessage([adname UTF8String], "goDirectlyToAdURL", "");
+//        }];
+//        [gate addErrorBlock:^(NSString *adname){
+//            // do nothing here really
+//        }];
+//        [gate addCancelBlock:^(NSString *adname){
+//            // do nothing here really
+//        }];
+//        [gate show];
     }
     
     void SuperAwesomeUnityShowPadlockView(){
         // do nothing so far
-        SAPadlockView *pad = [[SAPadlockView alloc] init];
-        [[[[UIApplication sharedApplication] delegate] window] addSubview:pad];
+//        SAPadlockView *pad = [[SAPadlockView alloc] init];
+//        [[[[UIApplication sharedApplication] delegate] window] addSubview:pad];
     }
 }

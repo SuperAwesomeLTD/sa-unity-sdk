@@ -12,15 +12,9 @@ public class SABridge {
 
 		var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 		activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-			AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-			test.CallStatic("playVideo", jo, adName, placementId, testMode, gateEnabled);
+			AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAVideoActivityUnityLinker");
+			test.CallStatic("start", jo, adName, placementId, testMode, gateEnabled);
 		}));
-
-//		var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-//		activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-//			AndroidJavaClass videoActivity = new AndroidJavaClass ("tv.superawesome.sdk.activities.SAVideoActivity");
-//			videoActivity.CallStatic ("start", jo, "5740", "true", "true");
-//		}));
 	}
 
 	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
@@ -68,6 +62,7 @@ public class SABridge {
 		SABridge.SuperAwesomeUnityShowPadlockView();
 	}
 
+
 #else
 
 	public static void openVideoAd(string adName, string placementId, bool gateEnabled, bool testMode){
@@ -81,6 +76,7 @@ public class SABridge {
 	public static void showPadlockView(){
 		// do nothing
 	}
+
 
 #endif
 
