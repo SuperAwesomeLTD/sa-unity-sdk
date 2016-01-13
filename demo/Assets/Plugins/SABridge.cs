@@ -18,26 +18,26 @@ public class SABridge {
 	}
 
 	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
-		var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+		// var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+		// var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-		var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-		activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-			AndroidJavaObject parentalGate = new AndroidJavaObject("tv.superawesome.sdk.parentalgate.SAParentalGateStandalone");
-			parentalGate.Call("createParentalGate", jo, adName);
-		}));
+		// var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+		// activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+		//	AndroidJavaObject parentalGate = new AndroidJavaObject("tv.superawesome.sdk.parentalgate.SAParentalGateStandalone");
+		//	parentalGate.Call("createParentalGate", jo, adName);
+		// }));
 	}
 
 	public static void showPadlockView(){
 		// do nothing
-		var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+		// var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+		// var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-		var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-		activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-			AndroidJavaObject parentalGate = new AndroidJavaObject("tv.superawesome.sdk.padlock.SAPadlock");
-			parentalGate.Call("createPadlock", jo);
-		}));
+		// var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+		// activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+		//	AndroidJavaObject parentalGate = new AndroidJavaObject("tv.superawesome.sdk.padlock.SAPadlock");
+		//	parentalGate.Call("createPadlock", jo);
+		// }));
 	}
 
 

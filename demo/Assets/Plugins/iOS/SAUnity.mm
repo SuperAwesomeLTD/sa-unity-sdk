@@ -13,7 +13,7 @@ extern "C" {
     void SuperAwesomeUnityOpenVideoAd(const char *adName, const char* placementID, BOOL gateEnabled, BOOL testMode)
     {
         // set staging config
-        [[SuperAwesome getInstance] setConfigurationStaging];
+        // [[SuperAwesome getInstance] setConfigurationStaging];
         
         // parse sent data
         NSString *placementIDString = [NSString stringWithUTF8String: placementID];
