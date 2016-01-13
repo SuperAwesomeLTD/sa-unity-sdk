@@ -21,34 +21,6 @@ After Unity has exported your Android project, add an empty `settings.gradle` fi
 ### Adding specific SuperAwesome functionality
 
 Up until this point, these are the standard steps required to export any Unity project to Android.
-In order to add advanced functionality to AwesomeAds, the next step is to integrate the Android SuperAwesome SDK into your current Android Project.
-
-First make sure you have the SDK downloaded - you can get it here: https://github.com/SuperAwesomeLTD/sa-mobile-sdk-android and you can save it anywhere on your computer.
-
-In Android Studio, go to "File > New > Import Module..." and, when prompted, select the 'superawesomesdk' directory from the files you just downloaded. This will import the SDK files into your project.
-
-The last step is to add a dependency on the SDK for your project. The simplest way to do this is to open the `build.gradle` file in the `app` folder of your project (not the global project one), find the `dependencies` section and add the following line:
-```
-compile project(':bee7androidsdkgamewall')
-compile project(':superawesomesdk')
-```
-
-It can also be done by adding a 'Module dependency' in the settings for your project and choosing the 'superawesomesdk' module. Whichever way you do it, your `build.gradle` file should have a dependencies section like this:
-
-```
-dependencies {
-    compile files('libs/unity-classes.jar')
-    compile project(':bee7androidsdkgamewall')
-    compile project(':superawesomesdk')
-}
-```
-
-Additionally you may want to add two lines to your global `build.gradle` file, in the dependencies part:
-
-```
-classpath 'com.github.dcendents:android-maven-plugin:1.2'
-classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.3.1'
-
-```
+In order to add advanced functionality to AwesomeAds, the next step is to integrate the Android SuperAwesome SDK into your current Android Project following the [instructions here](https://developers.superawesome.tv/docs/androidsdk/Getting%20Started/Adding%20the%20Library%20to%20Your%20Project%20-%20AAR%20Library?version=3).
 
 Now your Android project will be ready to use and any calls to the native SDK from your Unity project will work as expected.

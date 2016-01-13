@@ -20,9 +20,9 @@ Next, press on `Build` and save your project in a separate folder, for example `
 Up until this point, these are the standard steps required to export any Unity project to iOS.
 In order to add advanced functionality to AwesomeAds, the next step is to integrate the iOS SuperAwesome SDK into your current iOS Project.
 
-To to this, follow the standard instructions presented here: https://developers.superawesome.tv/docs/iossdk/Getting%20Started/Integrating%20the%20SDK?version=2
+To to this, follow the [standard instructions](https://developers.superawesome.tv/docs/iossdk/Getting%20Started/Integrating%20the%20SDK?version=4).
 
-In short, the SuperAwesome iOS SDK resides on CocoaPodss. To install it, you need to add it just like you would any other CocoaPods library.
+In short, the SuperAwesome iOS SDK resides on CocoaPods. To install it, you need to add it just like you would any other CocoaPods library.
 
 After the CocoaPod dependency has been added, open the `xcworkspace` file in your project's directory (not the `xcodeproj` file) with Xcode. You have to make some changes to the default Unity build configuration, as the CocoaPods settings need to be propagated in the build target but won't have done so since Unity has already set these values.
 
