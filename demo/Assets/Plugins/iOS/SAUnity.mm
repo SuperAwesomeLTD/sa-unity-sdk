@@ -10,77 +10,84 @@
 
 extern "C" {
     
-    void SuperAwesomeUnityOpenVideoAd(const char *adName, const char* placementID, BOOL gateEnabled, BOOL testMode)
-    {
-        // set staging config
-        // [[SuperAwesome getInstance] setConfigurationStaging];
+    //
+    // This function acts as a bridge between Unity-iOS-Unity
+    // and loads an Ad with the help of the SuperAwesome iOS SDK
+    void SuperAwesomeUnityLoadAd(const char *unityName, int placementId, BOOL isTestingEnabled) {
+        // transfrom the name
+        NSString *name = [NSString stringWithUTF8String:unityName];
         
-        // parse sent data
-        NSString *placementIDString = [NSString stringWithUTF8String: placementID];
-        NSString *name = [NSString stringWithUTF8String:adName];
-        BOOL isTest = testMode;
-        BOOL isParentalGate = gateEnabled;
-        
-        // start the linker
-        SAFullscreenVideoAdUnityLinker *linker = [[SAFullscreenVideoAdUnityLinker alloc] initWithVideoAd:[placementIDString intValue]
-                                                                                            andUnityName:name
-                                                                                                withGate:isParentalGate
-                                                                                              inTestMode:isTest
-                                                                                          hasCloseButton:true
-                                                                                          andClosesAtEnd:true];
-        [linker addLoadVideoBlock:^(NSString *unityAd) {
-            UnitySendMessage([unityAd UTF8String], "videoAdLoaded", "");
+        // create a linker
+        SALoaderUnityLinker *linker = [[SALoaderUnityLinker alloc] init];
+        [linker loadAd:placementId
+            forUnityAd:name
+          withTestMode:isTestingEnabled
+            andSuccess:^(NSString *unityAd, NSString *adString) {
+            // the Unity callback function
+            UnitySendMessage([unityAd UTF8String],
+                             "loadAdSuccessFunc",
+                             [adString UTF8String]);
+        }
+              andError:^(NSString *unityAd, NSInteger placementId) {
+            // the Unity callback function
+            UnitySendMessage([unityAd UTF8String],
+                             "loadAdErrorFunc",
+                             [[NSString stringWithFormat:@"%ld", placementId] UTF8String]);
         }];
-        [linker addFailToLoadVideoBlock:^(NSString *unityAd) {
-            UnitySendMessage([unityAd UTF8String], "videoAdFailedToLoad", "");
-        }];
-        [linker addStartVideoBlock:^(NSString *unityAd) {
-            UnitySendMessage([unityAd UTF8String], "videoAdStartedPlaying", "");
-        }];
-        [linker addStopVideoBlock:^(NSString *unityAd) {
-            UnitySendMessage([unityAd UTF8String], "videoAdStoppedPlaying", "");
-        }];
-        [linker addClickVideoBlock:^(NSString *unityAd) {
-            UnitySendMessage([unityAd UTF8String], "videoAdClicked", "");
-        }];
-        [linker addFailToPlayVideoBlock:^(NSString *unityAd) {
-            UnitySendMessage([unityAd UTF8String], "videoAdFailedToPlay", "");
-        }];
-        
-        // start!!!!
-        [linker start];
     }
     
-    void SuperAwesomeUnityOpenParentalGate(const char *adName, const char *placementID, long creativeId, long lineItemId) {
+    //
+    // This function acts as a bridge between Unity-iOS-Unity
+    // and displays an ad
+    void SuperAwesomeUnityOpenVideoAd(const char *unityName, int placementId, const char *adJson, BOOL isParentalGateEnabled, BOOL shouldShowCloseButton, BOOL shouldAutomaticallyCloseAtEnd) {
         
-//        NSString *_placementId = [NSString stringWithUTF8String:placementID];
-//        NSString *_lineItemId = [NSString stringWithFormat:@"%ld", lineItemId];
-//        NSString *_creativeId = [NSString stringWithFormat:@"%ld", creativeId];;
-//        
-//        // init the gate
-//        SAParentalGate *gate = [[SAParentalGate alloc] initWithPlacementId:_placementId
-//                                                             andCreativeId:_creativeId
-//                                                             andLineItemId:_lineItemId];
-//        gate.delegate = nil;
+        // parse parameters
+        NSString *name = [NSString stringWithUTF8String:unityName];
+        NSString *json = [NSString stringWithUTF8String:adJson];
+        
+        // updat-eeeeed!
+        SAFullscreenVideoAdUnityLinker *linker = [[SAFullscreenVideoAdUnityLinker alloc] init];
+        // start
+        [linker startWithPlacementId:placementId
+                           andAdJson:json
+                        andUnityName:name
+                  andHasParentalGate:isParentalGateEnabled
+                   andHasCloseButton:shouldShowCloseButton
+                      andClosesAtEnd:shouldAutomaticallyCloseAtEnd];
+        
+//        // parse sent data
+//        NSString *placementIDString = [NSString stringWithUTF8String: placementID];
 //        NSString *name = [NSString stringWithUTF8String:adName];
-//        [gate setAdName:name];
-//        [gate addSuccessBlock:^(NSString *adname){
-//            // go to add
-//            NSLog(@"AD: %@ requests goto URL", adname);
-//            UnitySendMessage([adname UTF8String], "goDirectlyToAdURL", "");
+//        BOOL isTest = testMode;
+//        BOOL isParentalGate = gateEnabled;
+//        
+//        // start the linker
+//        SAFullscreenVideoAdUnityLinker *linker = [[SAFullscreenVideoAdUnityLinker alloc] initWithVideoAd:[placementIDString intValue]
+//                                                                                            andUnityName:name
+//                                                                                                withGate:isParentalGate
+//                                                                                              inTestMode:isTest
+//                                                                                          hasCloseButton:true
+//                                                                                          andClosesAtEnd:true];
+//        [linker addLoadVideoBlock:^(NSString *unityAd) {
+//            UnitySendMessage([unityAd UTF8String], "videoAdLoaded", "");
 //        }];
-//        [gate addErrorBlock:^(NSString *adname){
-//            // do nothing here really
+//        [linker addFailToLoadVideoBlock:^(NSString *unityAd) {
+//            UnitySendMessage([unityAd UTF8String], "videoAdFailedToLoad", "");
 //        }];
-//        [gate addCancelBlock:^(NSString *adname){
-//            // do nothing here really
+//        [linker addStartVideoBlock:^(NSString *unityAd) {
+//            UnitySendMessage([unityAd UTF8String], "videoAdStartedPlaying", "");
 //        }];
-//        [gate show];
-    }
-    
-    void SuperAwesomeUnityShowPadlockView(){
-        // do nothing so far
-//        SAPadlockView *pad = [[SAPadlockView alloc] init];
-//        [[[[UIApplication sharedApplication] delegate] window] addSubview:pad];
+//        [linker addStopVideoBlock:^(NSString *unityAd) {
+//            UnitySendMessage([unityAd UTF8String], "videoAdStoppedPlaying", "");
+//        }];
+//        [linker addClickVideoBlock:^(NSString *unityAd) {
+//            UnitySendMessage([unityAd UTF8String], "videoAdClicked", "");
+//        }];
+//        [linker addFailToPlayVideoBlock:^(NSString *unityAd) {
+//            UnitySendMessage([unityAd UTF8String], "videoAdFailedToPlay", "");
+//        }];
+//        
+//        // start!!!!
+//        [linker start];
     }
 }

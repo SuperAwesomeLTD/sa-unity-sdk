@@ -168,27 +168,13 @@ namespace SuperAwesome {
 		////////////////////////////////////////////////////
 
 		public void OnPadlockClick() {
-#if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
-			if (!this.ad.fallback){
-				SABridge.showPadlockView ();
-			}
-#endif
+
 		}
 		
 		private void OnClick() {
 
-#if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
-			// case with parental gate
-			if (this.isParentalGateEnabled == true) {
-				SABridge.showParentalGate(this.name, this.ad.placementId, this.ad.creativeId, this.ad.lineItemId);
-			} 
-			// case no parental gate
-			else {
-				this.goDirectlyToAdURL();
-			}
-#else
+
 			this.goDirectlyToAdURL();
-#endif
 		}
 		
 		public void goDirectlyToAdURL(){

@@ -67,12 +67,7 @@ namespace SuperAwesome {
 		}
 
 		public void open() {
-
-#if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
-			SABridge.openVideoAd(this.name, this.placementID, this.isParentalGateEnabled, this.testMode);
-#else
-			Debug.Log ("Tried to start video");
-#endif
+		
 		}
 
 		////////////////////////////////////////////////////

@@ -31,7 +31,7 @@ namespace SuperAwesome {
 		}
 
 		/** public constructor */
-		public SuperAwesome(){
+		private SuperAwesome(){
 			/** log current version and sdk type */
 			Debug.Log (getSdkVersion ());
 			/** prepare to rock! */

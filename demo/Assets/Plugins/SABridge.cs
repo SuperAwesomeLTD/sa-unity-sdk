@@ -6,77 +6,78 @@ public class SABridge {
 
 #if UNITY_ANDROID  && !UNITY_EDITOR
 
-	public static void openVideoAd(string adName, string placementId, bool gateEnabled, bool testMode){
+	public static void loadAd(
+		string unityName, 
+		int placementId, 
+		bool isTestingEnabled) 
+	{
+		// do nothing
+	}
+
+	public static void openVideoAd(
+		string unityName, 
+		int placementId, 
+		string adJson, 
+		bool isParentalGateEnabled, 
+		bool shouldShowCloseButton,
+		bool shouldAutomaticallyCloseAtEnd)
+	{
 		var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 		var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
 		var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 		activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 			AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAVideoActivityUnityLinker");
-			test.CallStatic("start", jo, adName, placementId, testMode, gateEnabled);
+			test.CallStatic("start", jo, unityName, placementId, false, isParentalGateEnabled);
 		}));
 	}
-
-	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
-		// var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-		// var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
-
-		// var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-		// activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-		//	AndroidJavaObject parentalGate = new AndroidJavaObject("tv.superawesome.sdk.parentalgate.SAParentalGateStandalone");
-		//	parentalGate.Call("createParentalGate", jo, adName);
-		// }));
-	}
-
-	public static void showPadlockView(){
-		// do nothing
-		// var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-		// var jo = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
-
-		// var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-		// activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-		//	AndroidJavaObject parentalGate = new AndroidJavaObject("tv.superawesome.sdk.padlock.SAPadlock");
-		//	parentalGate.Call("createPadlock", jo);
-		// }));
-	}
-
 
 #elif UNITY_IPHONE && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityOpenVideoAd(string adName, string placementId, bool gateEnabled, bool testMode);
+	private static extern void SuperAwesomeUnityLoadAd(string unityName, int placementId, bool isTestingEnabled);
 	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityOpenParentalGate(string adName, string placementId, long creativeId, long lineItemId);
-	[DllImport ("__Internal")]
-	private static extern void SuperAwesomeUnityShowPadlockView();
-
-	public static void openVideoAd(string adName, string placementId, bool gateEnabled, bool testMode){
-		SABridge.SuperAwesomeUnityOpenVideoAd (adName, placementId, gateEnabled, testMode);
+	private static extern void SuperAwesomeUnityOpenVideoAd(string unityName, int placementId, string adJson, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd);
+	
+	public static void loadAd(
+		string unityName, 
+		int placementId, 
+		bool isTestingEnabled) 
+	{
+		SABridge.SuperAwesomeUnityLoadAd(unityName, placementId, isTestingEnabled);
 	}
 
-	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
-		SABridge.SuperAwesomeUnityOpenParentalGate(adName, placementId, creativeId, lineItemId);
+	public static void openVideoAd(
+		string unityName, 
+		int placementId, 
+		string adJson, 
+		bool isParentalGateEnabled, 
+		bool shouldShowCloseButton,
+		bool shouldAutomaticallyCloseAtEnd)
+	{
+		SABridge.SuperAwesomeUnityOpenVideoAd (unityName, placementId, adJson, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
 	}
-
-	public static void showPadlockView(){
-		SABridge.SuperAwesomeUnityShowPadlockView();
-	}
-
 
 #else
 
-	public static void openVideoAd(string adName, string placementId, bool gateEnabled, bool testMode){
+	public static void loadAd(
+		string unityName, 
+		int placementId, 
+		bool isTestingEnabled) 
+	{
 		// do nothing
 	}
 
-	public static void showParentalGate(string adName, string placementId, long creativeId, long lineItemId) {
+	public static void openVideoAd(
+		string unityName, 
+		int placementId, 
+		string adJson, 
+		bool isParentalGateEnabled, 
+		bool shouldShowCloseButton,
+		bool shouldAutomaticallyCloseAtEnd)
+	{
 		// do nothing
 	}
-
-	public static void showPadlockView(){
-		// do nothing
-	}
-
 
 #endif
 
