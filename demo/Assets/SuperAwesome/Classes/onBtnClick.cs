@@ -20,7 +20,7 @@ namespace SuperAwesome {
 		
 		// button actions
 		public void loadVideoAction () {
-			SALoader.instance.loadAd (28000, (Ad) => {
+			SALoader.createInstance().loadAd (28000, (Ad) => {
 				this.ad = Ad;
 				Debug.Log("Loaded " + ad.placementId);
 				Debug.Log("And " + ad.adJson);

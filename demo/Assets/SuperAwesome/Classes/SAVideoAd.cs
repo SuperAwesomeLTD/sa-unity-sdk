@@ -75,7 +75,7 @@ namespace SuperAwesome {
 		 * or when using the prefab
 		 */
 		public static void showAd(int placementId, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd) {
-			SALoader.instance.loadAd (placementId, (Ad) => {
+			SALoader.createInstance().loadAd (placementId, (Ad) => {
 
 				SAVideoAd vad = SAVideoAd.createInstance ();
 				vad.setAd(Ad);
