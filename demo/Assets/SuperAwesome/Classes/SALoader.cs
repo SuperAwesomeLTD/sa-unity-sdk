@@ -2,19 +2,26 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 /** part for the SuperAwesome namespace */
 namespace SuperAwesome {
 
 	/**
-	 * This is the Unity preloader class
+	 * This is the Unity pre-loader class that manages the Unity-iOS/Android communication
 	 */
 	public class SALoader: MonoBehaviour {
 
 		/** private members */
-		Func<SAAd, int> successCallback = null;
-		Func<int, int> errorCallback = null;
 		private int placementId = 0;
+
+		/** delegates & events */
+		public SALoaderInterface loaderDelegate = null;
+
+#if (UNITY_IPHONE && !UNITY_EDITOR)
+		[DllImport ("__Internal")] 
+		private static extern void SuperAwesomeUnityLoadAd2(string unityName, int placementId, bool isTestingEnabled);
+#endif
 
 		/** static function initialiser */
 		public static SALoader createInstance() {
@@ -37,36 +44,27 @@ namespace SuperAwesome {
 			/** do nothing */
 		}
 
-		/**
-		 * This function is used as a static wrapper against SALoaderScript's member 
-		 * loadAd function
-		 * 
-		 * @param: placementID - the SA placement id that you want to load an ad for
-		 * @param: success - a callback for when the ad gets loaded, with SAAd as "returning param"
-		 * @param: error - a callback for when the ad fails to load, with an int as "returning param"
-		 */
-		public void loadAd(int placementId, Func<SAAd, int> success, Func<int, int> error) {
-			/** assign callbacks */
-			this.successCallback = success;
-			this.errorCallback = error;
+		/** This function is used as a static wrapper against SALoaderScript's member loadAd function */
+		public void loadAd(int placementId) {
+			/** assign placement */
 			this.placementId = placementId;
 			
 			/** get if testing is enabled */
 			bool isTestingEnabled = SuperAwesome.instance.isTestingEnabled ();
-			
-			/** call the SABridge function for iOS / Android */
-			#if (UNITY_ANDROID || UNITY_IPHONE)  && !UNITY_EDITOR
-			SABridge.loadAd(this.name, placementId, isTestingEnabled);
-			#else
+
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SALoader.SuperAwesomeUnityLoadAd2(this.name, placementId, isTestingEnabled);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			Debug.Log("Not in Android yet");
+#else
 			Debug.Log ("Load: " + this.name + ", " + placementId + ", " + isTestingEnabled);
-			#endif
+#endif
 		}
 
-		/**
-		  * This func is called externally from iOS / Android by a "UnitySendMessage" call
-		  */
-		public void loadAdSuccessFunc (string adJson) {
-			if (successCallback != null) {
+		/** <Functions that are called by "UnitySendMesage" from the iOS / Android plugin */
+		public void nativeCallback_LoadSuccess (string adJson) {
+
+			if (loaderDelegate != null) {
 				/** create a new ad object */
 				SAAd ad = new SAAd();
 				
@@ -75,20 +73,17 @@ namespace SuperAwesome {
 				ad.placementId = this.placementId;
 				
 				/** then call the callback-function */
-				successCallback(ad);
+				loaderDelegate.didLoadAd(ad);
 			}
 		}
 		
-		/**
-	     * This func is called externally from iOS / Android by a "UnitySendMessage" call
-		 */
-		public void loadAdErrorFunc (string placementId) {
-			if (errorCallback != null) {
+		public void nativeCallback_LoadError (string placementId) {
+			if (loaderDelegate != null) {
 				/** parse the placement id */
 				this.placementId = int.Parse(placementId);
 				
 				/** call the callback-function */
-				errorCallback(this.placementId);
+				loaderDelegate.didFailToLoadAd(this.placementId);
 			}
 		}
 	}

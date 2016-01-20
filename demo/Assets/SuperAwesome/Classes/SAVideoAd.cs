@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 namespace SuperAwesome {
-	public class SAVideoAd : MonoBehaviour {
+	public class SAVideoAd : MonoBehaviour, SALoaderInterface {
 
 		/** public variables for the script & prefab */
 		private SAAd ad = null;
@@ -12,11 +12,6 @@ namespace SuperAwesome {
 		public bool shouldShowCloseButton = false;
 		public bool shouldAutomaticallyCloseAtEnd = true;
 		public bool shouldAutoStart = false;
-
-		/** constructor */
-		public SAVideoAd() {
-			/** @warn: this should never be used; use the static initialiser instead */
-		}
 
 		/** static function initialiser */
 		public static SAVideoAd createInstance() {
@@ -34,7 +29,7 @@ namespace SuperAwesome {
 		/** Use this for initialization */
 		void Start () {
 			if (shouldAutoStart) {
-				SAVideoAd.showAd(placementId, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+				showAd(placementId, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
 			}
 		}
 		
@@ -74,21 +69,32 @@ namespace SuperAwesome {
 		 * this function <would> be called when starting a video ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		public static void showAd(int placementId, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd) {
-			SALoader.createInstance().loadAd (placementId, (Ad) => {
+		public void showAd(int placementId, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd) {
+			/** create an instance of SALoader */
+			SALoader loader = SALoader.createInstance ();
+			/** set delegate methods */
+			loader.loaderDelegate = this;
+			/** load the actual ad */
+			loader.loadAd (28000);
+		}
 
-				SAVideoAd vad = SAVideoAd.createInstance ();
-				vad.setAd(Ad);
-				vad.isParentalGateEnabled = isParentalGateEnabled;
-				vad.shouldShowCloseButton = shouldShowCloseButton;
-				vad.shouldAutomaticallyCloseAtEnd = shouldAutomaticallyCloseAtEnd;
-				vad.play();
+		/** <SALoaderInterface> implementation */
+		void SALoaderInterface.didLoadAd(SAAd ad) {
 
-				return 0;
-			}, (pID) => {
-				Debug.Log("Failure: " + pID.ToString() );
-				return 0;
-			});
+			/** 
+			 * create another instance of SAVideoAd and do all the stuff to play it with
+			 * the ad data returned from SALoader
+			 */
+			SAVideoAd vad = SAVideoAd.createInstance ();
+			vad.setAd(ad);
+			vad.isParentalGateEnabled = isParentalGateEnabled;
+			vad.shouldShowCloseButton = shouldShowCloseButton;
+			vad.shouldAutomaticallyCloseAtEnd = shouldAutomaticallyCloseAtEnd;
+			vad.play();
+		}
+
+		void SALoaderInterface.didFailToLoadAd(int placementId) {
+			Debug.Log("Failure: " + placementId.ToString() );
 		}
 	}
 }

@@ -20,15 +20,17 @@ namespace SuperAwesome {
 		
 		// button actions
 		public void loadVideoAction () {
-			SALoader.createInstance().loadAd (28000, (Ad) => {
-				this.ad = Ad;
-				Debug.Log("Loaded " + ad.placementId);
-				Debug.Log("And " + ad.adJson);
-				return 0;
-			}, (placementId) => {
-				Debug.Log("Failed to preload: " + placementId.ToString());
-				return 0;
-			});
+//			SALoader.createInstance().loadAd (28000, (Ad) => {
+//				this.ad = Ad;
+//				Debug.Log("Loaded " + ad.placementId);
+//				Debug.Log("And " + ad.adJson);
+//				return 0;
+//			}, (placementId) => {
+//				Debug.Log("Failed to preload: " + placementId.ToString());
+//				return 0;
+//			});
+
+			// TestClass cl = new TestClass ();
 		}
 
 		public void playVideoAction () {
@@ -45,9 +47,8 @@ namespace SuperAwesome {
 		}
 		
 		public void playVideoDirectlyAction () {
-			SAVideoAd.showAd (28000, false, true, false);
+			SAVideoAd.createInstance().showAd (28000, false, true, false);
 		}
 	}
-
 }
 

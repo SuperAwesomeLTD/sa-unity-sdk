@@ -37,16 +37,6 @@ namespace SuperAwesome {
 			/** prepare to rock! */
 			this.setConfigurationProduction ();
 			this.disableTestMode ();
-
-			/**
-			 * init ad manager
-			 * @warn: this will be removed
-			 */
-			adManager = new AdManager (this.baseUrl);
-		}
-
-		public AdManager adManager { 
-			get; private set; 
 		}
 
 		/** functions to get info about the current SDK */

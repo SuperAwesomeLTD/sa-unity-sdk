@@ -25,15 +25,38 @@ extern "C" {
             andSuccess:^(NSString *unityAd, NSString *adString) {
             // the Unity callback function
             UnitySendMessage([unityAd UTF8String],
-                             "loadAdSuccessFunc",
+                             "nativeCallback_LoadSuccess",
                              [adString UTF8String]);
         }
               andError:^(NSString *unityAd, NSInteger placementId) {
             // the Unity callback function
             UnitySendMessage([unityAd UTF8String],
-                             "loadAdErrorFunc",
+                             "nativeCallback_LoadError",
                              [[NSString stringWithFormat:@"%ld", placementId] UTF8String]);
         }];
+    }
+    
+    void SuperAwesomeUnityLoadAd2(const char *unityName, int placementId, BOOL isTestingEnabled) {
+        // transfrom the name
+        NSString *name = [NSString stringWithUTF8String:unityName];
+        
+        // create a linker
+        SALoaderUnityLinker *linker = [[SALoaderUnityLinker alloc] init];
+        [linker loadAd:placementId
+            forUnityAd:name
+          withTestMode:isTestingEnabled
+            andSuccess:^(NSString *unityAd, NSString *adString) {
+                // the Unity callback function
+                UnitySendMessage([unityAd UTF8String],
+                                 "nativeCallback_LoadSuccess",
+                                 [adString UTF8String]);
+            }
+              andError:^(NSString *unityAd, NSInteger placementId) {
+                  // the Unity callback function
+                  UnitySendMessage([unityAd UTF8String],
+                                   "nativeCallback_LoadError",
+                                   [[NSString stringWithFormat:@"%ld", placementId] UTF8String]);
+              }];
     }
     
     //
