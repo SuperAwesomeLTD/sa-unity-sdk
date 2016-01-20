@@ -1,6 +1,10 @@
+/**
+ * Imports used for this class
+ */
 using UnityEngine;
 using System;
 
+/** part for the SuperAwesome namespace */
 namespace SuperAwesome{ 
 
 	/**

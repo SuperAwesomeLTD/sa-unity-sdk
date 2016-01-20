@@ -1,9 +1,10 @@
+/**
+ * Imports used for this classes
+ */
 using UnityEngine;
 using System.Collections;
 
-/**
- * Definitions of different interfaces used by AwesomeAds
- */
+/** part for the SuperAwesome namespace */
 namespace SuperAwesome {
 
 	/**
@@ -106,5 +107,14 @@ namespace SuperAwesome {
 		void allAdsEnded(int placementId);
 	}
 
+	/**
+	 * This is an interface that contains functions that should be called on an
+	 * implementing object from iOS / Android through "UnitySendMesage"
+	 */
+	public interface SANativeInterface {
+
+		/** a native call function with one parameter - the payload */
+		void nativeCallback(string payload);
+	}
 }
 

@@ -11,47 +11,44 @@ using System.Runtime.InteropServices;
 namespace SuperAwesome {
 
 	/**
-	 * Class that defines a video ad - that will be finally loaded & displayed by iOS / Android
+	 * Class that defines an interstitial ad - that will be finally loaded & displayed by iOS / Android
 	 */
-	public class SAVideoAd : MonoBehaviour, SALoaderInterface, SANativeInterface {
+	public class SAInterstitialAd : MonoBehaviour, SALoaderInterface, SANativeInterface {
 
 		/** public variables for the script & prefab */
 		private SAAd ad = null;
 		public int placementId = 0;
 		public bool testModeEnabled = false;
 		public bool isParentalGateEnabled = true;
-		public bool shouldShowCloseButton = false;
-		public bool shouldAutomaticallyCloseAtEnd = true;
 		public bool shouldAutoStart = false;
 
 		/** delegates */
 		public SAAdInterface adDelegate = null;
 		public SAParentalGateInterface parentalGateDelegate = null;
-		public SAVideoAdInterface videoAdDelegate = null;
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySAVideoAd(string unityName, int placementId, string adJson, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd);
+		private static extern void SuperAwesomeUnitySAInterstitialAd(string unityName, int placementId, string adJson, bool isParentalGateEnabled);
 #endif
 
 		/** static function initialiser */
-		public static SAVideoAd createInstance() {
-
+		public static SAInterstitialAd createInstance() {
+			
 			/** create a new game object */
 			GameObject obj = new GameObject ();
-
+			
 			/** add to that new object the video ad */
-			SAVideoAd adObj = obj.AddComponent<SAVideoAd> ();
-			adObj.name = "SAVideoAd_" + (new System.Random()).Next(100, 1000).ToString();
-
+			SAInterstitialAd adObj = obj.AddComponent<SAInterstitialAd> ();
+			adObj.name = "SAInterstitialAd_" + (new System.Random()).Next(100, 1000).ToString();
+			
 			/** and return the ad Obj instance */
 			return adObj;
 		}
 
 		/** Use this for initialization */
-		void Start () {
+		void Start (){
 			if (shouldAutoStart) {
-				showAd(placementId, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+				showAd(placementId, isParentalGateEnabled);
 			}
 		}
 		
@@ -64,9 +61,9 @@ namespace SuperAwesome {
 		public void setAd(SAAd ad) {
 			this.ad = ad;
 		}
-
+		
 		/**
-		 * The normal play() function should be used on an instance of the SAVideoAd, created with createInstance()
+		 * The normal play() function should be used on an instance of the SAInterstitialAd, created with createInstance()
 		 * and whose ad data has been pre-loaded using SALoader
 		 */
 		public void play () {
@@ -74,14 +71,14 @@ namespace SuperAwesome {
 				Debug.Log("Tried to play ad without ad data for " + this.name);
 				return;
 			}
-
+			
 			if (ad.placementId == -1 || ad.placementId == 0 || ad.placementId == null) {
 				Debug.Log("Tried to play ad without ad data for " + this.name);
 				return;
 			}
-
+			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAVideoAd.SuperAwesomeUnitySAVideoAd(this.name, ad.placementId, ad.adJson, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAd(this.name, ad.placementId, ad.adJson, isParentalGateEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			Debug.Log("Not in Android yet");
 #else
@@ -90,10 +87,10 @@ namespace SuperAwesome {
 		}
 
 		/**
-		 * this function <would> be called when starting a video ad from code w/o preloading
+		 * this function <would> be called when starting an interstitial ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		public void showAd(int placementId, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd) {
+		public void showAd(int placementId, bool isParentalGateEnabled) {
 			/** create an instance of SALoader */
 			SALoader loader = SALoader.createInstance ();
 			/** set delegate methods */
@@ -106,19 +103,17 @@ namespace SuperAwesome {
 		 * <SALoader> Interface implementation
 		 */
 		public void didLoadAd(SAAd ad) {
-
+			
 			/** 
-			 * create another instance of SAVideoAd and do all the stuff to play it with
+			 * create another instance of SAInterstitialAd and do all the stuff to play it with
 			 * the ad data returned from SALoader
 			 */
-			SAVideoAd vad = SAVideoAd.createInstance ();
-			vad.setAd(ad);
-			vad.isParentalGateEnabled = isParentalGateEnabled;
-			vad.shouldShowCloseButton = shouldShowCloseButton;
-			vad.shouldAutomaticallyCloseAtEnd = shouldAutomaticallyCloseAtEnd;
-			vad.play();
+			SAInterstitialAd iad = SAInterstitialAd.createInstance ();
+			iad.setAd(ad);
+			iad.isParentalGateEnabled = isParentalGateEnabled;
+			iad.play();
 		}
-
+		
 		public void didFailToLoadAd(int placementId) {
 			Debug.Log("Failure: " + placementId.ToString() );
 		}
@@ -129,7 +124,7 @@ namespace SuperAwesome {
 		public void nativeCallback(string payload) {
 			Dictionary<string, object> payloadDict;
 			string type = "";
-
+			
 			/** try to get payload and type data */
 			try {
 				payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
@@ -140,7 +135,7 @@ namespace SuperAwesome {
 				}
 				return;
 			}
-
+			
 			switch (type) {
 			case "callback_adWasShown":{
 				if (adDelegate != null) adDelegate.adWasShown(ad.placementId); break;
@@ -165,30 +160,6 @@ namespace SuperAwesome {
 			}
 			case "callback_parentalGateWasSucceded":{
 				if (parentalGateDelegate != null) parentalGateDelegate.parentalGateWasSucceded(ad.placementId); break;
-			}
-			case "callback_adStarted":{
-				if (videoAdDelegate != null) videoAdDelegate.adStarted(ad.placementId); break;
-			}
-			case "callback_videoStarted":{
-				if (videoAdDelegate != null) videoAdDelegate.videoStarted(ad.placementId); break;
-			}
-			case "callback_videoReachedFirstQuartile":{
-				if (videoAdDelegate != null) videoAdDelegate.videoReachedFirstQuartile(ad.placementId); break;
-			}
-			case "callback_videoReachedMidpoint":{
-				if (videoAdDelegate != null) videoAdDelegate.videoReachedMidpoint(ad.placementId); break;
-			}
-			case "callback_videoReachedThirdQuartile":{
-				if (videoAdDelegate != null) videoAdDelegate.videoReachedThirdQuartile(ad.placementId); break;
-			}
-			case "callback_videoEnded":{
-				if (videoAdDelegate != null) videoAdDelegate.videoEnded(ad.placementId); break;
-			}
-			case "callback_adEnded":{
-				if (videoAdDelegate != null) videoAdDelegate.adEnded(ad.placementId); break;
-			}
-			case "callback_allAdsEnded":{
-				if (videoAdDelegate != null) videoAdDelegate.allAdsEnded(ad.placementId); break;
 			}
 			}
 		}

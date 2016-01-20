@@ -1,4 +1,6 @@
-﻿/** imports for this class */
+﻿/** 
+ * Imports used for this class
+ */
 using UnityEngine;
 using System.Collections;
 

@@ -1,7 +1,11 @@
-/** imports for this class */
+/** 
+ * Imports used for this class
+ */
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using MiniJSON;
 using System.Runtime.InteropServices;
 
 /** part for the SuperAwesome namespace */
@@ -10,7 +14,7 @@ namespace SuperAwesome {
 	/**
 	 * This is the Unity pre-loader class that manages the Unity-iOS/Android communication
 	 */
-	public class SALoader: MonoBehaviour {
+	public class SALoader: MonoBehaviour, SANativeInterface {
 
 		/** private members */
 		private int placementId = 0;
@@ -20,7 +24,7 @@ namespace SuperAwesome {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")] 
-		private static extern void SuperAwesomeUnityLoadAd2(string unityName, int placementId, bool isTestingEnabled);
+		private static extern void SuperAwesomeUnityLoadAd(string unityName, int placementId, bool isTestingEnabled);
 #endif
 
 		/** static function initialiser */
@@ -46,6 +50,7 @@ namespace SuperAwesome {
 
 		/** This function is used as a static wrapper against SALoaderScript's member loadAd function */
 		public void loadAd(int placementId) {
+
 			/** assign placement */
 			this.placementId = placementId;
 			
@@ -53,7 +58,7 @@ namespace SuperAwesome {
 			bool isTestingEnabled = SuperAwesome.instance.isTestingEnabled ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SALoader.SuperAwesomeUnityLoadAd2(this.name, placementId, isTestingEnabled);
+			SALoader.SuperAwesomeUnityLoadAd(this.name, placementId, isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			Debug.Log("Not in Android yet");
 #else
@@ -61,29 +66,43 @@ namespace SuperAwesome {
 #endif
 		}
 
-		/** <Functions that are called by "UnitySendMesage" from the iOS / Android plugin */
-		public void nativeCallback_LoadSuccess (string adJson) {
+		/** 
+		 * Native callback interface implementation
+		 */
+		public void nativeCallback(string payload) {
+			Dictionary<string, object> payloadDict;
+			string type = "";
 
-			if (loaderDelegate != null) {
-				/** create a new ad object */
-				SAAd ad = new SAAd();
-				
-				/** and just assign it the adJson body and placement Id */
-				ad.adJson = adJson;
-				ad.placementId = this.placementId;
-				
-				/** then call the callback-function */
-				loaderDelegate.didLoadAd(ad);
+			/** try to get payload and type data */
+			try {
+				payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
+				type = (string) payloadDict ["type"];
+			} catch {
+				if (loaderDelegate != null) {
+					loaderDelegate.didFailToLoadAd(this.placementId);
+				}
+				return;
 			}
-		}
-		
-		public void nativeCallback_LoadError (string placementId) {
-			if (loaderDelegate != null) {
-				/** parse the placement id */
-				this.placementId = int.Parse(placementId);
-				
-				/** call the callback-function */
-				loaderDelegate.didFailToLoadAd(this.placementId);
+
+			switch (type) {
+			case "callback_didLoadAd":{
+				/** form the new ad */
+				Dictionary<string, object> data = payloadDict["adJson"] as Dictionary<string, object>;
+				SAAd ad = new SAAd();
+				ad.adJson = Json.Serialize(data);
+				ad.placementId = this.placementId;
+
+				if (loaderDelegate != null) {
+					loaderDelegate.didLoadAd(ad);
+				}
+				break;
+			}
+			case "callback_didFailToLoadAd":{
+				if (loaderDelegate != null) {
+					loaderDelegate.didFailToLoadAd(this.placementId);
+				}
+				break;
+			}
 			}
 		}
 	}
