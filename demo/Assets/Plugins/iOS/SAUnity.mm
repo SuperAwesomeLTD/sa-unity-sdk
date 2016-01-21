@@ -17,11 +17,15 @@ extern "C" {
         // transfrom the name
         NSString *name = [NSString stringWithUTF8String:unityName];
         
-        // create a linker
-        SALoaderUnityLinker *linker = [[SALoaderUnityLinker alloc] init];
+        // test mode staging
+        [[SuperAwesome getInstance] setConfigurationStaging];
         
+        // create a linker
+        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
+        NSLog(@"And it ends up here as being %@", name);
         // assign the success and error callbacks
-        linker.event = ^(NSString *unityAd, NSString *unityCallback, NSString *adString) {
+        linker.loadingEvent = ^(NSString *unityAd, NSString *unityCallback, NSString *adString) {
+            NSLog(@"And then in the callback is %@", unityAd);
             NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\", \"adJson\":%@}", unityCallback, adString];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
@@ -34,50 +38,80 @@ extern "C" {
     
     //
     // This function acts as a bridge between Unity-iOS-Unity
-    // and displays an ad
-    void SuperAwesomeUnitySAVideoAd(const char *unityName, int placementId, const char *adJson, BOOL isParentalGateEnabled, BOOL shouldShowCloseButton, BOOL shouldAutomaticallyCloseAtEnd) {
+    // and displays a banner ad
+    void SuperAwesomeUnitySABannerAd(int placementId, const char *adJson, const char *unityName, int position, int size, BOOL isParentalGateEnabled) {
         
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSString *json = [NSString stringWithUTF8String:adJson];
         
         // updat-eeeeed!
-        SAFullscreenVideoAdUnityLinker *linker = [[SAFullscreenVideoAdUnityLinker alloc] init];
+        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
         
         // add callbacks
-        linker.event = ^(NSString *unityAd, NSString *unityCallback) {
+        linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
             NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\"}", unityCallback];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
         // start
-        [linker startWithPlacementId:placementId
-                           andAdJson:json
-                        andUnityName:name
-                  andHasParentalGate:isParentalGateEnabled
-                   andHasCloseButton:shouldShowCloseButton
-                      andClosesAtEnd:shouldAutomaticallyCloseAtEnd];
+        [linker showBannerAdWith:placementId
+                       andAdJson:json
+                    andUnityName:name
+                     andPosition:position
+                         andSize:size
+              andHasParentalGate:isParentalGateEnabled];
     }
     
-    void SuperAwesomeUnitySAInterstitialAd(const char *unityName, int placementId, const char *adJson, BOOL isParentalGateEnabled) {
+    //
+    // This function acts as a bridge between Unity-iOS-Unity
+    // and displays an interstitial ad
+    void SuperAwesomeUnitySAInterstitialAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled) {
         
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSString *json = [NSString stringWithUTF8String:adJson];
         
         // updat-eeeeed!
-        SAInterstitialAdUnityLinker *linker = [[SAInterstitialAdUnityLinker alloc] init];
+        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
         
         // add callbacks
-        linker.event = ^(NSString *unityAd, NSString *unityCallback) {
+        linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
             NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\"}", unityCallback];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
         // start
-        [linker startWithPlacementId:placementId
-                           andAdJson:json
-                        andUnityName:name
-                  andHasParentalGate:isParentalGateEnabled];
+        [linker showInterstitialAdWith:placementId
+                             andAdJson:json
+                          andUnityName:name
+                    andHasParentalGate:isParentalGateEnabled];
+    }
+    
+    //
+    // This function acts as a bridge between Unity-iOS-Unity
+    // and displays a video ad
+    void SuperAwesomeUnitySAVideoAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled, BOOL shouldShowCloseButton, BOOL shouldAutomaticallyCloseAtEnd) {
+        
+        // parse parameters
+        NSString *name = [NSString stringWithUTF8String:unityName];
+        NSString *json = [NSString stringWithUTF8String:adJson];
+        
+        // updat-eeeeed!
+        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
+        
+        // add callbacks
+        linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
+            NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\"}", unityCallback];
+            UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
+        };
+        
+        // start
+        [linker showVideoAdWith:placementId
+                      andAdJson:json
+                   andUnityName:name
+             andHasParentalGate:isParentalGateEnabled
+              andHasCloseButton:shouldShowCloseButton
+                 andClosesAtEnd:shouldAutomaticallyCloseAtEnd];
     }
 }

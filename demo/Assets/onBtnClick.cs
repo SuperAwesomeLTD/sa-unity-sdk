@@ -4,11 +4,12 @@ using System.Collections;
 
 namespace SuperAwesome {
 
-	public class onBtnClick : MonoBehaviour, SALoaderInterface, SAAdInterface {
+	public class onBtnClick : MonoBehaviour, SALoaderInterface, SAAdInterface, SAVideoAdInterface, SAParentalGateInterface {
 
-		private SALoader loader = null;
-		private SAAd ad = null;
-		private bool isAdLoaded = false;
+		private SALoader loader1 = null, loader2 = null, loader3 = null;
+		private SAAd adBanner = null;
+		private SAAd adVideo = null;
+		private SAAd adInterstitial = null;
 
 		// Use this for initialization
 		void Start () {
@@ -21,39 +22,68 @@ namespace SuperAwesome {
 		}
 		
 		// button actions
-		public void loadVideoAction () {
+		public void loadAds () {
 
-			loader = SALoader.createInstance ();
-			loader.loaderDelegate = this;
-			loader.loadAd (28000);
+			loader1 = SALoader.createInstance ();
+			loader1.loaderDelegate = this;
+			loader1.loadAd (40);	// movie
+
+			loader2 = SALoader.createInstance ();
+			loader2.loaderDelegate = this;
+			loader2.loadAd (44);	// rm interstitial
+
+			loader3 = SALoader.createInstance ();
+			loader3.loaderDelegate = this;
+			loader3.loadAd (45); // banner
 		}
 
-		public void playVideoAction () {
-			if (ad != null) {
-				SAVideoAd vad = SAVideoAd.createInstance ();
-				vad.setAd(ad);
-				vad.isParentalGateEnabled = true;
-				vad.shouldShowCloseButton = false;
-				vad.shouldAutomaticallyCloseAtEnd = true;
-				vad.adDelegate = this;
-				vad.play();
-			} else {
-				Debug.Log("Ad is still not loaded!");
+		public void playBanner () {
+			if (adBanner != null) {
+				SABannerAd bad = SABannerAd.createInstance();
+				bad.setAd(adBanner);
+				bad.position = SABannerAd.BannerPosition.BOTTOM;
+				bad.size = SABannerAd.BannerSize.BANNER_300_50;
+				bad.isParentalGateEnabled = true;
+				bad.adDelegate = this;
+				bad.parentalGateDelegate = this;
+				bad.play();
 			}
 		}
-		
-		public void playVideoDirectlyAction () {
-			SAVideoAd.createInstance().showAd (28000, false, true, false);
+
+		public void playInterstitial () {
+			if (adInterstitial != null) {
+				SAInterstitialAd iad = SAInterstitialAd.createInstance();
+				iad.setAd(adInterstitial);
+				iad.isParentalGateEnabled = true;
+				iad.adDelegate = this;
+				iad.parentalGateDelegate = this;
+				iad.play();
+			}
 		}
 
-		public void playInterstitial() {
-			SAInterstitialAd.createInstance ().showAd (25397, true);
+		public void playVideo() {
+			if (adVideo != null) {
+				SAVideoAd vad = SAVideoAd.createInstance();
+				vad.setAd(adVideo);
+				vad.isParentalGateEnabled = true;
+				vad.shouldShowCloseButton = true;
+				vad.shouldAutomaticallyCloseAtEnd = true;
+				vad.adDelegate = this;
+				vad.parentalGateDelegate = this;
+				vad.videoAdDelegate = this;
+				vad.play();
+			}
 		}
 
 		/** <SALoaderInterface> */
 		void SALoaderInterface.didLoadAd(SAAd ad) {
-			this.ad = ad;
-			this.isAdLoaded = true;
+			if (ad.placementId == 40) {
+				adVideo = ad;
+			} else if (ad.placementId == 44) {
+				adInterstitial = ad;
+			} else {
+				adBanner = ad;
+			}
 		}
 
 		void SALoaderInterface.didFailToLoadAd(int placementId) {
@@ -61,24 +91,68 @@ namespace SuperAwesome {
 		}
 
 		/** <SAAdInterface> */
-		void SAAdInterface.adWasShown(int placementId) {
-			Debug.Log ("[Unity] - adWasShown");
+		public void adWasShown(int placementId) {
+			Debug.Log ("[Unity] - adWasShown " + placementId);
 		}
 
-		void SAAdInterface.adFailedToShow(int placementId) {
-			Debug.Log ("[Unity] - adFailedToShow");
+		public void adFailedToShow(int placementId) {
+			Debug.Log ("[Unity] - adFailedToShow" + placementId);
 		}
 
-		void SAAdInterface.adWasClosed(int placementId) {
-			Debug.Log ("[Unity] - adWasClosed");
+		public void adWasClosed(int placementId) {
+			Debug.Log ("[Unity] - adWasClosed " + placementId);
 		}
 
-		void SAAdInterface.adWasClicked(int placementId) {
-			Debug.Log ("[Unity] - adWasClicked");
+		public void adWasClicked(int placementId) {
+			Debug.Log ("[Unity] - adWasClicked " + placementId);
 		}
 
-		void SAAdInterface.adHasIncorrectPlacement(int placementId) {
+		public void adHasIncorrectPlacement(int placementId) {
 			Debug.Log ("[Unity] - adHasIncorrectPlacement");
+		}
+
+		public void parentalGateWasCanceled(int placementId) {
+			Debug.Log ("[Unity] - parentalGateWasCanceled " + placementId);
+		}
+		
+		public void parentalGateWasFailed(int placementId) {
+			Debug.Log ("[Unity] - parentalGateWasFailed " + placementId);
+		}
+
+		public void parentalGateWasSucceded(int placementId) {
+			Debug.Log ("[Unity] - parentalGateWasSucceded " + placementId);
+		}
+
+		public void adStarted(int placementId){
+			Debug.Log ("[Unity] - adStarted " + placementId);
+		}
+		
+		public void videoStarted(int placementId){
+			Debug.Log ("[Unity] - videoStarted " + placementId);
+		}
+		
+		public void videoReachedFirstQuartile(int placementId){
+			Debug.Log ("[Unity] - videoReachedFirstQuartile " + placementId);
+		}
+		
+		public void videoReachedMidpoint(int placementId){
+			Debug.Log ("[Unity] - videoReachedMidpoint " + placementId);
+		}
+		
+		public void videoReachedThirdQuartile(int placementId){
+			Debug.Log ("[Unity] - videoReachedThirdQuartile " + placementId);
+		}
+		
+		public void videoEnded(int placementId){
+			Debug.Log ("[Unity] - videoEnded " + placementId);
+		}
+		
+		public void adEnded(int placementId){
+			Debug.Log ("[Unity] - adEnded " + placementId);
+		}
+		
+		public void allAdsEnded(int placementId){
+			Debug.Log ("[Unity] - allAdsEnded " + placementId);
 		}
 	}
 }

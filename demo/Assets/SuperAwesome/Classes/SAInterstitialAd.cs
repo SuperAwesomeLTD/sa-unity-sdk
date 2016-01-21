@@ -2,6 +2,7 @@
  * Imports used for this class
  */
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using MiniJSON;
@@ -9,6 +10,8 @@ using System.Runtime.InteropServices;
 
 /** part for the SuperAwesome namespace */
 namespace SuperAwesome {
+
+
 
 	/**
 	 * Class that defines an interstitial ad - that will be finally loaded & displayed by iOS / Android
@@ -28,7 +31,7 @@ namespace SuperAwesome {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySAInterstitialAd(string unityName, int placementId, string adJson, bool isParentalGateEnabled);
+		private static extern void SuperAwesomeUnitySAInterstitialAd(int placementId, string adJson, string unityName, bool isParentalGateEnabled);
 #endif
 
 		/** static function initialiser */
@@ -47,6 +50,14 @@ namespace SuperAwesome {
 
 		/** Use this for initialization */
 		void Start (){
+			/** make the color invisible when playing */
+			if (this.GetComponent<Image> () != null) {
+				Color current = this.GetComponent<Image>().color;
+				current.a = 0;
+				this.GetComponent<Image>().color = current;
+			}
+			
+			/** check for autostart and then start */
 			if (shouldAutoStart) {
 				showAd(placementId, isParentalGateEnabled);
 			}
@@ -78,7 +89,7 @@ namespace SuperAwesome {
 			}
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAd(this.name, ad.placementId, ad.adJson, isParentalGateEnabled);
+			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAd(ad.placementId, ad.adJson, this.name, isParentalGateEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			Debug.Log("Not in Android yet");
 #else
@@ -91,12 +102,19 @@ namespace SuperAwesome {
 		 * or when using the prefab
 		 */
 		public void showAd(int placementId, bool isParentalGateEnabled) {
+			/** assign vars */
+			this.placementId = placementId;
+			this.isParentalGateEnabled = isParentalGateEnabled;
+
 			/** create an instance of SALoader */
 			SALoader loader = SALoader.createInstance ();
+
 			/** set delegate methods */
 			loader.loaderDelegate = this;
+
 			/** load the actual ad */
 			loader.loadAd (placementId);
+			Debug.Log ("From Unity name: " + loader.name);
 		}
 
 		/** 

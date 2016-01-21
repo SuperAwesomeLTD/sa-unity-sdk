@@ -2,9 +2,9 @@
  * Imports used for this class
  */
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using MiniJSON;
 using System.Runtime.InteropServices;
 
@@ -12,55 +12,69 @@ using System.Runtime.InteropServices;
 namespace SuperAwesome {
 
 	/**
-	 * Class that defines a video ad - that will be finally loaded & displayed by iOS / Android
+	 * Class that defines a banner ad - that will be finally loaded & displayed by iOS / Android
 	 */
-	public class SAVideoAd : MonoBehaviour, SALoaderInterface, SANativeInterface {
+	public class SABannerAd : MonoBehaviour, SALoaderInterface, SANativeInterface {
 
 		/** public variables for the script & prefab */
 		private SAAd ad = null;
 		public int placementId = 0;
 		public bool testModeEnabled = false;
 		public bool isParentalGateEnabled = true;
-		public bool shouldShowCloseButton = false;
-		public bool shouldAutomaticallyCloseAtEnd = true;
 		public bool shouldAutoStart = false;
+
+		/** public enum for banner predefined positions */
+		public enum BannerPosition {
+			TOP = 0,
+			BOTTOM = 1
+		}
+		public BannerPosition position = BannerPosition.BOTTOM;
+		
+		/** public enum for the banner predefined sized */
+		public enum BannerSize {
+			BANNER_320_50 = 0,
+			BANNER_300_50 = 1,
+			BANNER_728_90 = 2,
+			BANNER_300_250 = 3
+		}
+		public BannerSize size = BannerSize.BANNER_320_50;
 
 		/** delegates */
 		public SAAdInterface adDelegate = null;
 		public SAParentalGateInterface parentalGateDelegate = null;
-		public SAVideoAdInterface videoAdDelegate = null;
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySAVideoAd(int placementId, string adJson, string unityName, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd);
+		private static extern void SuperAwesomeUnitySABannerAd(int placementId, string adJson, string unityName, int position, int size, bool isParentalGateEnabled);
 #endif
 
 		/** static function initialiser */
-		public static SAVideoAd createInstance() {
-
+		public static SABannerAd createInstance() {
+			
 			/** create a new game object */
 			GameObject obj = new GameObject ();
 
 			/** add to that new object the video ad */
-			SAVideoAd adObj = obj.AddComponent<SAVideoAd> ();
-			adObj.name = "SAVideoAd_" + (new System.Random()).Next(100, 1000).ToString();
-
+			SABannerAd adObj = obj.AddComponent<SABannerAd> ();
+			adObj.name = "SABannerAd_" + (new System.Random()).Next(100, 1000).ToString();
+			
 			/** and return the ad Obj instance */
 			return adObj;
 		}
-
+		
 		/** Use this for initialization */
-		void Start () {
+		void Start (){
+
 			/** make the color invisible when playing */
 			if (this.GetComponent<Image> () != null) {
 				Color current = this.GetComponent<Image>().color;
 				current.a = 0;
 				this.GetComponent<Image>().color = current;
 			}
-			
+
 			/** check for autostart and then start */
 			if (shouldAutoStart) {
-				showAd(placementId, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+				showAd(placementId, position, size, isParentalGateEnabled);
 			}
 		}
 		
@@ -75,7 +89,7 @@ namespace SuperAwesome {
 		}
 
 		/**
-		 * The normal play() function should be used on an instance of the SAVideoAd, created with createInstance()
+		 * The normal play() function should be used on an instance of the SAInterstitialAd, created with createInstance()
 		 * and whose ad data has been pre-loaded using SALoader
 		 */
 		public void play () {
@@ -83,31 +97,31 @@ namespace SuperAwesome {
 				Debug.Log("Tried to play ad without ad data for " + this.name);
 				return;
 			}
-
+			
 			if (ad.placementId == -1 || ad.placementId == 0 || ad.placementId == null) {
 				Debug.Log("Tried to play ad without ad data for " + this.name);
 				return;
 			}
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAVideoAd.SuperAwesomeUnitySAVideoAd(ad.placementId, ad.adJson, this.name, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+			SABannerAd.SuperAwesomeUnitySABannerAd(ad.placementId, ad.adJson, this.name, (int)position, (int)size, isParentalGateEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			Debug.Log("Not in Android yet");
 #else
 			Debug.Log ("Open: " + this.name + ", " + ad.placementId);
 #endif
 		}
-
+		
 		/**
-		 * this function <would> be called when starting a video ad from code w/o preloading
+		 * this function <would> be called when starting an interstitial ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		public void showAd(int placementId, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd) {
+		public void showAd(int placementId, BannerPosition position, BannerSize size, bool isParentalGateEnabled) {
 			/** assign vars */
 			this.placementId = placementId;
+			this.position = position;
+			this.size = size;
 			this.isParentalGateEnabled = isParentalGateEnabled;
-			this.shouldShowCloseButton = shouldShowCloseButton;
-			this.shouldAutomaticallyCloseAtEnd = shouldAutomaticallyCloseAtEnd;
 
 			/** create an instance of SALoader */
 			SALoader loader = SALoader.createInstance ();
@@ -125,28 +139,28 @@ namespace SuperAwesome {
 		public void didLoadAd(SAAd ad) {
 
 			/** 
-			 * create another instance of SAVideoAd and do all the stuff to play it with
+			 * create another instance of SAInterstitialAd and do all the stuff to play it with
 			 * the ad data returned from SALoader
 			 */
-			SAVideoAd vad = SAVideoAd.createInstance ();
-			vad.setAd(ad);
-			vad.isParentalGateEnabled = isParentalGateEnabled;
-			vad.shouldShowCloseButton = shouldShowCloseButton;
-			vad.shouldAutomaticallyCloseAtEnd = shouldAutomaticallyCloseAtEnd;
-			vad.play();
+			SABannerAd bad = SABannerAd.createInstance ();
+			bad.setAd(ad);
+			bad.isParentalGateEnabled = isParentalGateEnabled;
+			bad.position = position;
+			bad.size = size;
+			bad.play();
 		}
-
+		
 		public void didFailToLoadAd(int placementId) {
 			Debug.Log("Failure: " + placementId.ToString() );
 		}
-
+		
 		/** 
 		 * Native callback interface implementation
 		 */
 		public void nativeCallback(string payload) {
 			Dictionary<string, object> payloadDict;
 			string type = "";
-
+			
 			/** try to get payload and type data */
 			try {
 				payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
@@ -157,7 +171,7 @@ namespace SuperAwesome {
 				}
 				return;
 			}
-
+			
 			switch (type) {
 			case "callback_adWasShown":{
 				if (adDelegate != null) adDelegate.adWasShown(ad.placementId); break;
@@ -182,30 +196,6 @@ namespace SuperAwesome {
 			}
 			case "callback_parentalGateWasSucceded":{
 				if (parentalGateDelegate != null) parentalGateDelegate.parentalGateWasSucceded(ad.placementId); break;
-			}
-			case "callback_adStarted":{
-				if (videoAdDelegate != null) videoAdDelegate.adStarted(ad.placementId); break;
-			}
-			case "callback_videoStarted":{
-				if (videoAdDelegate != null) videoAdDelegate.videoStarted(ad.placementId); break;
-			}
-			case "callback_videoReachedFirstQuartile":{
-				if (videoAdDelegate != null) videoAdDelegate.videoReachedFirstQuartile(ad.placementId); break;
-			}
-			case "callback_videoReachedMidpoint":{
-				if (videoAdDelegate != null) videoAdDelegate.videoReachedMidpoint(ad.placementId); break;
-			}
-			case "callback_videoReachedThirdQuartile":{
-				if (videoAdDelegate != null) videoAdDelegate.videoReachedThirdQuartile(ad.placementId); break;
-			}
-			case "callback_videoEnded":{
-				if (videoAdDelegate != null) videoAdDelegate.videoEnded(ad.placementId); break;
-			}
-			case "callback_adEnded":{
-				if (videoAdDelegate != null) videoAdDelegate.adEnded(ad.placementId); break;
-			}
-			case "callback_allAdsEnded":{
-				if (videoAdDelegate != null) videoAdDelegate.allAdsEnded(ad.placementId); break;
 			}
 			}
 		}
