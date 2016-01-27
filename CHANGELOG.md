@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+3.0.0
+ - Update to v3 Unity SDK - which is fully integrated with the iOS / Android native SDKs, and works only as such
+
 2.2.3
  - Add video callbacks for Android
 

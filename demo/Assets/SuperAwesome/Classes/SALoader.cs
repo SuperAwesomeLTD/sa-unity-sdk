@@ -24,7 +24,7 @@ namespace SuperAwesome {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")] 
-		private static extern void SuperAwesomeUnityLoadAd(string unityName, int placementId, bool isTestingEnabled);
+		private static extern void SuperAwesomeUnityLoadAd(string unityName, int placementId, bool isTestingEnabled, int config);
 #endif
 
 		/** static function initialiser */
@@ -56,9 +56,10 @@ namespace SuperAwesome {
 			
 			/** get if testing is enabled */
 			bool isTestingEnabled = SuperAwesome.instance.isTestingEnabled ();
+			int config = (int)SuperAwesome.instance.getConfiguration ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SALoader.SuperAwesomeUnityLoadAd(this.name, placementId, isTestingEnabled);
+			SALoader.SuperAwesomeUnityLoadAd(this.name, placementId, isTestingEnabled, config);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
@@ -67,7 +68,7 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnityLoadAd", context, uname, placementId, isTestingEnabled);
+				test.CallStatic("SuperAwesomeUnityLoadAd", context, uname, placementId, isTestingEnabled, config);
 			}));
 #else
 			Debug.Log ("Load: " + this.name + ", " + placementId + ", " + isTestingEnabled);

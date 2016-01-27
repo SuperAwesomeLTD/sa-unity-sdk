@@ -24,13 +24,15 @@ namespace SuperAwesome {
 		// button actions
 		public void loadAds () {
 
-			loader1 = SALoader.createInstance ();
-			loader1.loaderDelegate = this;
-			loader1.loadAd (40);	// movie
+			SuperAwesome.instance.setConfigurationStaging ();
 
+//			loader1 = SALoader.createInstance ();
+//			loader1.loaderDelegate = this;
+//			loader1.loadAd (40);	// movie
+//
 			loader2 = SALoader.createInstance ();
 			loader2.loaderDelegate = this;
-			loader2.loadAd (44);	// rm interstitial
+			loader2.loadAd (43);	// rm interstitial
 
 			loader3 = SALoader.createInstance ();
 			loader3.loaderDelegate = this;
@@ -62,31 +64,32 @@ namespace SuperAwesome {
 		}
 
 		public void playVideo() {
-			if (adVideo != null) {
-				SAVideoAd vad = SAVideoAd.createInstance();
-				vad.setAd(adVideo);
-				vad.isParentalGateEnabled = true;
-				vad.shouldShowCloseButton = true;
-				vad.shouldAutomaticallyCloseAtEnd = true;
-				vad.adDelegate = this;
-				vad.parentalGateDelegate = this;
-				vad.videoAdDelegate = this;
-				vad.play();
-			}
+//			if (adVideo != null) {
+//				SAVideoAd vad = SAVideoAd.createInstance();
+//				vad.setAd(adVideo);
+//				vad.isParentalGateEnabled = true;
+//				vad.shouldShowCloseButton = true;
+//				vad.shouldAutomaticallyCloseAtEnd = true;
+//				vad.adDelegate = this;
+//				vad.parentalGateDelegate = this;
+//				vad.videoAdDelegate = this;
+//				vad.play();
+//			}
 		}
 
 		/** <SALoaderInterface> */
-		void SALoaderInterface.didLoadAd(SAAd ad) {
-			if (ad.placementId == 40) {
-				adVideo = ad;
-			} else if (ad.placementId == 44) {
+		public void didLoadAd(SAAd ad) {
+//			if (ad.placementId == 40) {
+//				adVideo = ad;
+//			
+			if (ad.placementId == 43) {
 				adInterstitial = ad;
-			} else {
+			} else if (ad.placementId == 45){
 				adBanner = ad;
 			}
 		}
 
-		void SALoaderInterface.didFailToLoadAd(int placementId) {
+		public void didFailToLoadAd(int placementId) {
 			Debug.Log ("[Unity] - didFailToLoadAd " + placementId);
 		}
 

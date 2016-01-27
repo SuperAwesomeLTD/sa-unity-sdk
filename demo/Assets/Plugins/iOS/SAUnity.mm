@@ -13,19 +13,23 @@ extern "C" {
     //
     // This function acts as a bridge between Unity-iOS-Unity
     // and loads an Ad with the help of the SuperAwesome iOS SDK
-    void SuperAwesomeUnityLoadAd(const char *unityName, int placementId, BOOL isTestingEnabled) {
+    void SuperAwesomeUnityLoadAd(const char *unityName, int placementId, BOOL isTestingEnabled, int config) {
         // transfrom the name
         NSString *name = [NSString stringWithUTF8String:unityName];
         
-        // test mode staging
-        [[SuperAwesome getInstance] setConfigurationStaging];
+        SAConfiguration iconfig = (SAConfiguration)config;
+        switch (config) {
+            case PRODUCTION: [[SuperAwesome getInstance] setConfigurationProduction]; break;
+            case STAGING: [[SuperAwesome getInstance] setConfigurationStaging]; break;
+            case DEVELOPMENT: [[SuperAwesome getInstance] setConfigurationDevelopment]; break;
+            default: break;
+        }
         
         // create a linker
         SAUnityLinker *linker = [[SAUnityLinker alloc] init];
         NSLog(@"And it ends up here as being %@", name);
         // assign the success and error callbacks
         linker.loadingEvent = ^(NSString *unityAd, NSString *unityCallback, NSString *adString) {
-            NSLog(@"And then in the callback is %@", unityAd);
             NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\", \"adJson\":%@}", unityCallback, adString];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
@@ -40,6 +44,8 @@ extern "C" {
     // This function acts as a bridge between Unity-iOS-Unity
     // and displays a banner ad
     void SuperAwesomeUnitySABannerAd(int placementId, const char *adJson, const char *unityName, int position, int size, BOOL isParentalGateEnabled) {
+        
+        // NSLog(@"Got in SuperAwesomeUnitySABannerAd");
         
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
@@ -67,6 +73,8 @@ extern "C" {
     // This function acts as a bridge between Unity-iOS-Unity
     // and displays an interstitial ad
     void SuperAwesomeUnitySAInterstitialAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled) {
+        
+        // NSLog(@"Got in SuperAwesomeUnitySAInterstitialAd");
         
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];

@@ -21,6 +21,13 @@ namespace SuperAwesome {
 		private string baseUrl;
 		private bool isTestEnabled;
 
+		public enum SAConfiguration{
+			STAGING = 0,
+			DEVELOPMENT = 1,
+			PRODUCTION = 2
+		}
+		private SAConfiguration config = SAConfiguration.PRODUCTION;
+
 		/** instance variable, since SuperAwesome is a singleton */
 		private static SuperAwesome _instance;
 		public static SuperAwesome instance {
@@ -56,19 +63,26 @@ namespace SuperAwesome {
 
 		/** group of functions that encapsulate config / URL functionality */
 		public void setConfigurationProduction() {
+			this.config = SAConfiguration.PRODUCTION;
 			this.baseUrl = BASE_URL_PRODUCTION;
 		}
 
 		public void setConfigurationStaging() {
+			this.config = SAConfiguration.STAGING;
 			this.baseUrl = BASE_URL_STAGING;
 		}
 
 		public void setConfigurationDevelopment() {
+			this.config = SAConfiguration.DEVELOPMENT;
 			this.baseUrl = BASE_URL_DEVELOPMENT;
 		}
 
 		public string getBaseURL() {
 			return this.baseUrl;
+		}
+
+		public SAConfiguration getConfiguration() {
+			return this.config;
 		}
 
 		/** functions that encapsulate test functionality */
