@@ -60,7 +60,15 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SALoader.SuperAwesomeUnityLoadAd(this.name, placementId, isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			Debug.Log("Not in Android yet");
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var uname = this.name;
+
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnityLoadAd", context, uname, placementId, isTestingEnabled);
+			}));
 #else
 			Debug.Log ("Load: " + this.name + ", " + placementId + ", " + isTestingEnabled);
 #endif

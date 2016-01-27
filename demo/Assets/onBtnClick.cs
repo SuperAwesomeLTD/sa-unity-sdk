@@ -42,7 +42,7 @@ namespace SuperAwesome {
 				SABannerAd bad = SABannerAd.createInstance();
 				bad.setAd(adBanner);
 				bad.position = SABannerAd.BannerPosition.BOTTOM;
-				bad.size = SABannerAd.BannerSize.BANNER_300_50;
+				bad.size = SABannerAd.BannerSize.BANNER_320_50;
 				bad.isParentalGateEnabled = true;
 				bad.adDelegate = this;
 				bad.parentalGateDelegate = this;
@@ -87,7 +87,7 @@ namespace SuperAwesome {
 		}
 
 		void SALoaderInterface.didFailToLoadAd(int placementId) {
-			Debug.Log ("Could not load " + placementId);
+			Debug.Log ("[Unity] - didFailToLoadAd " + placementId);
 		}
 
 		/** <SAAdInterface> */

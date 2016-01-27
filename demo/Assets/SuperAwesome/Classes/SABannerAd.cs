@@ -106,7 +106,15 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SABannerAd.SuperAwesomeUnitySABannerAd(ad.placementId, ad.adJson, this.name, (int)position, (int)size, isParentalGateEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			Debug.Log("Not in Android yet");
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var uname = this.name; 
+			
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnitySABannerAd", context, ad.placementId, ad.adJson, uname, (int)position, (int)size, isParentalGateEnabled);
+			}));
 #else
 			Debug.Log ("Open: " + this.name + ", " + ad.placementId);
 #endif
