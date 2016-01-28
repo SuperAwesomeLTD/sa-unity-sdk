@@ -109,7 +109,7 @@ namespace SuperAwesome {
 		 * this function <would> be called when starting an interstitial ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		public void showAd(int placementId, bool isParentalGateEnabled) {
+		private void showAd(int placementId, bool isParentalGateEnabled) {
 			/** assign vars */
 			this.placementId = placementId;
 			this.isParentalGateEnabled = isParentalGateEnabled;
@@ -129,15 +129,8 @@ namespace SuperAwesome {
 		 * <SALoader> Interface implementation
 		 */
 		public void didLoadAd(SAAd ad) {
-			
-			/** 
-			 * create another instance of SAInterstitialAd and do all the stuff to play it with
-			 * the ad data returned from SALoader
-			 */
-			SAInterstitialAd iad = SAInterstitialAd.createInstance ();
-			iad.setAd(ad);
-			iad.isParentalGateEnabled = isParentalGateEnabled;
-			iad.play();
+			this.ad = ad;
+			this.play ();
 		}
 		
 		public void didFailToLoadAd(int placementId) {

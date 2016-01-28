@@ -30,10 +30,13 @@ In summary, this is what they're named and what they influence:
 | Should Show Close Button | Only for video; specifies if the close button should be visible | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_OK.png) |
 
 Banners:
+
 ![](img/IMG_12_BannerPrefabConfig.png "Banner config")
 
 Interstitials:
+
 ![](img/IMG_13_InterstitialPrefabConfig.png "Interstitial config")
 
 Video Ads:
+
 ![](img/IMG_14_VideoPrefab_Config.png "Video config")

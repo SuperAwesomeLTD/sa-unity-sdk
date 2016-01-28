@@ -110,7 +110,7 @@ namespace SuperAwesome {
 		 * this function <would> be called when starting a video ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		public void showAd(int placementId, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd) {
+		private void showAd(int placementId, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd) {
 			/** assign vars */
 			this.placementId = placementId;
 			this.isParentalGateEnabled = isParentalGateEnabled;
@@ -131,17 +131,8 @@ namespace SuperAwesome {
 		 * <SALoader> Interface implementation
 		 */
 		public void didLoadAd(SAAd ad) {
-
-			/** 
-			 * create another instance of SAVideoAd and do all the stuff to play it with
-			 * the ad data returned from SALoader
-			 */
-			SAVideoAd vad = SAVideoAd.createInstance ();
-			vad.setAd(ad);
-			vad.isParentalGateEnabled = isParentalGateEnabled;
-			vad.shouldShowCloseButton = shouldShowCloseButton;
-			vad.shouldAutomaticallyCloseAtEnd = shouldAutomaticallyCloseAtEnd;
-			vad.play();
+			this.ad = ad;
+			this.play ();
 		}
 
 		public void didFailToLoadAd(int placementId) {
