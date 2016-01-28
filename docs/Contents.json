@@ -1,55 +1,59 @@
 {
     "name": "Unity SDK",
-    "text": "01 UnitySDK.md",
+    "text": "00 Intro.md",
     "sections":[
         {
             "name": "Getting Started",
-            "text": "02 GettingStarted.md"
-        },
-        {
-            "name": "Banner Ads",
-            "text": "03 BannerAds.md"
-        },
-        {
-            "name": "Interstitial Ads",
-            "text": "04 InterstitialAds.md"
-        },
-        {
-            "name": "iOS and Android Configuration",
             "sections": [
                 {
-                    "name":"Advanced features",
-                    "text":"05 iOS and Android configuration/01 Intro.md"
+                    "name":"Registering on the Dashboard",
+                    "text":"01 Getting Started/01 Getting Started.md"
                 },
                 {
-                    "name":"iOS",
-                    "text":"05 iOS and Android configuration/02 iOS.md"
+                    "name":"Integrate Unity SDK",
+                    "text":"01 Getting Started/02 Integrate Unity SDK.md"
                 },
                 {
-                    "name":"Android",
-                    "text":"05 iOS and Android configuration/03 Android.md"
+                    "name":"Add iOS Dependencies",
+                    "text":"01 Getting Started/03 Add iOS Dependencies.md"
+                },
+                {
+                    "name":"Add Android Dependencies",
+                    "text":"01 Getting Started/04 Add Android Dependencies.md"
+                },
+                {
+                    "name":"Before you start",
+                    "text":"01 Getting Started/05 Final words.md"
                 }
             ]
         },
         {
-            "name": "Video Ads",
-            "text": "06 Video Ads.md"
+            "name": "Displaying Ads with Prefabs",
+            "text": "02 Displaying Ads as Prefabs.md"
         },
         {
-            "name": "Parental Gate",
-            "text": "07 Parental Gate.md"
+            "name": "Loading Ads",
+            "text": "03 Loading Ads.md"
         },
         {
-            "name": "Testing Placements",
-            "text": "08 Testing Placements.md"
+            "name": "Displaying Banner Ads",
+            "text": "04 Displaying Banner Ads.md"
         },
         {
-            "name": "Troubleshooting",
-            "text": "09 Troubleshooting.md"
+            "name": "Displaying Interstitial Ads",
+            "text": "05 Displaying Interstitial Ads.md"
+        },
+        {
+            "name": "Displaying Video Ads",
+            "text": "06 Displaying Video Ads.md"
+        },
+        {
+            "name": "Catching Ad Events",
+            "text": "07 Catching Ad Events.md"
         },
         {
             "name": "Support",
-            "text": "10 Support.md"
+            "text": "08 Support.md"
         }
     ]
 }
