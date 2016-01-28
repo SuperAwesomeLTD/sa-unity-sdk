@@ -1,14 +1,14 @@
 Each ad type, Banner, Interstitial or Video, sends out callbacks for major ad lifecycle events.
 Registering for events follows the same steps as registering for loading callbacks.
 
-1. Declare that ExampleScript implements the necessary interfaces
+Declare that ExampleScript implements the necessary interfaces
 
 ```
 public class ExampleScript : MonoBehaviour , SALoaderInterface , SAAdInterface , SAVideoAdInterface , SAParentalGateInterface {
 
 ```
 
-2. Setting the delegates:
+Íet the delegates:
 
 Banner ads:
 
@@ -35,7 +35,7 @@ myVideoAd.videoAdDelegate = this;
 
 ```
 
-3. In the ExampleScript class, implement all the necessary functions:
+In the ExampleScript class, implement all the necessary functions:
 
 For `SAAdInterface`:
 

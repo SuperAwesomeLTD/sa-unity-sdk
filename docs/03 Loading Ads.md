@@ -50,14 +50,14 @@ void Start () {
 Calling the `loadAd()` function initiates a call to the native iOS or Android code to asynchroniously load an ad.
 Because it's async, we need a way to get the ad information back. We do this in three steps:
 
-1. Declaring that our ExampleScript implements the `SALoaderInterface`:
+Declaring that our ExampleScript implements the `SALoaderInterface`:
 
 ```
 public class ExampleScript : MonoBehaviour , SALoaderInterface {
 
 ```
 
-2. Setting a delegate for the loader object:
+Setting a delegate for the loader object:
 
 ```
 loader.loaderDelegate = this;
@@ -66,7 +66,7 @@ loader.loaderDelegate = this;
 
 In this case the delegate is the ExampleScript class itself, since it declares that it will implement the `SALoaderInterface` required functions. But it can be any object that implements them.
 
-3. Finally, actually implementing the two functions specified by `SALoaderInterface`:
+Finally, actually implementing the two functions specified by `SALoaderInterface`:
 
 ```
 public class ExampleScript : MonoBehaviour, SALoaderInterface {
@@ -77,7 +77,7 @@ public class ExampleScript : MonoBehaviour, SALoaderInterface {
 
 		SALoader loader = SALoader.createInstance ();
 		loader.loaderDelegate = this;
-		loader.loadAd (23000);
+		loader.loadAd (5740);
 	}
 	
 	void Update () {

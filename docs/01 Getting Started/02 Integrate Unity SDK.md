@@ -5,7 +5,7 @@ You should see an image similar to this:
 ![](img/IMG_02_Import.png "Importing the SuperAwesome.unitypackage")
 
 Select all the files, and click Import. 
-If all goes well you should have a series of new folders and files in your Assets folder.
+If all goes well you should have a series of new folders and files in your Assets directory.
 
 ![](img/IMG_03_Assets.png "The new assets folder")
 
