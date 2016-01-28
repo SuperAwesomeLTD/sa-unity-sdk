@@ -15,6 +15,20 @@ Drag and drop any of then into your scene on the UI Layer.
 
 You'll see the prefab has a default rectangular shape and has a default texture associated. Don't worry about this, it will only display in editing mode, not playing mode.
 
+Each prefab has a number of associated parameters, that shouw up when clicking on them.
+In summary, this is what they're named and what they influence:
+
+| Parameter | Description | Banner | Interstitial | Video |
+|-------------------------|
+| Placement Id | Specify the ID of the placement you want to load an ad for | Available | Available | Available | 
+| Test Mode Enabled | If this placement is in test mode or not | Available | Available | Available |
+| Is Parental Gate Enabled | If when clicking on the ad, a user will activate a Parental Gate | Available | Available | Available |
+| Should Auto Start | Always set to True for Prefabs | Available | Available | Available |
+| Position | Only for banners; Can be Top or Bottom | Available | N/A | N/A |
+| Size | Only for banners; Can be 320x50, 300x50, 728x90, 300x250 | Available | N/A | N/A |
+| Should Automatically Close At End | Only for video; specifies if the ad should close when it ends; should be set to true for prefabs | N/A | N/A | Available |
+| Should Show Close Button | Only for video; specifies if the close button should be visible | N/A | N/A | Available |
+
 In order to make the ad actually display, select the Prefab you just created and change it's parameters:
 
 ![](img/IMG_12_BannerPrefabConfig.png "Banner config")

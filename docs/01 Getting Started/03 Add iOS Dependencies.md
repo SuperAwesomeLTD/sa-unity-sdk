@@ -2,7 +2,7 @@ To complete integrating the SDK for iOS, you'll need to follow the next steps (o
 
 #### Build the project for iOS
 
-To do this, click on `File` -> `Build Settings menu`.
+To do this, click on `File > Build Settings` menu.
 There, select the `iOS` option and check the `Symlink Unity Libraries` and `Development build` options.
 Then, click on `Build` and save the new XCode project on your drive.
 
