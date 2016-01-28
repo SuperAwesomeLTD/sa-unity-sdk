@@ -15,49 +15,25 @@ Drag and drop any of then into your scene on the UI Layer.
 
 You'll see the prefab has a default rectangular shape and has a default texture associated. Don't worry about this, it will only display in editing mode, not playing mode.
 
-Each prefab has a number of associated parameters, that shouw up when clicking on them.
+Each prefab has a number of associated parameters, that show up when you select a prefab.
 In summary, this is what they're named and what they influence:
 
 | Parameter | Description | Banner | Interstitial | Video |
 |-------------------------|
-| Placement Id | Specify the ID of the placement you want to load an ad for | Available | Available | Available | 
-| Test Mode Enabled | If this placement is in test mode or not | Available | Available | Available |
-| Is Parental Gate Enabled | If when clicking on the ad, a user will activate a Parental Gate | Available | Available | Available |
-| Should Auto Start | Always set to True for Prefabs | Available | Available | Available |
-| Position | Only for banners; Can be Top or Bottom | Available | N/A | N/A |
-| Size | Only for banners; Can be 320x50, 300x50, 728x90, 300x250 | Available | N/A | N/A |
-| Should Automatically Close At End | Only for video; specifies if the ad should close when it ends; should be set to true for prefabs | N/A | N/A | Available |
-| Should Show Close Button | Only for video; specifies if the close button should be visible | N/A | N/A | Available |
+| Placement Id | Specify the ID of the placement you want to load an ad for | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) | 
+| Test Mode Enabled | If this placement is in test mode or not | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) |
+| Is Parental Gate Enabled | If when clicking on the ad, a user will activate a Parental Gate | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) |
+| Should Auto Start | Always set to True for Prefabs | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) |
+| Position | Only for banners; Can be Top or Bottom | ![](img/IMG_OK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) |
+| Size | Only for banners; Can be 320x50, 300x50, 728x90, 300x250 | ![](img/IMG_OK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) |
+| Should Automatically Close At End | Only for video; specifies if the ad should close when it ends; should be set to true for prefabs | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_OK.png) |
+| Should Show Close Button | Only for video; specifies if the close button should be visible | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_OK.png) |
 
-In order to make the ad actually display, select the Prefab you just created and change it's parameters:
-
+Banners:
 ![](img/IMG_12_BannerPrefabConfig.png "Banner config")
 
-For a banner you'll need to specify:
-
-* Placement Id
-* Test Mode Enabled
-* Is Parental Gate Enabled
-* Should Auto Start - always set to True for Prefabs
-* Position - either Top or Bottom
-* Size - can be 320x50, 300x50, 728x90, 300x250
-
-For interstitial ads you'll need:
-
+Interstitials:
 ![](img/IMG_13_InterstitialPrefabConfig.png "Interstitial config")
 
-* Placement Id
-* Test Mode Enabled
-* Is Parental Gate Enabled
-* Should Auto Start
-
-and for video ads you'll need:
-
+Video Ads:
 ![](img/IMG_14_VideoPrefab_Config.png "Video config")
-
-* Placement Id
-* Test Mode Enabled
-* Is Parental Gate Enabled
-* Should Auto Start
-* Should Automatically Close At End - dictates if the video should close on it's own once it's ended. For prefabs this should always be set to true.
-* Should Show Close Button - whether the fullscreen video ad has a close button in the top right corner.
