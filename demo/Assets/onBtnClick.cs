@@ -14,6 +14,9 @@ namespace SuperAwesome {
 		private SAInterstitialAd iad = null;
 		private SAVideoAd vad = null;
 
+		private SABannerAd.BannerPosition position = SABannerAd.BannerPosition.BOTTOM;
+		private SABannerAd.BannerSize size = SABannerAd.BannerSize.BANNER_320_50;
+
 		// Use this for initialization
 		void Start () {
 			// do nothing
@@ -44,12 +47,31 @@ namespace SuperAwesome {
 			loader3.loadAd (45); // banner
 		}
 
+		public void setTop() {
+			position = SABannerAd.BannerPosition.TOP;
+		}
+		public void setBottom () {
+			position = SABannerAd.BannerPosition.BOTTOM;
+		}
+		public void set32050 () {
+			size = SABannerAd.BannerSize.BANNER_320_50;
+		}
+		public void set30050 () {
+			size = SABannerAd.BannerSize.BANNER_300_50;
+		}
+		public void set300250 () {
+			size = SABannerAd.BannerSize.BANNER_300_250;
+		}
+		public void set72890 () {
+			size = SABannerAd.BannerSize.BANNER_728_90;
+		}
+
 		public void playBanner () {
 			if (adBanner != null) {
 				bad = SABannerAd.createInstance();
 				bad.setAd(adBanner);
-				bad.position = SABannerAd.BannerPosition.BOTTOM;
-				bad.size = SABannerAd.BannerSize.BANNER_320_50;
+				bad.position = position;
+				bad.size = size;
 				bad.isParentalGateEnabled = true;
 				bad.adDelegate = this;
 				bad.parentalGateDelegate = this;
