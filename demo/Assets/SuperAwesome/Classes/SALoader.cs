@@ -16,6 +16,9 @@ namespace SuperAwesome {
 	 */
 	public class SALoader: MonoBehaviour, SANativeInterface {
 
+		/** instance index */
+		private static uint index = 0;
+
 		/** private members */
 		private int placementId = 0;
 
@@ -34,7 +37,7 @@ namespace SuperAwesome {
 			
 			/** add to that new object the video ad */
 			SALoader loader = obj.AddComponent<SALoader> ();
-			loader.name = "SALoader_" + (new System.Random()).Next(100, 1000).ToString();
+			loader.name = "SALoader_" + (++SALoader.index);
 			
 			/** and return the ad Obj instance */
 			return loader;

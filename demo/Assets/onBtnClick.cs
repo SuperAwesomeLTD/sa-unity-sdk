@@ -10,6 +10,9 @@ namespace SuperAwesome {
 		private SAAd adBanner = null;
 		private SAAd adVideo = null;
 		private SAAd adInterstitial = null;
+		private SABannerAd bad = null;
+		private SAInterstitialAd iad = null;
+		private SAVideoAd vad = null;
 
 		// Use this for initialization
 		void Start () {
@@ -26,10 +29,12 @@ namespace SuperAwesome {
 
 			SuperAwesome.instance.setConfigurationStaging ();
 
-//			loader1 = SALoader.createInstance ();
-//			loader1.loaderDelegate = this;
-//			loader1.loadAd (40);	// movie
-//
+			SuperAwesome.instance.enableTestMode ();
+			loader1 = SALoader.createInstance ();
+			loader1.loaderDelegate = this;
+			loader1.loadAd (40);	// movie
+			SuperAwesome.instance.disableTestMode ();
+
 			loader2 = SALoader.createInstance ();
 			loader2.loaderDelegate = this;
 			loader2.loadAd (43);	// rm interstitial
@@ -41,7 +46,7 @@ namespace SuperAwesome {
 
 		public void playBanner () {
 			if (adBanner != null) {
-				SABannerAd bad = SABannerAd.createInstance();
+				bad = SABannerAd.createInstance();
 				bad.setAd(adBanner);
 				bad.position = SABannerAd.BannerPosition.BOTTOM;
 				bad.size = SABannerAd.BannerSize.BANNER_320_50;
@@ -52,9 +57,15 @@ namespace SuperAwesome {
 			}
 		}
 
+		public void deleteBanner () {
+			if (bad != null) {
+				bad.close ();
+			}
+		}
+
 		public void playInterstitial () {
 			if (adInterstitial != null) {
-				SAInterstitialAd iad = SAInterstitialAd.createInstance();
+				iad = SAInterstitialAd.createInstance();
 				iad.setAd(adInterstitial);
 				iad.isParentalGateEnabled = true;
 				iad.adDelegate = this;
@@ -64,25 +75,24 @@ namespace SuperAwesome {
 		}
 
 		public void playVideo() {
-//			if (adVideo != null) {
-//				SAVideoAd vad = SAVideoAd.createInstance();
-//				vad.setAd(adVideo);
-//				vad.isParentalGateEnabled = true;
-//				vad.shouldShowCloseButton = true;
-//				vad.shouldAutomaticallyCloseAtEnd = true;
-//				vad.adDelegate = this;
-//				vad.parentalGateDelegate = this;
-//				vad.videoAdDelegate = this;
-//				vad.play();
-//			}
+			if (adVideo != null) {
+				vad = SAVideoAd.createInstance();
+				vad.setAd(adVideo);
+				vad.isParentalGateEnabled = true;
+				vad.shouldShowCloseButton = true;
+				vad.shouldAutomaticallyCloseAtEnd = false;
+				vad.adDelegate = this;
+				vad.parentalGateDelegate = this;
+				vad.videoAdDelegate = this;
+				vad.play();
+			}
 		}
 
 		/** <SALoaderInterface> */
 		public void didLoadAd(SAAd ad) {
-//			if (ad.placementId == 40) {
-//				adVideo = ad;
-//			
-			if (ad.placementId == 43) {
+			if (ad.placementId == 40) {
+				adVideo = ad;
+			} else if (ad.placementId == 43) {
 				adInterstitial = ad;
 			} else if (ad.placementId == 45){
 				adBanner = ad;
@@ -156,6 +166,7 @@ namespace SuperAwesome {
 		
 		public void allAdsEnded(int placementId){
 			Debug.Log ("[Unity] - allAdsEnded " + placementId);
+			vad.close ();
 		}
 	}
 }

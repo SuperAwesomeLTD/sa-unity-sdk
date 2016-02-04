@@ -27,7 +27,9 @@ extern "C" {
         
         // create a linker
         SAUnityLinker *linker = [[SAUnityLinker alloc] init];
-        NSLog(@"And it ends up here as being %@", name);
+        
+        NSLog(@"SuperAwesomeUnityLoadAd - %@", name);
+        
         // assign the success and error callbacks
         linker.loadingEvent = ^(NSString *unityAd, NSString *unityCallback, NSString *adString) {
             NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\", \"adJson\":%@}", unityCallback, adString];
@@ -45,14 +47,14 @@ extern "C" {
     // and displays a banner ad
     void SuperAwesomeUnitySABannerAd(int placementId, const char *adJson, const char *unityName, int position, int size, BOOL isParentalGateEnabled) {
         
-        // NSLog(@"Got in SuperAwesomeUnitySABannerAd");
-        
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSString *json = [NSString stringWithUTF8String:adJson];
         
         // updat-eeeeed!
         SAUnityLinker *linker = [[SAUnityLinker alloc] init];
+        
+        NSLog(@"SuperAwesomeUnitySABannerAd - %@", name);
         
         // add callbacks
         linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
@@ -70,6 +72,21 @@ extern "C" {
     }
     
     //
+    // function that removes a banner ad
+    void SuperAwesomeUnityRemoveSABannerAd(const char *unityName) {
+        // parse parameters
+        NSString *name = [NSString stringWithUTF8String:unityName];
+        
+        // updat-eeeeed!
+        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
+        
+        NSLog(@"SuperAwesomeUnityRemoveSABannerAd - %@", name);
+        
+        
+        [linker removeBannerForUnityName:name];
+    }
+    
+    //
     // This function acts as a bridge between Unity-iOS-Unity
     // and displays an interstitial ad
     void SuperAwesomeUnitySAInterstitialAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled) {
@@ -82,6 +99,8 @@ extern "C" {
         
         // updat-eeeeed!
         SAUnityLinker *linker = [[SAUnityLinker alloc] init];
+        
+        NSLog(@"SuperAwesomeUnitySAInterstitialAd - %@", name);
         
         // add callbacks
         linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
@@ -97,6 +116,21 @@ extern "C" {
     }
     
     //
+    // function that removes an interstitial ad
+    void SuperAwesomeUnityCloseSAInterstitialAd(const char *unityName) {
+        // parse parameters
+        NSString *name = [NSString stringWithUTF8String:unityName];
+        
+        // updat-eeeeed!
+        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
+        
+        NSLog(@"SuperAwesomeUnityCloseSAInterstitialAd - %@", name);
+        
+        
+        [linker closeInterstitialForUnityName:name];
+    }
+    
+    //
     // This function acts as a bridge between Unity-iOS-Unity
     // and displays a video ad
     void SuperAwesomeUnitySAVideoAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled, BOOL shouldShowCloseButton, BOOL shouldAutomaticallyCloseAtEnd) {
@@ -107,6 +141,8 @@ extern "C" {
         
         // updat-eeeeed!
         SAUnityLinker *linker = [[SAUnityLinker alloc] init];
+        
+        NSLog(@"SuperAwesomeUnitySAVideoAd - %@", name);
         
         // add callbacks
         linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
@@ -121,5 +157,19 @@ extern "C" {
              andHasParentalGate:isParentalGateEnabled
               andHasCloseButton:shouldShowCloseButton
                  andClosesAtEnd:shouldAutomaticallyCloseAtEnd];
+    }
+    
+    //
+    // function that closes a fullscreen ad
+    void SuperAwesomeUnityCloseSAFullscreenVideoAd(const char *unityName) {
+        // parse parameters
+        NSString *name = [NSString stringWithUTF8String:unityName];
+        
+        // updat-eeeeed!
+        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
+        
+        NSLog(@"SuperAwesomeUnityCloseSAFullscreenVideoAd - %@", name);
+        
+        [linker closeFullscreenVideoForUnityName:name];
     }
 }

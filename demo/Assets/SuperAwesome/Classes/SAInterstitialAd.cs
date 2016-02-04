@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 
 /** part for the SuperAwesome namespace */
 namespace SuperAwesome {
-
-
-
+	
 	/**
 	 * Class that defines an interstitial ad - that will be finally loaded & displayed by iOS / Android
 	 */
 	public class SAInterstitialAd : MonoBehaviour, SALoaderInterface, SANativeInterface {
+
+		/** instance index */
+		private static uint index = 0;
 
 		/** public variables for the script & prefab */
 		private SAAd ad = null;
@@ -32,6 +33,8 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")]
 		private static extern void SuperAwesomeUnitySAInterstitialAd(int placementId, string adJson, string unityName, bool isParentalGateEnabled);
+		[DllImport ("__Internal")]
+		private static extern void SuperAwesomeUnityCloseSAInterstitialAd(string unityName);
 #endif
 
 		/** static function initialiser */
@@ -42,7 +45,7 @@ namespace SuperAwesome {
 			
 			/** add to that new object the video ad */
 			SAInterstitialAd adObj = obj.AddComponent<SAInterstitialAd> ();
-			adObj.name = "SAInterstitialAd_" + (new System.Random()).Next(100, 1000).ToString();
+			adObj.name = "SAInterstitialAd_" + (++SAInterstitialAd.index);
 			
 			/** and return the ad Obj instance */
 			return adObj;
@@ -102,6 +105,27 @@ namespace SuperAwesome {
 			}));
 #else
 			Debug.Log ("Open: " + this.name + ", " + ad.placementId);
+#endif
+		}
+
+		/**
+		 * This function removes the closes the interstitial
+		 */
+		public void close () {
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SAInterstitialAd.SuperAwesomeUnityCloseSAInterstitialAd(this.name);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var uname = this.name;
+			
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnityCloseSAInterstitialAd", context, uname);
+			}));
+#else 
+			Debug.Log("Close: " + this.name + ", " + ad.placementId);
 #endif
 		}
 
