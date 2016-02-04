@@ -10,7 +10,7 @@ Then, click on `Build` and save the new XCode project on your drive.
 
 #### Adding the SuperAwesome SDK via CocoaPods
 
-Next, you'll need to add the AwesomeAds iOS SDK. You can find more information [here](https://developers.superawesome.tv/docs/iossdk?version=4) or you can follow the quick guide below:
+Next, you'll need to add the AwesomeAds iOS SDK. You can find more information [here](https://developers.superawesome.tv/docs/iossdk?version=3) or you can follow the quick guide below:
 
 Install CocoaPods (if you haven't already):
 
