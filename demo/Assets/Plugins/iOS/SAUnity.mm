@@ -45,7 +45,7 @@ extern "C" {
     //
     // This function acts as a bridge between Unity-iOS-Unity
     // and displays a banner ad
-    void SuperAwesomeUnitySABannerAd(int placementId, const char *adJson, const char *unityName, int position, int size, BOOL isParentalGateEnabled) {
+    void SuperAwesomeUnitySABannerAd(int placementId, const char *adJson, const char *unityName, int position, int size, int color, BOOL isParentalGateEnabled) {
         
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
@@ -68,6 +68,7 @@ extern "C" {
                     andUnityName:name
                      andPosition:position
                          andSize:size
+                        andColor:color
               andHasParentalGate:isParentalGateEnabled];
     }
     

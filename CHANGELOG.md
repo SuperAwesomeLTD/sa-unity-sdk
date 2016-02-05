@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+3.0.3
+ - even tighter and more correct integration with ios & android sdks
+
 3.0.0
  - Update to v3 Unity SDK - which is fully integrated with the iOS / Android native SDKs, and works only as such
 

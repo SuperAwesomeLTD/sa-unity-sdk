@@ -16,6 +16,7 @@ namespace SuperAwesome {
 
 		private SABannerAd.BannerPosition position = SABannerAd.BannerPosition.BOTTOM;
 		private SABannerAd.BannerSize size = SABannerAd.BannerSize.BANNER_320_50;
+		private SABannerAd.BannerColor color = SABannerAd.BannerColor.BANNER_GRAY;
 
 		// Use this for initialization
 		void Start () {
@@ -53,6 +54,12 @@ namespace SuperAwesome {
 		public void setBottom () {
 			position = SABannerAd.BannerPosition.BOTTOM;
 		}
+		public void setTransparent () {
+			color = SABannerAd.BannerColor.BANNER_TRANSPARENT;
+		}
+		public void setGray () {
+			color = SABannerAd.BannerColor.BANNER_GRAY;
+		}
 		public void set32050 () {
 			size = SABannerAd.BannerSize.BANNER_320_50;
 		}
@@ -72,6 +79,7 @@ namespace SuperAwesome {
 				bad.setAd(adBanner);
 				bad.position = position;
 				bad.size = size;
+				bad.color = color;
 				bad.isParentalGateEnabled = true;
 				bad.adDelegate = this;
 				bad.parentalGateDelegate = this;
