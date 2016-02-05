@@ -26,6 +26,7 @@ In summary, this is what they're named and what they influence:
 | Should Auto Start | Always set to True for Prefabs | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) | ![](img/IMG_OK.png) |
 | Position | Only for banners; Can be Top or Bottom | ![](img/IMG_OK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) |
 | Size | Only for banners; Can be 320x50, 300x50, 728x90, 300x250 | ![](img/IMG_OK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) |
+| Color | Only for banners; Can be Transparent or Gray | ![](img/IMG_OK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) |
 | Should Automatically Close At End | Only for video; specifies if the ad should close when it ends; should be set to true for prefabs | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_OK.png) |
 | Should Show Close Button | Only for video; specifies if the close button should be visible | ![](img/IMG_NOK.png) | ![](img/IMG_NOK.png) | ![](img/IMG_OK.png) |
 

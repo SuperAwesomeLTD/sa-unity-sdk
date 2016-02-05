@@ -6,6 +6,7 @@ public void didLoadAd(SAAd adData) {
 	banner.setAd (adData);
 	banner.position = SABannerAd.BannerPosition.BOTTOM;
 	banner.size = SABannerAd.BannerSize.BANNER_320_50;
+	banner.color = SABannerAd.BannerColor.BANNER_GRAY;
 	banner.isParentalGateEnabled = false;
 	banner.play ();
 }
