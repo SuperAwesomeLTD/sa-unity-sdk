@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+3.0.4
+ - added the SAViewInterface to make the code more in line with iOS / Android practices
+
 3.0.3
  - even tighter and more correct integration with ios & android sdks
 

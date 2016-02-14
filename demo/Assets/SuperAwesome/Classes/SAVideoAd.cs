@@ -14,7 +14,7 @@ namespace SuperAwesome {
 	/**
 	 * Class that defines a video ad - that will be finally loaded & displayed by iOS / Android
 	 */
-	public class SAVideoAd : MonoBehaviour, SALoaderInterface, SANativeInterface {
+	public class SAVideoAd : MonoBehaviour, SALoaderInterface, SAViewInterface, SANativeInterface {
 
 		/** instance index */
 		private static uint index = 0;
@@ -39,6 +39,10 @@ namespace SuperAwesome {
 		[DllImport ("__Internal")]
 		private static extern void SuperAwesomeUnityCloseSAFullscreenVideoAd(string unityName);
 #endif
+
+		/*********************************************************************************************/
+		/** Normal Unity Init methods */
+		/*********************************************************************************************/
 
 		/** static function initialiser */
 		public static SAVideoAd createInstance() {
@@ -74,63 +78,9 @@ namespace SuperAwesome {
 			/** do nothing */
 		}
 
-		/** setter for the Ad */
-		public void setAd(SAAd ad) {
-			this.ad = ad;
-		}
-
-		/**
-		 * The normal play() function should be used on an instance of the SAVideoAd, created with createInstance()
-		 * and whose ad data has been pre-loaded using SALoader
-		 */
-		public void play () {
-			if (ad == null) {
-				Debug.Log("Tried to play ad without ad data for " + this.name);
-				return;
-			}
-
-			if (ad.placementId == -1 || ad.placementId == 0 || ad.placementId == null) {
-				Debug.Log("Tried to play ad without ad data for " + this.name);
-				return;
-			}
-
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAVideoAd.SuperAwesomeUnitySAVideoAd(ad.placementId, ad.adJson, this.name, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
-			var uname = this.name; 
-			
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAVideoAd", context, ad.placementId, ad.adJson, uname, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
-			}));
-#else
-			Debug.Log ("Open: " + this.name + ", " + ad.placementId);
-#endif
-		}
-
-		/**
-		 * This function removes the closes the fullscreen video
-		 */
-		public void close () {
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAVideoAd.SuperAwesomeUnityCloseSAFullscreenVideoAd(this.name);
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
-			var uname = this.name;
-			
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnityCloseSAFullscreenVideoAd", context, uname);
-			}));
-#else 
-			Debug.Log("Close: " + this.name + ", " + ad.placementId);
-#endif
-		}
+		/*********************************************************************************************/
+		/** Internal loader methods */
+		/*********************************************************************************************/
 
 		/**
 		 * this function <would> be called when starting a video ad from code w/o preloading
@@ -163,6 +113,72 @@ namespace SuperAwesome {
 
 		public void didFailToLoadAd(int placementId) {
 			Debug.Log("Failure: " + placementId.ToString() );
+		}
+
+		/*********************************************************************************************/
+		/** SANativeInterface methods */
+		/*********************************************************************************************/
+
+		/** setter for the Ad */
+		public void setAd(SAAd ad) {
+			this.ad = ad;
+		}
+		
+		public SAAd getAd() {
+			return this.ad;
+		}
+		
+		/**
+		 * The normal play() function should be used on an instance of the SAVideoAd, created with createInstance()
+		 * and whose ad data has been pre-loaded using SALoader
+		 */
+		public void play () {
+			if (ad == null) {
+				Debug.Log("Tried to play ad without ad data for " + this.name);
+				return;
+			}
+			
+			if (ad.placementId == -1 || ad.placementId == 0 || ad.placementId == null) {
+				Debug.Log("Tried to play ad without ad data for " + this.name);
+				return;
+			}
+			
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SAVideoAd.SuperAwesomeUnitySAVideoAd(ad.placementId, ad.adJson, this.name, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var uname = this.name; 
+			
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnitySAVideoAd", context, ad.placementId, ad.adJson, uname, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+			}));
+#else
+			Debug.Log ("Open: " + this.name + ", " + ad.placementId);
+#endif
+		}
+		
+		/**
+		 * This function removes the closes the fullscreen video
+		 */
+		public void close () {
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SAVideoAd.SuperAwesomeUnityCloseSAFullscreenVideoAd(this.name);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var uname = this.name;
+			
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnityCloseSAFullscreenVideoAd", context, uname);
+			}));
+#else 
+			Debug.Log("Close: " + this.name + ", " + ad.placementId);
+#endif
 		}
 
 		/** 

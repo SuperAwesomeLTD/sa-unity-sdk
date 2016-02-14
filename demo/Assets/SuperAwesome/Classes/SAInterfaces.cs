@@ -108,6 +108,23 @@ namespace SuperAwesome {
 	}
 
 	/**
+	 * Interface for all view-types
+	 */
+	public interface SAViewInterface {
+		/** function that sets an ad */
+		void setAd(SAAd ad);
+		
+		/** function that gets an view's ad */
+		SAAd getAd();
+		
+		/** function that plays the ad - sends the signal to native code to play */
+		void play ();
+		
+		/** function that closes the ad */
+		void close();
+	}
+
+	/**
 	 * This is an interface that contains functions that should be called on an
 	 * implementing object from iOS / Android through "UnitySendMesage"
 	 */

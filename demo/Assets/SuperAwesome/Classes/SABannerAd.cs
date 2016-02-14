@@ -14,7 +14,7 @@ namespace SuperAwesome {
 	/**
 	 * Class that defines a banner ad - that will be finally loaded & displayed by iOS / Android
 	 */
-	public class SABannerAd : MonoBehaviour, SALoaderInterface, SANativeInterface {
+	public class SABannerAd : MonoBehaviour, SALoaderInterface, SAViewInterface, SANativeInterface {
 
 		/** instance index */
 		private static uint index = 0; 
@@ -60,6 +60,10 @@ namespace SuperAwesome {
 		private static extern void SuperAwesomeUnityRemoveSABannerAd(string unityName);
 #endif
 
+		/*********************************************************************************************/
+		/** Normal Unity Init methods */
+		/*********************************************************************************************/
+
 		/** static function initialiser */
 		public static SABannerAd createInstance() {
 			
@@ -95,64 +99,10 @@ namespace SuperAwesome {
 			/** do nothing */
 		}
 
-		/** setter for the Ad */
-		public void setAd(SAAd ad) {
-			this.ad = ad;
-		}
+		/*********************************************************************************************/
+		/** Internal loader methods */
+		/*********************************************************************************************/
 
-		/**
-		 * The normal play() function should be used on an instance of the SAInterstitialAd, created with createInstance()
-		 * and whose ad data has been pre-loaded using SALoader
-		 */
-		public void play () {
-			if (ad == null) {
-				Debug.Log("Tried to play ad without ad data for " + this.name);
-				return;
-			}
-			
-			if (ad.placementId == -1 || ad.placementId == 0 || ad.placementId == null) {
-				Debug.Log("Tried to play ad without ad data for " + this.name);
-				return;
-			}
-
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SABannerAd.SuperAwesomeUnitySABannerAd(ad.placementId, ad.adJson, this.name, (int)position, (int)size, (int)color, isParentalGateEnabled);
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
-			var uname = this.name; 
-			
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySABannerAd", context, ad.placementId, ad.adJson, uname, (int)position, (int)size, (int)color, isParentalGateEnabled);
-			}));
-#else
-			Debug.Log ("Open: " + this.name + ", " + ad.placementId);
-#endif
-		}
-
-		/**
-		 * This function removes the banner from the screen
-		 */
-		public void close () {
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SABannerAd.SuperAwesomeUnityRemoveSABannerAd(this.name);
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
-			var uname = this.name;
-
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnityRemoveSABannerAd", context, uname);
-			}));
-#else 
-			Debug.Log("Close: " + this.name + ", " + ad.placementId);
-#endif
-		}
-		
 		/**
 		 * this function <would> be called when starting an interstitial ad from code w/o preloading
 		 * or when using the prefab
@@ -184,6 +134,72 @@ namespace SuperAwesome {
 		
 		public void didFailToLoadAd(int placementId) {
 			Debug.Log("Failure: " + placementId.ToString() );
+		}
+
+		/*********************************************************************************************/
+		/** SANativeInterface methods */
+		/*********************************************************************************************/
+
+		/** setter for the Ad */
+		public void setAd(SAAd ad) {
+			this.ad = ad;
+		}
+		
+		public SAAd getAd() {
+			return this.ad;
+		}
+		
+		/**
+		 * The normal play() function should be used on an instance of the SAInterstitialAd, created with createInstance()
+		 * and whose ad data has been pre-loaded using SALoader
+		 */
+		public void play () {
+			if (ad == null) {
+				Debug.Log("Tried to play ad without ad data for " + this.name);
+				return;
+			}
+			
+			if (ad.placementId == -1 || ad.placementId == 0 || ad.placementId == null) {
+				Debug.Log("Tried to play ad without ad data for " + this.name);
+				return;
+			}
+			
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SABannerAd.SuperAwesomeUnitySABannerAd(ad.placementId, ad.adJson, this.name, (int)position, (int)size, (int)color, isParentalGateEnabled);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var uname = this.name; 
+			
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnitySABannerAd", context, ad.placementId, ad.adJson, uname, (int)position, (int)size, (int)color, isParentalGateEnabled);
+			}));
+#else
+			Debug.Log ("Open: " + this.name + ", " + ad.placementId);
+#endif
+		}
+		
+		/**
+		 * This function removes the banner from the screen
+		 */
+		public void close () {
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SABannerAd.SuperAwesomeUnityRemoveSABannerAd(this.name);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var uname = this.name;
+			
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnityRemoveSABannerAd", context, uname);
+			}));
+#else 
+			Debug.Log("Close: " + this.name + ", " + ad.placementId);
+#endif
 		}
 		
 		/** 
