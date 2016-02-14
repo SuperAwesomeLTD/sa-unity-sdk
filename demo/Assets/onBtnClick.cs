@@ -42,10 +42,10 @@ namespace SuperAwesome {
 			loader2.loaderDelegate = this;
 			loader2.loadAd (30444);	// rm interstitial
 
-//			SuperAwesome.instance.setConfigurationStaging ();
-//			loader3 = SALoader.createInstance ();
-//			loader3.loaderDelegate = this;
-//			loader3.loadAd (45); // banner
+			SuperAwesome.instance.setConfigurationStaging ();
+			loader3 = SALoader.createInstance ();
+			loader3.loaderDelegate = this;
+			loader3.loadAd (45); // banner
 		}
 
 		public void setTop() {
