@@ -54,6 +54,9 @@ namespace SuperAwesome {
 			SAVideoAd adObj = obj.AddComponent<SAVideoAd> ();
 			adObj.name = "SAVideoAd_" + (++SAVideoAd.index);
 
+			/** call don't destroy on load ... */
+			DontDestroyOnLoad (obj);
+
 			/** and return the ad Obj instance */
 			return adObj;
 		}

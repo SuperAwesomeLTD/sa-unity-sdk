@@ -66,14 +66,16 @@ namespace SuperAwesome {
 
 		/** static function initialiser */
 		public static SABannerAd createInstance() {
-			
+
 			/** create a new game object */
 			GameObject obj = new GameObject ();
-
 			/** add to that new object the video ad */
 			SABannerAd adObj = obj.AddComponent<SABannerAd> ();
 			adObj.name = "SABannerAd_" + (++SABannerAd.index);
-			
+
+			/** call don't destroy on load ... */
+			DontDestroyOnLoad (obj);
+
 			/** and return the ad Obj instance */
 			return adObj;
 		}

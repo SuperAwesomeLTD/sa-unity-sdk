@@ -50,7 +50,10 @@ namespace SuperAwesome {
 			/** add to that new object the video ad */
 			SAInterstitialAd adObj = obj.AddComponent<SAInterstitialAd> ();
 			adObj.name = "SAInterstitialAd_" + (++SAInterstitialAd.index);
-			
+
+			/** call don't destroy on load ... */
+			DontDestroyOnLoad (obj);
+
 			/** and return the ad Obj instance */
 			return adObj;
 		}
