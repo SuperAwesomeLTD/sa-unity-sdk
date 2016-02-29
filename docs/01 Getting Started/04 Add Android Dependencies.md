@@ -39,7 +39,8 @@ repositories {
 }
 
 dependencies {
-    compile 'tv.superawesome.sdk:sa-sdk:3.4.5@aar'
+    compile 'tv.superawesome.sdk:sa-sdk:3.4.6@aar'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }
 
 ```

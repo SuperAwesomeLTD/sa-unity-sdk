@@ -31,21 +31,21 @@ namespace SuperAwesome {
 		// button actions
 		public void loadAds () {
 
-			SuperAwesome.instance.setConfigurationProduction ();
+			SuperAwesome.instance.setConfigurationStaging ();
 			SuperAwesome.instance.disableTestMode ();
 
 			loader1 = SALoader.createInstance ();
 			loader1.loaderDelegate = this;
-			loader1.loadAd (30447);	// movie
+			loader1.loadAd (79);	// movie
 
 			loader2 = SALoader.createInstance ();
 			loader2.loaderDelegate = this;
-			loader2.loadAd (30444);	// rm interstitial
+			loader2.loadAd (232);	// rm interstitial
 
 			SuperAwesome.instance.setConfigurationStaging ();
 			loader3 = SALoader.createInstance ();
 			loader3.loaderDelegate = this;
-			loader3.loadAd (45); // banner
+			loader3.loadAd (230); // banner
 		}
 
 		public void setTop() {
@@ -120,11 +120,11 @@ namespace SuperAwesome {
 
 		/** <SALoaderInterface> */
 		public void didLoadAd(SAAd ad) {
-			if (ad.placementId == 30447) {
+			if (ad.placementId == 79) {
 				adVideo = ad;
-			} else if (ad.placementId == 30444) {
+			} else if (ad.placementId == 232) {
 				adInterstitial = ad;
-			} else if (ad.placementId == 45){
+			} else if (ad.placementId == 230){
 				adBanner = ad;
 			}
 		}
