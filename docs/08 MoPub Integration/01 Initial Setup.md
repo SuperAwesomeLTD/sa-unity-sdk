@@ -2,7 +2,7 @@ If you already have MoPub ads serving in your app, but want to integrate SuperAw
 
 #### Setting up MoPub in your Unity Project
 
-To start at the beginning, the first thing you'll need to do, once you've created a new Unity project, is to head over to [MoPub's developer page](https://dev.twitter.com/mopub/unity) and download the latest [MoPub plugin](http://mopub-unity.mopub.com.s3.amazonaws.com/v3.8.0.zip).
+The first thing you'll need to do, once you've created a new Unity project, is to head over to [MoPub's developer page](https://dev.twitter.com/mopub/unity) and download the latest [MoPub plugin](http://mopub-unity.mopub.com.s3.amazonaws.com/v3.8.0.zip).
 This should contain a couple of .unitypackage files, chief among them **MoPubPlugin.unitypackage**. You'll need to import this into your Unity project.
 
 ![](img/IMG_15_MoPub1.png "unitypackage")

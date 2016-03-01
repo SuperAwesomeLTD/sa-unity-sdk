@@ -4,8 +4,6 @@ Start by actually exporting the project:
 
 ![](img/IMG_15_MoPub10.png "export to android")
 
-### Getting the Android SDK
-
 Again, you'll miss the actual Android SDK from the newly created Android Studio project.
 
 The simplest way of installing the AwesomeAds SDK in Android Studio is to download the AAR library through Gradle.
