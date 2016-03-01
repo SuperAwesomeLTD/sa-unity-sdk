@@ -52,8 +52,29 @@
             "text": "07 Catching Ad Events.md"
         },
         {
+            "name": "MoPub Integration",
+            "sections": [
+                {
+                    "name": "Initial Setup",
+                    "text": "08 MoPub Integration/01 Initial Setup.md"
+                },
+                {
+                    "name": "Export to iOS",
+                    "text": "08 MoPub Integration/02 Export to iOS.md"
+                },
+                {
+                    "name": "Export to Android",
+                    "text": "08 MoPub Integration/03 Export to Android.md"
+                },
+                {
+                    "name": "Create a Custom Native Network for SuperAwesome",
+                    "text": "08 MoPub Integration/04 Create a custom network.md"
+                }
+            ]
+        },
+        {
             "name": "Support",
-            "text": "08 Support.md"
+            "text": "09 Support.md"
         }
     ]
 }
