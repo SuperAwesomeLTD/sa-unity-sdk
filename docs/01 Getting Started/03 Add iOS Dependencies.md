@@ -34,11 +34,7 @@ This will create a new file simply called `Podfile`. Open it and alter it to loo
 platform :ios, '6.0'
 
 target 'Unity-iPhone' do
-pod 'SuperAwesome'
-end
-
-target 'Unity-iPhone Tests' do
-
+  pod 'SuperAwesome/Unity'
 end
 
 ```
@@ -50,8 +46,8 @@ pod update
 
 ```
 
-to tell CocoaPods to add the SuperAwesome iOS SDK library to your project. 
-Don't forget to open the .xcworkspace file to open your project in Xcode, instead of the .xcproj file, from here on out.
+to tell CocoaPods to add the SuperAwesome iOS SDK library and Unity plugins to your project. 
+Don't forget to open the *.xcworkspace* file to open your project in Xcode, instead of the .xcproj file, from here on out.
 
 #### Final setup
 

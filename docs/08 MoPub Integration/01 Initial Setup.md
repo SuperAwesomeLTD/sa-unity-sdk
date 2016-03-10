@@ -17,12 +17,12 @@ Next you'll need to download the AwesomeAds MoPub adapters for iOS and Android a
 
 For iOS you'll need to download:
 
-  * [SuperAwesomeBannerCustomEvent.h](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/SuperAwesomeMoPub/SuperAwesomeMoPub/SuperAwesomeBannerCustomEvent.h)
-  * [SuperAwesomeBannerCustomEvent.m](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/SuperAwesomeMoPub/SuperAwesomeMoPub/SuperAwesomeBannerCustomEvent.m)
-  * [SuperAwesomeInterstitialCustomEvent.h](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/SuperAwesomeMoPub/SuperAwesomeMoPub/SuperAwesomeInterstitialCustomEvent.h)
-  * [SuperAwesomeInterstitialCustomEvent.m](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/SuperAwesomeMoPub/SuperAwesomeMoPub/SuperAwesomeInterstitialCustomEvent.m)
-  * [SuperAwesomeRewardedVideoCustomEvent.h](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/SuperAwesomeMoPub/SuperAwesomeMoPub/SuperAwesomeRewardedVideoCustomEvent.h)
-  * [SuperAwesomeRewardedVideoCustomEvent.m](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/SuperAwesomeMoPub/SuperAwesomeMoPub/SuperAwesomeRewardedVideoCustomEvent.m)
+  * [SuperAwesomeBannerCustomEvent.h](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/Pod/Plugin/MoPub/SuperAwesomeBannerCustomEvent.h)
+  * [SuperAwesomeBannerCustomEvent.m](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/Pod/Plugin/MoPub/SuperAwesomeBannerCustomEvent.m)
+  * [SuperAwesomeInterstitialCustomEvent.h](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/Pod/Plugin/MoPub/SuperAwesomeInterstitialCustomEvent.h)
+  * [SuperAwesomeInterstitialCustomEvent.m](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/Pod/Plugin/MoPub/SuperAwesomeInterstitialCustomEvent.m)
+  * [SuperAwesomeRewardedVideoCustomEvent.h](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/Pod/Plugin/MoPub/SuperAwesomeRewardedVideoCustomEvent.h)
+  * [SuperAwesomeRewardedVideoCustomEvent.m](https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-sdk-ios/master/Pod/Plugin/MoPub/SuperAwesomeRewardedVideoCustomEvent.m)
 
 and place them into the `Assets/Editor/MoPub/NativeCode` folder.
 

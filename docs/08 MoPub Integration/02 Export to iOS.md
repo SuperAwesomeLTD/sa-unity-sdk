@@ -29,12 +29,9 @@ This will create a file called `Podfile`, which you'll need to edit to look like
 platform :ios, '6.0'
 
 target 'Unity-iPhone' do
-pod 'SuperAwesome'
+  pod 'SuperAwesome/Unity'
 end
 
-target 'Unity-iPhone Tests' do
-
-end
 
 ```
 
