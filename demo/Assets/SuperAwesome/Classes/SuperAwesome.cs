@@ -50,7 +50,7 @@ namespace SuperAwesome {
 
 		/** functions to get info about the current SDK */
 		private static string getVersion(){
-			return "3.0.5";
+			return "3.0.6";
 		}
 
 		private static string getSdk() {

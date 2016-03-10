@@ -40,12 +40,12 @@ namespace SuperAwesome {
 
 			loader2 = SALoader.createInstance ();
 			loader2.loaderDelegate = this;
-			loader2.loadAd (232);	// rm interstitial
+			loader2.loadAd (2559);	// rm interstitial
 
 			SuperAwesome.instance.setConfigurationStaging ();
 			loader3 = SALoader.createInstance ();
 			loader3.loaderDelegate = this;
-			loader3.loadAd (230); // banner
+			loader3.loadAd (10305); // banner
 		}
 
 		public void setTop() {
@@ -122,9 +122,9 @@ namespace SuperAwesome {
 		public void didLoadAd(SAAd ad) {
 			if (ad.placementId == 79) {
 				adVideo = ad;
-			} else if (ad.placementId == 232) {
+			} else if (ad.placementId == 2559) {
 				adInterstitial = ad;
-			} else if (ad.placementId == 230){
+			} else if (ad.placementId == 10305){
 				adBanner = ad;
 			}
 		}

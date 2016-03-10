@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SuperAwesome.h"
+#import "SAUnityLinker.h"
 
 extern "C" {
     
