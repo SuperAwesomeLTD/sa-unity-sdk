@@ -40,7 +40,7 @@ namespace SuperAwesome {
 
 			loader2 = SALoader.createInstance ();
 			loader2.loaderDelegate = this;
-			loader2.loadAd (2559);	// rm interstitial
+			loader2.loadAd (3079);	// rm interstitial
 
 			SuperAwesome.instance.setConfigurationStaging ();
 			loader3 = SALoader.createInstance ();
@@ -122,7 +122,7 @@ namespace SuperAwesome {
 		public void didLoadAd(SAAd ad) {
 			if (ad.placementId == 79) {
 				adVideo = ad;
-			} else if (ad.placementId == 2559) {
+			} else if (ad.placementId == 3079) {
 				adInterstitial = ad;
 			} else if (ad.placementId == 10305){
 				adBanner = ad;

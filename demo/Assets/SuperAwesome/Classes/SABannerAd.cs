@@ -92,7 +92,7 @@ namespace SuperAwesome {
 
 			/** check for autostart and then start */
 			if (shouldAutoStart) {
-				showAd(placementId, position, size, isParentalGateEnabled);
+				showAd(placementId, position, size, testModeEnabled, isParentalGateEnabled);
 			}
 		}
 		
@@ -109,12 +109,16 @@ namespace SuperAwesome {
 		 * this function <would> be called when starting an interstitial ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		private void showAd(int placementId, BannerPosition position, BannerSize size, bool isParentalGateEnabled) {
+		private void showAd(int placementId, BannerPosition position, BannerSize size, bool testModeEnabled, bool isParentalGateEnabled) {
 			/** assign vars */
 			this.placementId = placementId;
 			this.position = position;
 			this.size = size;
 			this.isParentalGateEnabled = isParentalGateEnabled;
+
+			/** save the current global test mode - and assign the new one */
+			bool cTestMode = SuperAwesome.instance.isTestingEnabled ();
+			SuperAwesome.instance.setTestMode (this.testModeEnabled);
 
 			/** create an instance of SALoader */
 			SALoader loader = SALoader.createInstance ();
@@ -124,6 +128,9 @@ namespace SuperAwesome {
 
 			/** load the actual ad */
 			loader.loadAd (placementId);
+
+			/** revert to current global test mode */
+			SuperAwesome.instance.setTestMode (cTestMode);
 		}
 
 		/** 

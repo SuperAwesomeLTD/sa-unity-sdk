@@ -49,16 +49,16 @@ namespace SuperAwesome {
 		}
 
 		/** functions to get info about the current SDK */
-		private static string getVersion(){
-			return "3.0.6";
+		private string getVersion(){
+			return "3.0.7";
 		}
 
-		private static string getSdk() {
+		private string getSdk() {
 			return "unity";
 		}
 
-		public static string getSdkVersion() {
-			return SuperAwesome.getSdk () + "_" + SuperAwesome.getVersion ();
+		public string getSdkVersion() {
+			return getSdk () + "_" + getVersion ();
 		}
 
 		/** group of functions that encapsulate config / URL functionality */
@@ -92,6 +92,10 @@ namespace SuperAwesome {
 
 		public void disableTestMode() {
 			this.isTestEnabled = false;
+		}
+
+		public void setTestMode(bool testMode) {
+			this.isTestEnabled = testMode;
 		}
 
 		public bool isTestingEnabled() {
