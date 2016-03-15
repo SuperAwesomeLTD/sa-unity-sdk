@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    compile 'tv.superawesome.sdk:sa-sdk:3.5.3@aar'
+    compile 'tv.superawesome.sdk:sa-sdk:3.5.4@aar'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile files('libs/mopub-volley-1.1.0.jar')
     compile files('libs/samopub.jar')
