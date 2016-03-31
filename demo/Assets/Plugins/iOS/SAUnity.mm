@@ -11,15 +11,36 @@
 
 extern "C" {
     
+    NSMutableDictionary *linkerDict = [[NSMutableDictionary alloc] init];
+    
+    //
+    // Setter / getter and remover functions for linker dictionary objects
+    // @warn: this should be compatible with both Unity 4- and Unity 5+
+    SAUnityLinker *getOrCreateLinker(NSString *name) {
+        SAUnityLinker *linker = [linkerDict objectForKey:name];
+        if (linker == nil) {
+            linker = [[SAUnityLinker alloc] init];
+            [linkerDict setObject:linker forKey:name];
+        }
+        return linker;
+    }
+    
+    void removeLinker(NSString *name){
+        if ([linkerDict objectForKey:name]){
+            [linkerDict removeObjectForKey:name];
+        }
+    }
+    
     //
     // This function acts as a bridge between Unity-iOS-Unity
     // and loads an Ad with the help of the SuperAwesome iOS SDK
     void SuperAwesomeUnityLoadAd(const char *unityName, int placementId, BOOL isTestingEnabled, int config) {
         // transfrom the name
         NSString *name = [NSString stringWithUTF8String:unityName];
+        NSLog(@"SuperAwesomeUnityLoadAd - %@", name);
         
         SAConfiguration iconfig = (SAConfiguration)config;
-        switch (config) {
+        switch (iconfig) {
             case PRODUCTION: [[SuperAwesome getInstance] setConfigurationProduction]; break;
             case STAGING: [[SuperAwesome getInstance] setConfigurationStaging]; break;
             case DEVELOPMENT: [[SuperAwesome getInstance] setConfigurationDevelopment]; break;
@@ -27,9 +48,7 @@ extern "C" {
         }
         
         // create a linker
-        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
-        
-        NSLog(@"SuperAwesomeUnityLoadAd - %@", name);
+        SAUnityLinker *linker = getOrCreateLinker(name);
         
         // assign the success and error callbacks
         linker.loadingEvent = ^(NSString *unityAd, NSString *unityCallback, NSString *adString) {
@@ -51,11 +70,10 @@ extern "C" {
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSString *json = [NSString stringWithUTF8String:adJson];
+        NSLog(@"SuperAwesomeUnitySABannerAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
-        
-        NSLog(@"SuperAwesomeUnitySABannerAd - %@", name);
+        SAUnityLinker *linker = getOrCreateLinker(name);
         
         // add callbacks
         linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
@@ -78,14 +96,12 @@ extern "C" {
     void SuperAwesomeUnityRemoveSABannerAd(const char *unityName) {
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
-        
-        // updat-eeeeed!
-        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
-        
         NSLog(@"SuperAwesomeUnityRemoveSABannerAd - %@", name);
         
-        
+        // updat-eeeeed!
+        SAUnityLinker *linker = getOrCreateLinker(name);
         [linker removeBannerForUnityName:name];
+        removeLinker(name);
     }
     
     //
@@ -93,16 +109,13 @@ extern "C" {
     // and displays an interstitial ad
     void SuperAwesomeUnitySAInterstitialAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled) {
         
-        // NSLog(@"Got in SuperAwesomeUnitySAInterstitialAd");
-        
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSString *json = [NSString stringWithUTF8String:adJson];
+        NSLog(@"SuperAwesomeUnitySAInterstitialAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
-        
-        NSLog(@"SuperAwesomeUnitySAInterstitialAd - %@", name);
+        SAUnityLinker *linker = getOrCreateLinker(name);
         
         // add callbacks
         linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
@@ -122,14 +135,12 @@ extern "C" {
     void SuperAwesomeUnityCloseSAInterstitialAd(const char *unityName) {
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
-        
-        // updat-eeeeed!
-        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
-        
         NSLog(@"SuperAwesomeUnityCloseSAInterstitialAd - %@", name);
         
-        
+        // updat-eeeeed!
+        SAUnityLinker *linker = getOrCreateLinker(name);
         [linker closeInterstitialForUnityName:name];
+        removeLinker(name);
     }
     
     //
@@ -140,11 +151,10 @@ extern "C" {
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSString *json = [NSString stringWithUTF8String:adJson];
+        NSLog(@"SuperAwesomeUnitySAVideoAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
-        
-        NSLog(@"SuperAwesomeUnitySAVideoAd - %@", name);
+        SAUnityLinker *linker = getOrCreateLinker(name);
         
         // add callbacks
         linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
@@ -166,12 +176,11 @@ extern "C" {
     void SuperAwesomeUnityCloseSAFullscreenVideoAd(const char *unityName) {
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
-        
-        // updat-eeeeed!
-        SAUnityLinker *linker = [[SAUnityLinker alloc] init];
-        
         NSLog(@"SuperAwesomeUnityCloseSAFullscreenVideoAd - %@", name);
         
+        // updat-eeeeed!
+        SAUnityLinker *linker = getOrCreateLinker(name);
         [linker closeFullscreenVideoForUnityName:name];
+        removeLinker(name);
     }
 }

@@ -38,7 +38,10 @@ namespace SuperAwesome {
 			/** add to that new object the video ad */
 			SALoader loader = obj.AddComponent<SALoader> ();
 			loader.name = "SALoader_" + (++SALoader.index);
-			
+
+			/** call don't destroy on load ... */
+			DontDestroyOnLoad (obj);
+
 			/** and return the ad Obj instance */
 			return loader;
 		}

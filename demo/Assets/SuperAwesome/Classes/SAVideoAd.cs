@@ -218,12 +218,14 @@ namespace SuperAwesome {
 				if (adDelegate != null) adDelegate.adFailedToShow(ad.placementId); break;
 			}
 			case "callback_adWasClosed":{
+				close ();
 				if (adDelegate != null) adDelegate.adWasClosed(ad.placementId); break;
 			}
 			case "callback_adWasClicked":{
 				if (adDelegate != null) adDelegate.adWasClicked(ad.placementId); break;
 			}
 			case "callback_adHasIncorrectPlacement":{
+				close ();
 				if (adDelegate != null) adDelegate.adHasIncorrectPlacement(ad.placementId); break;
 			}
 			case "callback_parentalGateWasCanceled":{

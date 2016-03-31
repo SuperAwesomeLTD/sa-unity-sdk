@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+3.0.8
+ - Update SAUnity.mm to work with Unity 5.3+
+
+3.0.7
+3.0.6
+3.0.5
 3.0.4
  - added the SAViewInterface to make the code more in line with iOS / Android practices
 
