@@ -4,19 +4,13 @@ using System.Collections;
 
 namespace SuperAwesome {
 
-	public class onBtnClick : MonoBehaviour, SALoaderInterface, SAAdInterface, SAVideoAdInterface, SAParentalGateInterface {
+	public class onBtnClick : MonoBehaviour, SALoaderInterface, SAAdInterface, SAParentalGateInterface {
 
-		private SALoader loader1 = null, loader2 = null, loader3 = null;
+		private SALoader loader1 = null, loader2 = null;
 		private SAAd adBanner = null;
-		private SAAd adVideo = null;
 		private SAAd adInterstitial = null;
 		private SABannerAd bad = null;
 		private SAInterstitialAd iad = null;
-		private SAVideoAd vad = null;
-
-		private SABannerAd.BannerPosition position = SABannerAd.BannerPosition.BOTTOM;
-		private SABannerAd.BannerSize size = SABannerAd.BannerSize.BANNER_320_50;
-		private SABannerAd.BannerColor color = SABannerAd.BannerColor.BANNER_GRAY;
 
 		// Use this for initialization
 		void Start () {
@@ -36,50 +30,20 @@ namespace SuperAwesome {
 
 			loader1 = SALoader.createInstance ();
 			loader1.loaderDelegate = this;
-			loader1.loadAd (79);	// movie
+			loader1.loadAd (31107);	// 728x90
 
 			loader2 = SALoader.createInstance ();
 			loader2.loaderDelegate = this;
-			loader2.loadAd (31093);	// rm interstitial
-
-			SuperAwesome.instance.setConfigurationStaging ();
-			loader3 = SALoader.createInstance ();
-			loader3.loaderDelegate = this;
-			loader3.loadAd (10305); // banner
-		}
-
-		public void setTop() {
-			position = SABannerAd.BannerPosition.TOP;
-		}
-		public void setBottom () {
-			position = SABannerAd.BannerPosition.BOTTOM;
-		}
-		public void setTransparent () {
-			color = SABannerAd.BannerColor.BANNER_TRANSPARENT;
-		}
-		public void setGray () {
-			color = SABannerAd.BannerColor.BANNER_GRAY;
-		}
-		public void set32050 () {
-			size = SABannerAd.BannerSize.BANNER_320_50;
-		}
-		public void set30050 () {
-			size = SABannerAd.BannerSize.BANNER_300_50;
-		}
-		public void set300250 () {
-			size = SABannerAd.BannerSize.BANNER_300_250;
-		}
-		public void set72890 () {
-			size = SABannerAd.BannerSize.BANNER_728_90;
+			loader2.loadAd (31108);	// interstitial
 		}
 
 		public void playBanner () {
 			if (adBanner != null) {
 				bad = SABannerAd.createInstance();
 				bad.setAd(adBanner);
-				bad.position = position;
-				bad.size = size;
-				bad.color = color;
+				bad.position = SABannerAd.BannerPosition.BOTTOM;
+				bad.size = SABannerAd.BannerSize.BANNER_728_90;
+				bad.color = SABannerAd.BannerColor.BANNER_GRAY;
 				bad.isParentalGateEnabled = true;
 				bad.adDelegate = this;
 				bad.parentalGateDelegate = this;
@@ -104,29 +68,13 @@ namespace SuperAwesome {
 			}
 		}
 
-		public void playVideo() {
-			if (adVideo != null) {
-				vad = SAVideoAd.createInstance();
-				vad.setAd(adVideo);
-				vad.isParentalGateEnabled = true;
-				vad.shouldShowCloseButton = true;
-				vad.shouldAutomaticallyCloseAtEnd = false;
-				vad.adDelegate = this;
-				vad.parentalGateDelegate = this;
-				vad.videoAdDelegate = this;
-				vad.play();
-			}
-		}
-
 		/** <SALoaderInterface> */
 		public void didLoadAd(SAAd ad) {
-			if (ad.placementId == 79) {
-				adVideo = ad;
-			} else if (ad.placementId == 31093) {
-				adInterstitial = ad;
-			} else if (ad.placementId == 10305){
+			if (ad.placementId == 31107) {
 				adBanner = ad;
-			}
+			} else if (ad.placementId == 31108) {
+				adInterstitial = ad;
+			} 
 		}
 
 		public void didFailToLoadAd(int placementId) {
@@ -164,39 +112,6 @@ namespace SuperAwesome {
 
 		public void parentalGateWasSucceded(int placementId) {
 			Debug.Log ("[Unity] - parentalGateWasSucceded " + placementId);
-		}
-
-		public void adStarted(int placementId){
-			Debug.Log ("[Unity] - adStarted " + placementId);
-		}
-		
-		public void videoStarted(int placementId){
-			Debug.Log ("[Unity] - videoStarted " + placementId);
-		}
-		
-		public void videoReachedFirstQuartile(int placementId){
-			Debug.Log ("[Unity] - videoReachedFirstQuartile " + placementId);
-		}
-		
-		public void videoReachedMidpoint(int placementId){
-			Debug.Log ("[Unity] - videoReachedMidpoint " + placementId);
-		}
-		
-		public void videoReachedThirdQuartile(int placementId){
-			Debug.Log ("[Unity] - videoReachedThirdQuartile " + placementId);
-		}
-		
-		public void videoEnded(int placementId){
-			Debug.Log ("[Unity] - videoEnded " + placementId);
-		}
-		
-		public void adEnded(int placementId){
-			Debug.Log ("[Unity] - adEnded " + placementId);
-		}
-		
-		public void allAdsEnded(int placementId){
-			Debug.Log ("[Unity] - allAdsEnded " + placementId);
-			vad.close ();
 		}
 	}
 }
