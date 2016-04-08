@@ -6,11 +6,12 @@ namespace SuperAwesome {
 
 	public class onBtnClick : MonoBehaviour, SALoaderInterface, SAAdInterface, SAParentalGateInterface {
 
-		private SALoader loader1 = null, loader2 = null;
+		private SALoader loader = null, loader1 = null;
 		private SAAd adBanner = null;
 		private SAAd adInterstitial = null;
 		private SABannerAd bad = null;
 		private SAInterstitialAd iad = null;
+		private SAVideoAd vad = null;
 
 		// Use this for initialization
 		void Start () {
@@ -28,53 +29,53 @@ namespace SuperAwesome {
 			SuperAwesome.instance.setConfigurationProduction ();
 			SuperAwesome.instance.enableTestMode ();
 
+			loader = SALoader.createInstance ();
+			loader.loaderDelegate = this;
+			loader.loadAd (31107);	// 728x90
+			loader.loadAd (31108);  // video
+
 			loader1 = SALoader.createInstance ();
 			loader1.loaderDelegate = this;
-			loader1.loadAd (31107);	// 728x90
+			loader1.loadAd (28000);  // interstitial
 
-			loader2 = SALoader.createInstance ();
-			loader2.loaderDelegate = this;
-			loader2.loadAd (31108);	// interstitial
 		}
 
 		public void playBanner () {
-			if (adBanner != null) {
-				bad = SABannerAd.createInstance();
-				bad.setAd(adBanner);
+
+		}
+
+		public void deleteBanner () {
+
+		}
+
+		public void playInterstitial () {
+			iad = SAInterstitialAd.createInstance ();
+			iad.setAd (adInterstitial);
+			iad.isParentalGateEnabled = true;
+			iad.adDelegate = this;
+			iad.parentalGateDelegate = this;
+			iad.play ();
+		}
+
+		/** <SALoaderInterface> */
+		public void didLoadAd(SAAd ad) {
+			if (ad.placementId == 31107) {
+				bad = SABannerAd.createInstance ();
+				bad.setAd (ad);
 				bad.position = SABannerAd.BannerPosition.BOTTOM;
 				bad.size = SABannerAd.BannerSize.BANNER_728_90;
 				bad.color = SABannerAd.BannerColor.BANNER_GRAY;
 				bad.isParentalGateEnabled = true;
 				bad.adDelegate = this;
 				bad.parentalGateDelegate = this;
-				bad.play();
-			}
-		}
-
-		public void deleteBanner () {
-			if (bad != null) {
-				bad.close ();
-			}
-		}
-
-		public void playInterstitial () {
-			if (adInterstitial != null) {
-				iad = SAInterstitialAd.createInstance();
-				iad.setAd(adInterstitial);
-				iad.isParentalGateEnabled = true;
-				iad.adDelegate = this;
-				iad.parentalGateDelegate = this;
-				iad.play();
-			}
-		}
-
-		/** <SALoaderInterface> */
-		public void didLoadAd(SAAd ad) {
-			if (ad.placementId == 31107) {
-				adBanner = ad;
+				bad.play ();
 			} else if (ad.placementId == 31108) {
 				adInterstitial = ad;
-			} 
+			} else if (ad.placementId == 28000) {
+				vad = SAVideoAd.createInstance ();
+				vad.setAd (ad);
+				vad.play ();
+			}
 		}
 
 		public void didFailToLoadAd(int placementId) {

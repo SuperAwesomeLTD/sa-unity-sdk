@@ -29,6 +29,7 @@ extern "C" {
         if ([linkerDict objectForKey:name]){
             [linkerDict removeObjectForKey:name];
         }
+        NSLog(@"Remaining: %@", keys);
     }
     
     //
@@ -51,8 +52,8 @@ extern "C" {
         SAUnityLinker *linker = getOrCreateLinker(name);
         
         // assign the success and error callbacks
-        linker.loadingEvent = ^(NSString *unityAd, NSString *unityCallback, NSString *adString) {
-            NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\", \"adJson\":%@}", unityCallback, adString];
+        linker.loadingEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback, NSString *adString) {
+            NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\", \"adJson\":%@}", placementId, unityCallback, adString];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
@@ -76,8 +77,8 @@ extern "C" {
         SAUnityLinker *linker = getOrCreateLinker(name);
         
         // add callbacks
-        linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
-            NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\"}", unityCallback];
+        linker.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
+            NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
@@ -118,8 +119,8 @@ extern "C" {
         SAUnityLinker *linker = getOrCreateLinker(name);
         
         // add callbacks
-        linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
-            NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\"}", unityCallback];
+        linker.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
+            NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
@@ -157,8 +158,8 @@ extern "C" {
         SAUnityLinker *linker = getOrCreateLinker(name);
         
         // add callbacks
-        linker.adEvent = ^(NSString *unityAd, NSString *unityCallback) {
-            NSString *payload = [NSString stringWithFormat:@"{\"type\":\"%@\"}", unityCallback];
+        linker.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
+            NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         

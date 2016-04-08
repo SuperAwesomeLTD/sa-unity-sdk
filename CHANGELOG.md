@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+3.0.9
+ - Updates to work w/ new versions of iOS & Android SDK
+
 3.0.8
  - Update SAUnity.mm to work with Unity 5.3+
 

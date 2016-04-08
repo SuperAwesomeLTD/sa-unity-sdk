@@ -87,11 +87,14 @@ namespace SuperAwesome {
 		public void nativeCallback(string payload) {
 			Dictionary<string, object> payloadDict;
 			string type = "";
+			string placement = "";
+			int placementId = 0;
 
 			/** try to get payload and type data */
 			try {
 				payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
 				type = (string) payloadDict ["type"];
+				placement = (string) payloadDict ["placementId"];
 			} catch {
 				if (loaderDelegate != null) {
 					loaderDelegate.didFailToLoadAd(this.placementId);
@@ -105,7 +108,7 @@ namespace SuperAwesome {
 				Dictionary<string, object> data = payloadDict["adJson"] as Dictionary<string, object>;
 				SAAd ad = new SAAd();
 				ad.adJson = Json.Serialize(data);
-				ad.placementId = this.placementId;
+				ad.placementId = int.Parse(placement);
 
 				if (loaderDelegate != null) {
 					loaderDelegate.didLoadAd(ad);
@@ -114,7 +117,7 @@ namespace SuperAwesome {
 			}
 			case "callback_didFailToLoadAd":{
 				if (loaderDelegate != null) {
-					loaderDelegate.didFailToLoadAd(this.placementId);
+					loaderDelegate.didFailToLoadAd(int.Parse(placement));
 				}
 				break;
 			}
