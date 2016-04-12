@@ -29,7 +29,6 @@ extern "C" {
         if ([linkerDict objectForKey:name]){
             [linkerDict removeObjectForKey:name];
         }
-        NSLog(@"Remaining: %@", keys);
     }
     
     //
