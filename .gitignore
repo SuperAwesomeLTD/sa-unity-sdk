@@ -21,6 +21,5 @@
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
 
-/ios_unity4_test
-/android_unity4_test
-rdocs/build/*
+/ios_unity4_test/*
+/android_unity4_test/*
