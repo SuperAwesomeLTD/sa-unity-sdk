@@ -163,7 +163,7 @@ namespace SuperAwesome {
 			
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityPlayFullscreenVideoAd");
 				test.CallStatic("SuperAwesomeUnitySAVideoAd", context, ad.placementId, ad.adJson, uname, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
 			}));
 #else
@@ -184,7 +184,7 @@ namespace SuperAwesome {
 			
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityPlayFullscreenVideoAd");
 				test.CallStatic("SuperAwesomeUnityCloseSAFullscreenVideoAd", context, uname);
 			}));
 #else 

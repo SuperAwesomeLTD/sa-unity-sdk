@@ -25,6 +25,7 @@ namespace SuperAwesome {
 		public bool testModeEnabled = false;
 		public bool isParentalGateEnabled = true;
 		public bool shouldAutoStart = false;
+		public bool shouldLockOrientation = false;
 
 		/** delegates */
 		public SAAdInterface adDelegate = null;
@@ -157,7 +158,7 @@ namespace SuperAwesome {
 			
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityPlayInterstitialAd");
 				test.CallStatic("SuperAwesomeUnitySAInterstitialAd", context, ad.placementId, ad.adJson, uname, isParentalGateEnabled);
 			}));
 #else
@@ -178,7 +179,7 @@ namespace SuperAwesome {
 			
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityPlayInterstitialAd");
 				test.CallStatic("SuperAwesomeUnityCloseSAInterstitialAd", context, uname);
 			}));
 #else 

@@ -73,7 +73,7 @@ namespace SuperAwesome {
 
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityLoadAd");
 				test.CallStatic("SuperAwesomeUnityLoadAd", context, uname, placementId, isTestingEnabled, config);
 			}));
 #else

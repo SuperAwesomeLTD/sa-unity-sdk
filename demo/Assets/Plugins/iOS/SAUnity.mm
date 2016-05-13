@@ -7,27 +7,26 @@
 
 #import <Foundation/Foundation.h>
 #import "SuperAwesome.h"
-#import "SAUnityLinker.h"
+#import "SAUnityExtension.h"
+#import "SAUnityLoadAd.h"
+#import "SAUnityPlayBannerAd.h"
+#import "SAUnityPlayInterstitialAd.h"
+#import "SAUnityPlayFullscreenVideoAd.h"
 
 extern "C" {
     
-    NSMutableDictionary *linkerDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *extensionDict = [[NSMutableDictionary alloc] init];
     
     //
     // Setter / getter and remover functions for linker dictionary objects
     // @warn: this should be compatible with both Unity 4- and Unity 5+
-    SAUnityLinker *getOrCreateLinker(NSString *name) {
-        SAUnityLinker *linker = [linkerDict objectForKey:name];
-        if (linker == nil) {
-            linker = [[SAUnityLinker alloc] init];
-            [linkerDict setObject:linker forKey:name];
-        }
-        return linker;
+    SAUnityExtension *getOrCreateExtension(NSString *name) {
+        return [extensionDict objectForKey:name];
     }
     
-    void removeLinker(NSString *name){
-        if ([linkerDict objectForKey:name]){
-            [linkerDict removeObjectForKey:name];
+    void removeExtension(NSString *name){
+        if ([extensionDict objectForKey:name]){
+            [extensionDict removeObjectForKey:name];
         }
     }
     
@@ -48,18 +47,19 @@ extern "C" {
         }
         
         // create a linker
-        SAUnityLinker *linker = getOrCreateLinker(name);
+        SAUnityLoadAd *extension = (SAUnityLoadAd*)getOrCreateExtension(name);
+        if (!extension) extension = [[SAUnityLoadAd alloc] init];
         
         // assign the success and error callbacks
-        linker.loadingEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback, NSString *adString) {
+        extension.loadingEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback, NSString *adString) {
             NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\", \"adJson\":%@}", placementId, unityCallback, adString];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
         // call to load
-        [linker loadAd:placementId
-            forUnityAd:name
-          withTestMode:isTestingEnabled];
+        [extension loadAd:placementId
+               forUnityAd:name
+             withTestMode:isTestingEnabled];
     }
     
     //
@@ -73,22 +73,23 @@ extern "C" {
         NSLog(@"SuperAwesomeUnitySABannerAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = getOrCreateLinker(name);
+        SAUnityPlayBannerAd *extension = (SAUnityPlayBannerAd*)getOrCreateExtension(name);
+        if (!extension) extension = [[SAUnityPlayBannerAd alloc] init];
         
         // add callbacks
-        linker.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
+        extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
             NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
         // start
-        [linker showBannerAdWith:placementId
-                       andAdJson:json
-                    andUnityName:name
-                     andPosition:position
-                         andSize:size
-                        andColor:color
-              andHasParentalGate:isParentalGateEnabled];
+        [extension showBannerAdWith:placementId
+                          andAdJson:json
+                       andUnityName:name
+                        andPosition:position
+                            andSize:size
+                           andColor:color
+                 andHasParentalGate:isParentalGateEnabled];
     }
     
     //
@@ -99,9 +100,10 @@ extern "C" {
         NSLog(@"SuperAwesomeUnityRemoveSABannerAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = getOrCreateLinker(name);
-        [linker removeBannerForUnityName:name];
-        removeLinker(name);
+        SAUnityPlayBannerAd *extension = (SAUnityPlayBannerAd*)getOrCreateExtension(name);
+        if (!extension) extension = [[SAUnityPlayBannerAd alloc] init];
+        [extension removeBannerForUnityName:name];
+        removeExtension(name);
     }
     
     //
@@ -115,19 +117,20 @@ extern "C" {
         NSLog(@"SuperAwesomeUnitySAInterstitialAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = getOrCreateLinker(name);
+        SAUnityPlayInterstitialAd *extension = (SAUnityPlayInterstitialAd*)getOrCreateExtension(name);
+        if (!extension) extension = [[SAUnityPlayInterstitialAd alloc] init];
         
         // add callbacks
-        linker.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
+        extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
             NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
         // start
-        [linker showInterstitialAdWith:placementId
-                             andAdJson:json
-                          andUnityName:name
-                    andHasParentalGate:isParentalGateEnabled];
+        [extension showInterstitialAdWith:placementId
+                                andAdJson:json
+                             andUnityName:name
+                       andHasParentalGate:isParentalGateEnabled];
     }
     
     //
@@ -138,9 +141,10 @@ extern "C" {
         NSLog(@"SuperAwesomeUnityCloseSAInterstitialAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = getOrCreateLinker(name);
-        [linker closeInterstitialForUnityName:name];
-        removeLinker(name);
+        SAUnityPlayInterstitialAd *extension = (SAUnityPlayInterstitialAd*)getOrCreateExtension(name);
+        if (!extension) extension = [[SAUnityPlayInterstitialAd alloc] init];
+        [extension closeInterstitialForUnityName:name];
+        removeExtension(name);
     }
     
     //
@@ -154,21 +158,22 @@ extern "C" {
         NSLog(@"SuperAwesomeUnitySAVideoAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = getOrCreateLinker(name);
+        SAUnityPlayFullscreenVideoAd *extension = (SAUnityPlayFullscreenVideoAd*)getOrCreateExtension(name);
+        if (!extension) extension = [[SAUnityPlayFullscreenVideoAd alloc] init];
         
         // add callbacks
-        linker.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
+        extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
             NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
             UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
         };
         
         // start
-        [linker showVideoAdWith:placementId
-                      andAdJson:json
-                   andUnityName:name
-             andHasParentalGate:isParentalGateEnabled
-              andHasCloseButton:shouldShowCloseButton
-                 andClosesAtEnd:shouldAutomaticallyCloseAtEnd];
+        [extension showVideoAdWith:placementId
+                         andAdJson:json
+                      andUnityName:name
+                andHasParentalGate:isParentalGateEnabled
+                 andHasCloseButton:shouldShowCloseButton
+                    andClosesAtEnd:shouldAutomaticallyCloseAtEnd];
     }
     
     //
@@ -179,8 +184,9 @@ extern "C" {
         NSLog(@"SuperAwesomeUnityCloseSAFullscreenVideoAd - %@", name);
         
         // updat-eeeeed!
-        SAUnityLinker *linker = getOrCreateLinker(name);
-        [linker closeFullscreenVideoForUnityName:name];
-        removeLinker(name);
+        SAUnityPlayFullscreenVideoAd *extension = (SAUnityPlayFullscreenVideoAd*)getOrCreateExtension(name);
+        if (!extension) extension = [[SAUnityPlayFullscreenVideoAd alloc] init];
+        [extension closeFullscreenVideoForUnityName:name];
+        removeExtension(name);
     }
 }
