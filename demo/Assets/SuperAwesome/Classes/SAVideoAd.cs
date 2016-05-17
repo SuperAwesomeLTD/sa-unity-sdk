@@ -26,6 +26,9 @@ namespace SuperAwesome {
 		public bool isParentalGateEnabled = true;
 		public bool shouldShowCloseButton = false;
 		public bool shouldAutomaticallyCloseAtEnd = true;
+		public bool shouldShowSmallClickButton = false;
+		public bool shouldLockOrientation = false;
+		public LockOrientation lockOrientation = LockOrientation.ANY;
 		public bool shouldAutoStart = false;
 
 		/** delegates */
@@ -35,7 +38,7 @@ namespace SuperAwesome {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySAVideoAd(int placementId, string adJson, string unityName, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd);
+		private static extern void SuperAwesomeUnitySAVideoAd(int placementId, string adJson, string unityName, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd, bool shouldShowSmallClickButton, bool shouldLockOrientation, int lockOrientation);
 		[DllImport ("__Internal")]
 		private static extern void SuperAwesomeUnityCloseSAFullscreenVideoAd(string unityName);
 #endif
@@ -72,7 +75,7 @@ namespace SuperAwesome {
 			
 			/** check for autostart and then start */
 			if (shouldAutoStart) {
-				showAd(placementId, testModeEnabled, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+				showAd(placementId, testModeEnabled, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd, shouldShowSmallClickButton, shouldLockOrientation, lockOrientation);
 			}
 		}
 		
@@ -89,13 +92,16 @@ namespace SuperAwesome {
 		 * this function <would> be called when starting a video ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		private void showAd(int placementId, bool testModeEnabled,  bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd) {
+		private void showAd(int placementId, bool testModeEnabled,  bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd, bool shouldShowSmallClickButton, bool shouldLockOrientation, LockOrientation lockOrientation) {
 			/** assign vars */
 			this.placementId = placementId;
+			this.testModeEnabled = testModeEnabled;
 			this.isParentalGateEnabled = isParentalGateEnabled;
 			this.shouldShowCloseButton = shouldShowCloseButton;
 			this.shouldAutomaticallyCloseAtEnd = shouldAutomaticallyCloseAtEnd;
-			this.testModeEnabled = testModeEnabled;
+			this.shouldShowSmallClickButton = shouldShowSmallClickButton;
+			this.shouldLockOrientation = shouldLockOrientation;
+			this.lockOrientation = lockOrientation;
 
 			/** save the current global test mode - and assign the new one */
 			bool cTestMode = SuperAwesome.instance.isTestingEnabled ();
@@ -153,9 +159,11 @@ namespace SuperAwesome {
 				Debug.Log("Tried to play ad without ad data for " + this.name);
 				return;
 			}
+
+			int orientation = (int)lockOrientation;
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAVideoAd.SuperAwesomeUnitySAVideoAd(ad.placementId, ad.adJson, this.name, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+			SAVideoAd.SuperAwesomeUnitySAVideoAd(ad.placementId, ad.adJson, this.name, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd, shouldShowSmallClickButton, shouldLockOrientation, orientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
@@ -164,7 +172,7 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityPlayFullscreenVideoAd");
-				test.CallStatic("SuperAwesomeUnitySAVideoAd", context, ad.placementId, ad.adJson, uname, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd);
+				test.CallStatic("SuperAwesomeUnitySAVideoAd", context, ad.placementId, ad.adJson, uname, isParentalGateEnabled, shouldShowCloseButton, shouldAutomaticallyCloseAtEnd, shouldShowSmallClickButton, shouldLockOrientation, orientation);
 			}));
 #else
 			Debug.Log ("Open: " + this.name + ", " + ad.placementId);

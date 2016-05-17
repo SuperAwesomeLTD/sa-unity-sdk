@@ -26,6 +26,7 @@ namespace SuperAwesome {
 		public bool isParentalGateEnabled = true;
 		public bool shouldAutoStart = false;
 		public bool shouldLockOrientation = false;
+		public LockOrientation lockOrientation = LockOrientation.ANY;
 
 		/** delegates */
 		public SAAdInterface adDelegate = null;
@@ -33,7 +34,7 @@ namespace SuperAwesome {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySAInterstitialAd(int placementId, string adJson, string unityName, bool isParentalGateEnabled);
+		private static extern void SuperAwesomeUnitySAInterstitialAd(int placementId, string adJson, string unityName, bool isParentalGateEnabled, bool shouldLockOrientation, int lockOrientation);
 		[DllImport ("__Internal")]
 		private static extern void SuperAwesomeUnityCloseSAInterstitialAd(string unityName);
 #endif
@@ -70,7 +71,7 @@ namespace SuperAwesome {
 			
 			/** check for autostart and then start */
 			if (shouldAutoStart) {
-				showAd(placementId, testModeEnabled, isParentalGateEnabled);
+				showAd(placementId, testModeEnabled, isParentalGateEnabled, shouldLockOrientation, lockOrientation);
 			}
 		}
 		
@@ -87,10 +88,12 @@ namespace SuperAwesome {
 		 * this function <would> be called when starting an interstitial ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		private void showAd(int placementId, bool testModeEnabled, bool isParentalGateEnabled) {
+		private void showAd(int placementId, bool testModeEnabled, bool isParentalGateEnabled, bool shouldLockOrientation, LockOrientation lockOrientation) {
 			/** assign vars */
 			this.placementId = placementId;
 			this.isParentalGateEnabled = isParentalGateEnabled;
+			this.shouldLockOrientation = shouldLockOrientation;
+			this.lockOrientation = lockOrientation;
 
 			/** save the current global test mode - and assign the new one */
 			bool cTestMode = SuperAwesome.instance.isTestingEnabled ();
@@ -148,9 +151,11 @@ namespace SuperAwesome {
 				Debug.Log("Tried to play ad without ad data for " + this.name);
 				return;
 			}
+
+			int orientation = (int)lockOrientation;
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAd(ad.placementId, ad.adJson, this.name, isParentalGateEnabled);
+			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAd(ad.placementId, ad.adJson, this.name, isParentalGateEnabled, shouldLockOrientation, orientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
@@ -159,7 +164,7 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityPlayInterstitialAd");
-				test.CallStatic("SuperAwesomeUnitySAInterstitialAd", context, ad.placementId, ad.adJson, uname, isParentalGateEnabled);
+				test.CallStatic("SuperAwesomeUnitySAInterstitialAd", context, ad.placementId, ad.adJson, uname, isParentalGateEnabled, shouldLockOrientation, orientation);
 			}));
 #else
 			Debug.Log ("Open: " + this.name + ", " + ad.placementId);

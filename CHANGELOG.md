@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+3.1.1
+ - Add orientation lock
+
+3.1.0
 3.0.9
  - Updates to work w/ new versions of iOS & Android SDK
 

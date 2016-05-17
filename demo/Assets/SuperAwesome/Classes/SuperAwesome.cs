@@ -21,7 +21,7 @@ namespace SuperAwesome {
 		private string baseUrl;
 		private bool isTestEnabled;
 
-		public enum SAConfiguration{
+		public enum SAConfiguration {
 			STAGING = 0,
 			DEVELOPMENT = 1,
 			PRODUCTION = 2
@@ -50,7 +50,7 @@ namespace SuperAwesome {
 
 		/** functions to get info about the current SDK */
 		private string getVersion(){
-			return "3.1.0";
+			return "3.1.1";
 		}
 
 		private string getSdk() {

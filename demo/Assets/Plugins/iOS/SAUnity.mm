@@ -116,12 +116,18 @@ extern "C" {
     //
     // This function acts as a bridge between Unity-iOS-Unity
     // and displays an interstitial ad
-    void SuperAwesomeUnitySAInterstitialAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled) {
+    void SuperAwesomeUnitySAInterstitialAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled, BOOL shouldLockOrientation, int lockOrientation) {
         
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSString *json = [NSString stringWithUTF8String:adJson];
         NSLog(@"SuperAwesomeUnitySAInterstitialAd - %@", name);
+        
+        NSUInteger orientation = UIInterfaceOrientationMaskAll;
+        switch (lockOrientation) {
+            case 1: orientation = UIInterfaceOrientationMaskPortrait; break;
+            case 2: orientation = UIInterfaceOrientationMaskLandscape; break;
+        }
         
         // updat-eeeeed!
         SAUnityPlayInterstitialAd *extension = (SAUnityPlayInterstitialAd*)getOrCreateExtension(name);
@@ -140,7 +146,9 @@ extern "C" {
         [extension showInterstitialAdWith:placementId
                                 andAdJson:json
                              andUnityName:name
-                       andHasParentalGate:isParentalGateEnabled];
+                       andHasParentalGate:isParentalGateEnabled
+                            andShouldLock:shouldLockOrientation
+                          lockOrientation:orientation];
     }
     
     //
@@ -161,12 +169,18 @@ extern "C" {
     //
     // This function acts as a bridge between Unity-iOS-Unity
     // and displays a video ad
-    void SuperAwesomeUnitySAVideoAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled, BOOL shouldShowCloseButton, BOOL shouldAutomaticallyCloseAtEnd) {
+    void SuperAwesomeUnitySAVideoAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled, BOOL shouldShowCloseButton, BOOL shouldAutomaticallyCloseAtEnd, BOOL shouldShowSmallClickButton, BOOL shouldLockOrientation, int lockOrientation) {
         
         // parse parameters
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSString *json = [NSString stringWithUTF8String:adJson];
         NSLog(@"SuperAwesomeUnitySAVideoAd - %@", name);
+        
+        NSUInteger orientation = UIInterfaceOrientationMaskAll;
+        switch (lockOrientation) {
+            case 1: orientation = UIInterfaceOrientationMaskPortrait; break;
+            case 2: orientation = UIInterfaceOrientationMaskLandscape; break;
+        }
         
         // updat-eeeeed!
         SAUnityPlayFullscreenVideoAd *extension = (SAUnityPlayFullscreenVideoAd*)getOrCreateExtension(name);
@@ -187,7 +201,10 @@ extern "C" {
                       andUnityName:name
                 andHasParentalGate:isParentalGateEnabled
                  andHasCloseButton:shouldShowCloseButton
-                    andClosesAtEnd:shouldAutomaticallyCloseAtEnd];
+                    andClosesAtEnd:shouldAutomaticallyCloseAtEnd
+           andShouldShowSmallClick:shouldShowSmallClickButton
+                     andShouldLock:shouldLockOrientation
+                   lockOrientation:orientation];
     }
     
     //
