@@ -48,7 +48,10 @@ extern "C" {
         
         // create a linker
         SAUnityLoadAd *extension = (SAUnityLoadAd*)getOrCreateExtension(name);
-        if (!extension) extension = [[SAUnityLoadAd alloc] init];
+        if (!extension) {
+            extension = [[SAUnityLoadAd alloc] init];
+            [extensionDict setObject:extension forKey: name];
+        }
         
         // assign the success and error callbacks
         extension.loadingEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback, NSString *adString) {
@@ -74,7 +77,10 @@ extern "C" {
         
         // updat-eeeeed!
         SAUnityPlayBannerAd *extension = (SAUnityPlayBannerAd*)getOrCreateExtension(name);
-        if (!extension) extension = [[SAUnityPlayBannerAd alloc] init];
+        if (!extension) {
+            extension = [[SAUnityPlayBannerAd alloc] init];
+            [extensionDict setObject:extension forKey: name];
+        }
         
         // add callbacks
         extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
@@ -101,9 +107,10 @@ extern "C" {
         
         // updat-eeeeed!
         SAUnityPlayBannerAd *extension = (SAUnityPlayBannerAd*)getOrCreateExtension(name);
-        if (!extension) extension = [[SAUnityPlayBannerAd alloc] init];
-        [extension removeBannerForUnityName:name];
-        removeExtension(name);
+        if (extension) {
+            [extension removeBannerForUnityName:name];
+            removeExtension(name);
+        }
     }
     
     //
@@ -118,7 +125,10 @@ extern "C" {
         
         // updat-eeeeed!
         SAUnityPlayInterstitialAd *extension = (SAUnityPlayInterstitialAd*)getOrCreateExtension(name);
-        if (!extension) extension = [[SAUnityPlayInterstitialAd alloc] init];
+        if (!extension) {
+            extension = [[SAUnityPlayInterstitialAd alloc] init];
+            [extensionDict setObject:extension forKey: name];
+        }
         
         // add callbacks
         extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
@@ -142,9 +152,10 @@ extern "C" {
         
         // updat-eeeeed!
         SAUnityPlayInterstitialAd *extension = (SAUnityPlayInterstitialAd*)getOrCreateExtension(name);
-        if (!extension) extension = [[SAUnityPlayInterstitialAd alloc] init];
-        [extension closeInterstitialForUnityName:name];
-        removeExtension(name);
+        if (extension) {
+            [extension closeInterstitialForUnityName:name];
+            removeExtension(name);
+        }
     }
     
     //
@@ -159,7 +170,10 @@ extern "C" {
         
         // updat-eeeeed!
         SAUnityPlayFullscreenVideoAd *extension = (SAUnityPlayFullscreenVideoAd*)getOrCreateExtension(name);
-        if (!extension) extension = [[SAUnityPlayFullscreenVideoAd alloc] init];
+        if (!extension) {
+            extension = [[SAUnityPlayFullscreenVideoAd alloc] init];
+            [extensionDict setObject:extension forKey: name];
+        }
         
         // add callbacks
         extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
@@ -185,8 +199,9 @@ extern "C" {
         
         // updat-eeeeed!
         SAUnityPlayFullscreenVideoAd *extension = (SAUnityPlayFullscreenVideoAd*)getOrCreateExtension(name);
-        if (!extension) extension = [[SAUnityPlayFullscreenVideoAd alloc] init];
-        [extension closeFullscreenVideoForUnityName:name];
-        removeExtension(name);
+        if (extension) {
+            [extension closeFullscreenVideoForUnityName:name];
+            removeExtension(name);
+        }
     }
 }

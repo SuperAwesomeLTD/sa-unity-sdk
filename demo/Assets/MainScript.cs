@@ -2,7 +2,7 @@
 using System.Collections;
 using SuperAwesome;
 
-public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAParentalGateInterface  {
+public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAParentalGateInterface, SAVideoAdInterface  {
 
 	private SALoader loader = null, loader1 = null;
 	private SAAd adBanner = null;
@@ -72,6 +72,8 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 		} else if (ad.placementId == 28000) {
 			vad = SAVideoAd.createInstance ();
 			vad.setAd (ad);
+			vad.adDelegate = this;
+			vad.videoAdDelegate = this;
 			vad.play ();
 		}
 	}
@@ -110,6 +112,38 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 	}
 	
 	public void parentalGateWasSucceded(int placementId) {
+		Debug.Log ("[Unity] - parentalGateWasSucceded " + placementId);
+	}
+
+	public void adStarted(int placementId) {
+		Debug.Log ("[Unity] - adStarted " + placementId);
+	}
+	
+	public void videoStarted(int placementId) {
+		Debug.Log ("[Unity] - videoStarted " + placementId);
+	}
+	
+	public void videoReachedFirstQuartile(int placementId) {
+		Debug.Log ("[Unity] - videoReachedFirstQuartile " + placementId);
+	}
+	
+	public void videoReachedMidpoint(int placementId) {
+		Debug.Log ("[Unity] - videoReachedMidpoint " + placementId);
+	}
+	
+	public void videoReachedThirdQuartile(int placementId) {
+		Debug.Log ("[Unity] - videoReachedThirdQuartile " + placementId);
+	}
+	
+	public void videoEnded(int placementId) {
+		Debug.Log ("[Unity] - videoEnded " + placementId);
+	}
+	
+	public void adEnded(int placementId) {
+		Debug.Log ("[Unity] - adEnded " + placementId);
+	}
+	
+	public void allAdsEnded(int placementId) {
 		Debug.Log ("[Unity] - parentalGateWasSucceded " + placementId);
 	}
 }
