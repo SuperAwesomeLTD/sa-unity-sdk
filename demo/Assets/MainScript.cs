@@ -53,7 +53,7 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 		iad.adDelegate = this;
 		iad.parentalGateDelegate = this;
 		iad.shouldLockOrientation = true;
-		iad.lockOrientation = LockOrientation.PORTRAIT;
+		iad.lockOrientation = SALockOrientation.PORTRAIT;
 		iad.play ();
 	}
 	
@@ -78,7 +78,7 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 			vad.videoAdDelegate = this;
 			vad.shouldShowSmallClickButton = true;
 			vad.shouldLockOrientation = true;
-			vad.lockOrientation = LockOrientation.PORTRAIT;
+			vad.lockOrientation = SALockOrientation.PORTRAIT;
 			vad.play ();
 		}
 	}

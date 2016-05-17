@@ -1,6 +1,7 @@
 CHANGELOG
 =========
 
+3.1.2
 3.1.1
  - Add orientation lock
 

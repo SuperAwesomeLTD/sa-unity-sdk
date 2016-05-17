@@ -9,7 +9,7 @@ namespace SuperAwesome {
 	/**
 	 * Enum defining possible orientations for Video & Interstitial Ads
 	 */
-	public enum LockOrientation {
+	public enum SALockOrientation {
 		ANY = 0,
 		PORTRAIT = 1,
 		LANDSCAPE = 2

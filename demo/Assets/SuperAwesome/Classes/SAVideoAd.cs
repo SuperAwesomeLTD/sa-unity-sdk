@@ -28,7 +28,7 @@ namespace SuperAwesome {
 		public bool shouldAutomaticallyCloseAtEnd = true;
 		public bool shouldShowSmallClickButton = false;
 		public bool shouldLockOrientation = false;
-		public LockOrientation lockOrientation = LockOrientation.ANY;
+		public SALockOrientation lockOrientation = SALockOrientation.ANY;
 		public bool shouldAutoStart = false;
 
 		/** delegates */
@@ -92,7 +92,7 @@ namespace SuperAwesome {
 		 * this function <would> be called when starting a video ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		private void showAd(int placementId, bool testModeEnabled,  bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd, bool shouldShowSmallClickButton, bool shouldLockOrientation, LockOrientation lockOrientation) {
+		private void showAd(int placementId, bool testModeEnabled,  bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldAutomaticallyCloseAtEnd, bool shouldShowSmallClickButton, bool shouldLockOrientation, SALockOrientation lockOrientation) {
 			/** assign vars */
 			this.placementId = placementId;
 			this.testModeEnabled = testModeEnabled;

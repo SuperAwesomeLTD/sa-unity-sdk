@@ -26,7 +26,7 @@ namespace SuperAwesome {
 		public bool isParentalGateEnabled = true;
 		public bool shouldAutoStart = false;
 		public bool shouldLockOrientation = false;
-		public LockOrientation lockOrientation = LockOrientation.ANY;
+		public SALockOrientation lockOrientation = SALockOrientation.ANY;
 
 		/** delegates */
 		public SAAdInterface adDelegate = null;
@@ -88,7 +88,7 @@ namespace SuperAwesome {
 		 * this function <would> be called when starting an interstitial ad from code w/o preloading
 		 * or when using the prefab
 		 */
-		private void showAd(int placementId, bool testModeEnabled, bool isParentalGateEnabled, bool shouldLockOrientation, LockOrientation lockOrientation) {
+		private void showAd(int placementId, bool testModeEnabled, bool isParentalGateEnabled, bool shouldLockOrientation, SALockOrientation lockOrientation) {
 			/** assign vars */
 			this.placementId = placementId;
 			this.isParentalGateEnabled = isParentalGateEnabled;
