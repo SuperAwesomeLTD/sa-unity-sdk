@@ -24,17 +24,17 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 	// button actions
 	public void loadAds () {
 		
-		SuperAwesome.SuperAwesome.instance.setConfigurationProduction ();
+		SuperAwesome.SuperAwesome.instance.setConfigurationStaging ();
 		SuperAwesome.SuperAwesome.instance.enableTestMode ();
 		
 		loader = SALoader.createInstance ();
 		loader.loaderDelegate = this;
-		loader.loadAd (31107);	// 728x90
-		loader.loadAd (31108);  // video
+		loader.loadAd (113);	// 728x90
+		loader.loadAd (116);  // video
 		
 		loader1 = SALoader.createInstance ();
 		loader1.loaderDelegate = this;
-		loader1.loadAd (28000);  // interstitial
+		loader1.loadAd (115);  // interstitial
 		
 	}
 	
@@ -59,7 +59,7 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 	
 	/** <SALoaderInterface> */
 	public void didLoadAd(SAAd ad) {
-		if (ad.placementId == 31107) {
+		if (ad.placementId == 113) {
 			bad = SABannerAd.createInstance ();
 			bad.setAd (ad);
 			bad.position = SABannerAd.BannerPosition.BOTTOM;
@@ -69,9 +69,9 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 			bad.adDelegate = this;
 			bad.parentalGateDelegate = this;
 			bad.play ();
-		} else if (ad.placementId == 31108) {
+		} else if (ad.placementId == 115) {
 			adInterstitial = ad;
-		} else if (ad.placementId == 28000) {
+		} else if (ad.placementId == 116) {
 			vad = SAVideoAd.createInstance ();
 			vad.setAd (ad);
 			vad.adDelegate = this;
