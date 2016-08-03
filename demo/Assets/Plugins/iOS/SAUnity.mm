@@ -1,4 +1,12 @@
-﻿//
+//
+//  SAUnity.mm
+//  Pods
+//
+//  Created by Gabriel Coman on 19/07/2016.
+//
+//
+
+//
 //  SAUnity.c
 //  Pods
 //
@@ -14,12 +22,20 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#if defined(__has_include)
+#if __has_include("SuperAwesomeSDKUnity.h")
+#import "SuperAwesomeSDKUnity.h"
+#else 
 #import "SuperAwesome.h"
-#import "SAUnityExtension.h"
 #import "SAUnityLoadAd.h"
 #import "SAUnityPlayBannerAd.h"
 #import "SAUnityPlayInterstitialAd.h"
-#import "SAUnityPlayFullscreenVideoAd.h"
+#import "SAUnityPlayFullscreenVideoAd.m"
+#endif
+#endif
+
+void UnitySendMessage(const char *identifier, const char *function, const char *payload);
 
 extern "C" {
     
@@ -50,7 +66,7 @@ extern "C" {
         switch (iconfig) {
             case PRODUCTION: [[SuperAwesome getInstance] setConfigurationProduction]; break;
             case STAGING: [[SuperAwesome getInstance] setConfigurationStaging]; break;
-            case DEVELOPMENT: [[SuperAwesome getInstance] setConfigurationDevelopment]; break;
+            case DEVELOPMENT: [[SuperAwesome getInstance] setConfigurationStaging]; break;
             default: break;
         }
         

@@ -63,7 +63,7 @@ namespace SuperAwesome {
 			/** get if testing is enabled */
 			bool isTestingEnabled = SuperAwesome.instance.isTestingEnabled ();
 			int config = (int)SuperAwesome.instance.getConfiguration ();
-
+			Debug.Log ("When loading testing is " + isTestingEnabled);
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SALoader.SuperAwesomeUnityLoadAd(this.name, placementId, isTestingEnabled, config);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)

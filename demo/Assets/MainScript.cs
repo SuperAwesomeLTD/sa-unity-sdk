@@ -24,17 +24,20 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 	// button actions
 	public void loadAds () {
 		
-		SuperAwesome.SuperAwesome.instance.setConfigurationStaging ();
+		SuperAwesome.SuperAwesome.instance.setConfigurationProduction ();
 		SuperAwesome.SuperAwesome.instance.enableTestMode ();
-		
+
+		Debug.Log ("Testing is " + SuperAwesome.SuperAwesome.instance.isTestingEnabled ());
+
 		loader = SALoader.createInstance ();
 		loader.loaderDelegate = this;
-		loader.loadAd (113);	// 728x90
-		loader.loadAd (116);  // video
+//		loader.loadAd (113);	// 728x90
+		loader.loadAd (30473);
+		// loader.loadAd (116);  // video
 		
-		loader1 = SALoader.createInstance ();
-		loader1.loaderDelegate = this;
-		loader1.loadAd (115);  // interstitial
+//		loader1 = SALoader.createInstance ();
+//		loader1.loaderDelegate = this;
+//		loader1.loadAd (115);  // interstitial
 		
 	}
 	
@@ -43,7 +46,9 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 	}
 	
 	public void deleteBanner () {
-		
+		if (bad != null) {
+			bad.close();
+		}
 	}
 	
 	public void playInterstitial () {
@@ -59,28 +64,32 @@ public class MainScript : MonoBehaviour, SALoaderInterface, SAAdInterface, SAPar
 	
 	/** <SALoaderInterface> */
 	public void didLoadAd(SAAd ad) {
-		if (ad.placementId == 113) {
-			bad = SABannerAd.createInstance ();
-			bad.setAd (ad);
-			bad.position = SABannerAd.BannerPosition.BOTTOM;
-			bad.size = SABannerAd.BannerSize.BANNER_728_90;
-			bad.color = SABannerAd.BannerColor.BANNER_GRAY;
-			bad.isParentalGateEnabled = true;
-			bad.adDelegate = this;
-			bad.parentalGateDelegate = this;
-			bad.play ();
-		} else if (ad.placementId == 115) {
+//		if (ad.placementId == 113) {
+//			bad = SABannerAd.createInstance ();
+//			bad.setAd (ad);
+//			bad.position = SABannerAd.BannerPosition.TOP;
+//			bad.size = SABannerAd.BannerSize.BANNER_728_90;
+//			bad.color = SABannerAd.BannerColor.BANNER_GRAY;
+//			bad.isParentalGateEnabled = false;
+//			bad.adDelegate = this;
+//			bad.parentalGateDelegate = this;
+//			bad.play ();
+//		} 
+//		else 
+		if (ad.placementId == 30473) {
 			adInterstitial = ad;
-		} else if (ad.placementId == 116) {
-			vad = SAVideoAd.createInstance ();
-			vad.setAd (ad);
-			vad.adDelegate = this;
-			vad.videoAdDelegate = this;
-			vad.shouldShowSmallClickButton = true;
-			vad.shouldLockOrientation = true;
-			vad.lockOrientation = SALockOrientation.PORTRAIT;
-			vad.play ();
-		}
+		} 
+//		else 
+//		if (ad.placementId == 116) {
+//			vad = SAVideoAd.createInstance ();
+//			vad.setAd (ad);
+//			vad.adDelegate = this;
+//			vad.videoAdDelegate = this;
+//			vad.shouldShowSmallClickButton = true;
+//			vad.shouldLockOrientation = true;
+//			vad.lockOrientation = SALockOrientation.PORTRAIT;
+//			vad.play ();
+//		}
 	}
 	
 	public void didFailToLoadAd(int placementId) {

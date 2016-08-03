@@ -13,22 +13,15 @@ namespace SuperAwesome {
 	public class SuperAwesome {
 
 		/** constants */
-		private const string BASE_URL_STAGING = "https://ads.staging.superawesome.tv/v2";
-		private const string BASE_URL_DEVELOPMENT = "https://ads.dev.superawesome.tv/v2";
-		private const string BASE_URL_PRODUCTION = "https://ads.superawesome.tv/v2";
+		private const int CONFIGURATION_PRODUCTION = 0;
+		private const int CONFIGURATION_STAGING = 1;
 
 		/** other variables */
 		private string baseUrl;
 		private bool isTestEnabled;
+		private int config;
 
-		public enum SAConfiguration {
-			STAGING = 0,
-			DEVELOPMENT = 1,
-			PRODUCTION = 2
-		}
-		private SAConfiguration config = SAConfiguration.PRODUCTION;
-
-		/** instance variable, since SuperAwesome is a singleton */
+		// Singleton stuff
 		private static SuperAwesome _instance;
 		public static SuperAwesome instance {
 			get {
@@ -39,7 +32,7 @@ namespace SuperAwesome {
 			}
 		}
 
-		/** public constructor */
+		// constructor
 		private SuperAwesome(){
 			/** log current version and sdk type */
 			Debug.Log (getSdkVersion ());
@@ -48,59 +41,55 @@ namespace SuperAwesome {
 			this.disableTestMode ();
 		}
 
-		/** functions to get info about the current SDK */
-		private string getVersion(){
-			return "3.1.5";
+		// setters
+
+		public void setConfiguration(int configuration) {
+			if (configuration == CONFIGURATION_PRODUCTION) {
+				setConfigurationProduction ();
+			} else {
+				setConfigurationStaging ();
+			}
+		}
+		
+		public void setConfigurationProduction() {
+			this.config = CONFIGURATION_PRODUCTION;
+		}
+		
+		public void setConfigurationStaging() {
+			this.config = CONFIGURATION_STAGING;
+		}
+		
+		public void enableTestMode() {
+			this.isTestEnabled = true;
+		}
+		
+		public void disableTestMode() {
+			this.isTestEnabled = false;
+		}
+		
+		public void setTestMode(bool testMode) {
+			this.isTestEnabled = testMode;
 		}
 
+		// getters
+		private string getVersion(){
+			return "3.1.7";
+		}
+		
 		private string getSdk() {
 			return "unity";
 		}
-
+		
 		public string getSdkVersion() {
 			return getSdk () + "_" + getVersion ();
 		}
 
-		/** group of functions that encapsulate config / URL functionality */
-		public void setConfigurationProduction() {
-			this.config = SAConfiguration.PRODUCTION;
-			this.baseUrl = BASE_URL_PRODUCTION;
-		}
-
-		public void setConfigurationStaging() {
-			this.config = SAConfiguration.STAGING;
-			this.baseUrl = BASE_URL_STAGING;
-		}
-
-		public void setConfigurationDevelopment() {
-			this.config = SAConfiguration.DEVELOPMENT;
-			this.baseUrl = BASE_URL_DEVELOPMENT;
-		}
-
-		public string getBaseURL() {
-			return this.baseUrl;
-		}
-
-		public SAConfiguration getConfiguration() {
+		public int getConfiguration() {
 			return this.config;
-		}
-
-		/** functions that encapsulate test functionality */
-		public void enableTestMode() {
-			this.isTestEnabled = true;
-		}
-
-		public void disableTestMode() {
-			this.isTestEnabled = false;
-		}
-
-		public void setTestMode(bool testMode) {
-			this.isTestEnabled = testMode;
 		}
 
 		public bool isTestingEnabled() {
 			return this.isTestEnabled;
 		}
 	}
-
 }
