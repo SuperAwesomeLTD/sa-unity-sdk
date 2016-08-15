@@ -40,19 +40,4 @@
              andCreative:(NSInteger) creative
                 andEvent:(NSString*) event;
 
-// enable and disable
-+ (void) enableSATracking;
-+ (void) disableSATracking;
-
-////////////////////////////////////////////////////////////////////////////////
-// MOAT Plugin
-////////////////////////////////////////////////////////////////////////////////
-
-// This function sends display data to Moat
-+ (NSString*) sendDisplayMoatEvent:(UIWebView*)webView andAdDictionary:(NSDictionary*)adDict;
-
-// This function sends video events to Moat
-+ (void) sendVideoMoatEvent:(AVPlayer*)player andLayer:(AVPlayerLayer*)layer andView:(UIView*)adView andAdDictionary:(NSDictionary*)adDict;
-
-
 @end

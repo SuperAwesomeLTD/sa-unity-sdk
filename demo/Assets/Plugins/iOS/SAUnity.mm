@@ -62,14 +62,6 @@ extern "C" {
         NSString *name = [NSString stringWithUTF8String:unityName];
         NSLog(@"SuperAwesomeUnityLoadAd - %@", name);
         
-        SAConfiguration iconfig = (SAConfiguration)config;
-        switch (iconfig) {
-            case PRODUCTION: [[SuperAwesome getInstance] setConfigurationProduction]; break;
-            case STAGING: [[SuperAwesome getInstance] setConfigurationStaging]; break;
-            case DEVELOPMENT: [[SuperAwesome getInstance] setConfigurationStaging]; break;
-            default: break;
-        }
-        
         // create a linker
         SAUnityLoadAd *extension = (SAUnityLoadAd*)getOrCreateExtension(name);
         if (!extension) {
@@ -86,7 +78,8 @@ extern "C" {
         // call to load
         [extension loadAd:placementId
                forUnityAd:name
-             withTestMode:isTestingEnabled];
+             withTestMode:isTestingEnabled
+        withConfiguration:config];
     }
     
     //

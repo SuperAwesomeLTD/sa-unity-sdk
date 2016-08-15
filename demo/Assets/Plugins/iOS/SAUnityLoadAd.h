@@ -13,7 +13,8 @@
 
 // main loading function for the linker
 - (void) loadAd:(NSInteger)placementId
-     forUnityAd:(NSString*)unityAd
-   withTestMode:(BOOL)isTestEnabled;
+     forUnityAd:(NSString *)unityAd
+   withTestMode:(BOOL)isTestEnabled
+withConfiguration:(NSInteger)config;
 
 @end

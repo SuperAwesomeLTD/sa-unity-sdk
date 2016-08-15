@@ -36,7 +36,7 @@
 #if HAS_MOAT
     NSLog(@"MOAT can be triggered");
     // go ahead
-    BOOL allOK = [SUPMoatBootstrap injectDelegateWrapper:webView];
+    [SUPMoatBootstrap injectDelegateWrapper:webView];
     
     NSMutableString *moatQuery = [[NSMutableString alloc] init];
     [moatQuery appendFormat:@"moatClientLevel1=%@", [adDict objectForKey:@"advertiser"]];

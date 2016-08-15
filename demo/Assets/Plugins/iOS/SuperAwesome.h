@@ -31,12 +31,6 @@
 // load protocols
 #import "SAProtocols.h"
 
-typedef enum SAConfiguration {
-    STAGING = 0,
-    DEVELOPMENT = 1,
-    PRODUCTION = 2
-} SAConfiguration;
-
 // @brief:
 // This is the main SuperAwesome class that handles the Ad Session
 // as a singleton (enable / disable test mode, configuration, version, etc)
@@ -45,25 +39,19 @@ typedef enum SAConfiguration {
 // singleton instance (instead of init)
 + (instancetype)getInstance;
 
-// current SDK version
-- (NSString*) getSdkVersion;
-
-// set configuration - which determines what URL will call for ads
-// @production: https://ads.superawesome.tv
-// @staging: https://ads.staging.superawesome.tv
-// @development: https://ads.dev.superawesome.tv
+// setters
+- (void) setConfiguration:(NSInteger)configuration;
 - (void) setConfigurationProduction;
 - (void) setConfigurationStaging;
-- (NSString*) getBaseURL;
-- (SAConfiguration) getConfiguration;
-
-// enable or disable test mode
-- (void) enableTestMode;
-- (void) disableTestMode;
 - (void) setTesting:(BOOL)enabled;
-- (BOOL) isTestingEnabled;
+- (void) disableTestMode;
+- (void) enableTestMode;
 
-// get the dau
+// getters
+- (NSString*) getSdkVersion;
+- (NSString*) getBaseURL;
+- (BOOL) isTestingEnabled;
+- (NSInteger) getConfiguration;
 - (NSUInteger) getDAUID;
 
 @end

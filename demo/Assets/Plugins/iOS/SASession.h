@@ -14,6 +14,7 @@
 + (instancetype) getInstance;
 
 // setters
+- (void) setConfiguration:(NSInteger) configuration;
 - (void) setConfigurationProduction;
 - (void) setConfigurationStaging;
 - (void) setTestEnabled;
@@ -27,5 +28,6 @@
 - (BOOL) isTestEnabled;
 - (NSInteger) getDauId;
 - (NSString*) getVersion;
+- (NSInteger) getConfiguration;
 
 @end

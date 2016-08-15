@@ -17,7 +17,7 @@
  *
  *  @return either the object or NSNull
  */
-static id _Nullable nullSafe(id object) {
+__attribute__((unused)) static _Nullable id nullSafe(_Nullable id object) {
     return object ?: [NSNull null];
 }
 
@@ -31,6 +31,6 @@ static id _Nullable nullSafe(id object) {
  *
  *  @return the return value or nil
  */
--  (id) safeObjectForKey:(id)aKey;
+-  (_Nullable id) safeObjectForKey:(_Nullable id)aKey;
 
 @end

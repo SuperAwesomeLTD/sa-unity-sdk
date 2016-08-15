@@ -10,8 +10,7 @@
 
 // define a blocks used by UIAlertActions
 typedef void(^actionBlock) (UIAlertAction *action);
-typedef void(^okBlock) (NSString *popupMessage);
-typedef void(^nokBlock) ();
+typedef void(^pressed) (int button, NSString *popupMessage);
 
 @interface SAPopup : NSObject
 
@@ -25,10 +24,6 @@ typedef void(^nokBlock) ();
            andNOKTitle:(NSString*)nok
           andTextField:(BOOL)hasTextField
        andKeyboardTyle:(UIKeyboardType)keyboardType
-            andOKBlock:(okBlock)okBlock
-           andNOKBlock:(nokBlock)nokBlock;
-
-// close function
-- (void) close;
+            andPressed:(pressed)pressed;
 
 @end
