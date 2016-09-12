@@ -1,20 +1,20 @@
+////
+////  SAUnityLoadAd.h
+////  Pods
+////
+////  Created by Gabriel Coman on 13/05/2016.
+////
+////
 //
-//  SAUnityLoadAd.h
-//  Pods
+//#import <Foundation/Foundation.h>
+//#import "SAUnityExtension.h"
 //
-//  Created by Gabriel Coman on 13/05/2016.
+//@interface SAUnityLoadAd : SAUnityExtension
 //
+//// main loading function for the linker
+//- (void) loadAd:(NSInteger)placementId
+//     forUnityAd:(NSString *)unityAd
+//   withTestMode:(BOOL)isTestEnabled
+//withConfiguration:(NSInteger)config;
 //
-
-#import <Foundation/Foundation.h>
-#import "SAUnityExtension.h"
-
-@interface SAUnityLoadAd : SAUnityExtension
-
-// main loading function for the linker
-- (void) loadAd:(NSInteger)placementId
-     forUnityAd:(NSString *)unityAd
-   withTestMode:(BOOL)isTestEnabled
-withConfiguration:(NSInteger)config;
-
-@end
+//@end

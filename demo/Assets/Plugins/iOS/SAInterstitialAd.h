@@ -2,24 +2,33 @@
 //  SAInterstitialAd2.h
 //  Pods
 //
-//  Created by Gabriel Coman on 13/02/2016.
+//  Created by Gabriel Coman on 02/09/2016.
 //
 //
 
 #import <UIKit/UIKit.h>
 
-// useful imports
-#import "SAProtocols.h"
+// helper headers
+#import "SASession.h"
+#import "SACallback.h"
 
-@class SAAd;
-@class SABannerAd;
+@interface SAInterstitialAd : UIViewController
 
-@interface SAInterstitialAd : UIViewController <SAViewProtocol>
+// static "action" methods
++ (void) load:(NSInteger) placementId;
++ (void) play:(UIViewController*) parent;
++ (BOOL) hasAdAvailable;
 
-@property (nonatomic, weak) id<SAAdProtocol> adDelegate;
-@property (nonatomic, weak) id<SAParentalGateProtocol> parentalGateDelegate;
-@property (nonatomic, assign) IBInspectable BOOL isParentalGateEnabled;
-@property (nonatomic, assign) BOOL shouldLockOrientation;
-@property (nonatomic, assign) NSUInteger lockOrientation;
+// static "state" methods
++ (void) setCallback:(sacallback)call;
++ (void) setIsParentalGateEnabled: (BOOL) value;
++ (void) setShouldLockOrientation: (BOOL) value;
++ (void) setLockOrientation: (NSUInteger) value;
++ (void) setTest:(BOOL) isTest;
++ (void) setTestEnabled;
++ (void) setTestDisabled;
++ (void) setConfiguration: (NSInteger) config;
++ (void) setConfigurationProduction;
++ (void) setConfigurationStaging;
 
 @end

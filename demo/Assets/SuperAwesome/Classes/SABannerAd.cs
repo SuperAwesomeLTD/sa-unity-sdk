@@ -1,6 +1,3 @@
-/** 
- * Imports used for this class
- */
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,256 +5,250 @@ using UnityEngine.UI;
 using MiniJSON;
 using System.Runtime.InteropServices;
 
-/** part for the SuperAwesome namespace */
 namespace SuperAwesome {
 
-	/**
-	 * Class that defines a banner ad - that will be finally loaded & displayed by iOS / Android
-	 */
-	public class SABannerAd : MonoBehaviour, SALoaderInterface, SAViewInterface, SANativeInterface {
+	public class SABannerAd: MonoBehaviour {
 
-		/** instance index */
-		private static uint index = 0; 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 
-		/** public variables for the script & prefab */
-		private SAAd ad = null;
-		public int placementId = 0;
-		public bool testModeEnabled = false;
-		public bool isParentalGateEnabled = true;
-		public bool shouldAutoStart = false;
+		[DllImport ("__Internal")]
+		private static extern void SuperAwesomeUnitySABannerAdCreate(string unityName);
 
-		/** public enum for banner predefined positions */
+		[DllImport ("__Internal")]
+		private static extern void SuperAwesomeUnitySABannerAdLoad(string unityName,
+		                                                           int placementId,
+		                                                           int configuration, 
+		                                                           bool test);
+
+		[DllImport ("__Internal")]
+		private static extern bool SuperAwesomeUnitySABannerAdHasAdAvailable(string unityName);
+		
+
+		[DllImport ("__Internal")]
+		private static extern void SuperAwesomeUnitySABannerAdPlay(string unityName,
+		                                                           bool isParentalGateEnabled, 
+		                                                           int position, 
+		                                                           int size, 
+		                                                           int color);
+
+		[DllImport ("__Internal")]
+		private static extern void SuperAwesomeUnitySABannerAdClose(string unityName);
+
+#endif
+
+		// enums for different banner specific properties
 		public enum BannerPosition {
 			TOP = 0,
 			BOTTOM = 1
 		}
-		public BannerPosition position = BannerPosition.BOTTOM;
-		
-		/** public enum for the banner predefined sized */
 		public enum BannerSize {
 			BANNER_320_50 = 0,
 			BANNER_300_50 = 1,
 			BANNER_728_90 = 2,
 			BANNER_300_250 = 3
 		}
-		public BannerSize size = BannerSize.BANNER_320_50;
-
-		/** public enum for banner color */
 		public enum BannerColor {
 			BANNER_TRANSPARENT = 0,
 			BANNER_GRAY = 1
 		}
-		public BannerColor color = BannerColor.BANNER_GRAY;
 
-		/** delegates */
-		public SAAdInterface adDelegate = null;
-		public SAParentalGateInterface parentalGateDelegate = null;
+		// banner index
+		private static uint 					index = 0;
 
-#if (UNITY_IPHONE && !UNITY_EDITOR)
-		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySABannerAd(int placementId, string adJson, string unityName, int position, int size, int color, bool isParentalGateEnabled);
-		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnityRemoveSABannerAd(string unityName);
-#endif
+		// private state vars
+		private bool 							isParentalGateEnabled = true;
+		private BannerPosition 					position = BannerPosition.BOTTOM;
+		private BannerSize 						size = BannerSize.BANNER_320_50;
+		private BannerColor 					color = BannerColor.BANNER_GRAY;
+		private SuperAwesome.SAConfiguration 	configuration = SuperAwesome.SAConfiguration.PRODUCTION;
+		private bool 							isTestingEnabled = false;
+		private SAInterface 					listener;
 
-		/*********************************************************************************************/
-		/** Normal Unity Init methods */
-		/*********************************************************************************************/
-
-		/** static function initialiser */
+		// create method
 		public static SABannerAd createInstance() {
-
-			/** create a new game object */
 			GameObject obj = new GameObject ();
-			/** add to that new object the video ad */
 			SABannerAd adObj = obj.AddComponent<SABannerAd> ();
 			adObj.name = "SABannerAd_" + (++SABannerAd.index);
-
-			/** call don't destroy on load ... */
 			DontDestroyOnLoad (obj);
 
-			/** and return the ad Obj instance */
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SABannerAd.SuperAwesomeUnitySABannerAdCreate(adObj.name);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			// do nothing
+#endif
+
 			return adObj;
 		}
-		
-		/** Use this for initialization */
-		void Start (){
 
-			/** make the color invisible when playing */
+		// start method for MonoObject
+		void Start () {
 			if (this.GetComponent<Image> () != null) {
 				Color current = this.GetComponent<Image>().color;
 				current.a = 0;
 				this.GetComponent<Image>().color = current;
 			}
-
-			/** check for autostart and then start */
-			if (shouldAutoStart) {
-				showAd(placementId, position, size, testModeEnabled, isParentalGateEnabled);
-			}
 		}
-		
-		/** Update is called once per frame */
+
+		// update method for MonoObject
 		void Update () {
-			/** do nothing */
+			// do nothing
 		}
 
-		/*********************************************************************************************/
-		/** Internal loader methods */
-		/*********************************************************************************************/
+		////////////////////////////////////////////////////////////////////
+		// Banner specific method
+		////////////////////////////////////////////////////////////////////
 
-		/**
-		 * this function <would> be called when starting an interstitial ad from code w/o preloading
-		 * or when using the prefab
-		 */
-		private void showAd(int placementId, BannerPosition position, BannerSize size, bool testModeEnabled, bool isParentalGateEnabled) {
-			/** assign vars */
-			this.placementId = placementId;
-			this.position = position;
-			this.size = size;
-			this.isParentalGateEnabled = isParentalGateEnabled;
+		public void load (int placementId) {
 
-			/** save the current global test mode - and assign the new one */
-			bool cTestMode = SuperAwesome.instance.isTestingEnabled ();
-			SuperAwesome.instance.setTestMode (this.testModeEnabled);
-
-			/** create an instance of SALoader */
-			SALoader loader = SALoader.createInstance ();
-
-			/** set delegate methods */
-			loader.loaderDelegate = this;
-
-			/** load the actual ad */
-			loader.loadAd (placementId);
-
-			/** revert to current global test mode */
-			SuperAwesome.instance.setTestMode (cTestMode);
-		}
-
-		/** 
-		 * <SALoader> Interface implementation
-		 */
-		public void didLoadAd(SAAd ad) {
-			this.ad = ad;
-			this.play ();
-		}
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SABannerAd.SuperAwesomeUnitySABannerAdLoad(this.name,
+			                                           placementId, 
+			                                           (int)configuration,
+			                                           isTestingEnabled);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			// do nothing
+#endif
 		
-		public void didFailToLoadAd(int placementId) {
-			Debug.Log("Failure: " + placementId.ToString() );
 		}
 
-		/*********************************************************************************************/
-		/** SANativeInterface methods */
-		/*********************************************************************************************/
-
-		/** setter for the Ad */
-		public void setAd(SAAd ad) {
-			this.ad = ad;
-		}
-		
-		public SAAd getAd() {
-			return this.ad;
-		}
-		
-		/**
-		 * The normal play() function should be used on an instance of the SAInterstitialAd, created with createInstance()
-		 * and whose ad data has been pre-loaded using SALoader
-		 */
 		public void play () {
-			if (ad == null) {
-				Debug.Log("Tried to play ad without ad data for " + this.name);
-				return;
-			}
-			
-			if (ad.placementId == -1 || ad.placementId == 0 || ad.placementId == null) {
-				Debug.Log("Tried to play ad without ad data for " + this.name);
-				return;
-			}
-			
+
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SABannerAd.SuperAwesomeUnitySABannerAd(ad.placementId, ad.adJson, this.name, (int)position, (int)size, (int)color, isParentalGateEnabled);
+			SABannerAd.SuperAwesomeUnitySABannerAdPlay(this.name,
+			                                           isParentalGateEnabled,
+			                                           (int)position,
+			                                           (int)size,
+			                                           (int)color);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
-			var uname = this.name; 
-			
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityPlayBannerAd");
-				test.CallStatic("SuperAwesomeUnitySABannerAd", context, ad.placementId, ad.adJson, uname, (int)position, (int)size, (int)color, isParentalGateEnabled);
-			}));
-#else
-			Debug.Log ("Open: " + this.name + ", " + ad.placementId);
+			// do nothing
 #endif
+
 		}
-		
-		/**
-		 * This function removes the banner from the screen
-		 */
+
+		public bool hasAdAvailable () {
+
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			return SABannerAd.SuperAwesomeUnitySABannerAdHasAdAvailable(this.name);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			return false;
+#endif
+			return false;
+
+		}
+
 		public void close () {
+
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SABannerAd.SuperAwesomeUnityRemoveSABannerAd(this.name);
+			SABannerAd.SuperAwesomeUnitySABannerAdClose(this.name);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
-			var uname = this.name;
-			
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnityPlayBannerAd");
-				test.CallStatic("SuperAwesomeUnityRemoveSABannerAd", context, uname);
-			}));
-#else 
-			Debug.Log("Close: " + this.name + ", " + ad.placementId);
+			// do nothing
 #endif
 		}
+
+		////////////////////////////////////////////////////////////////////
+		// Setters & getters
+		////////////////////////////////////////////////////////////////////
+
+		public void setIsParentalGateEnabled (bool value) {
+			isParentalGateEnabled = value;
+		}
+
+		public void setPosition (BannerPosition value) {
+			position = value;
+		}
+
+		public void setSize (BannerSize value) {
+			size = value;
+		}
+
+		public void setColor (BannerColor value) {
+			color = value;
+		}
+
+		public void setTest (bool value) {
+			isTestingEnabled = value;
+		}
+
+		public void setTestEnabled () {
+			isTestingEnabled = true;
+		}
+
+		public void setTestDisabled () {
+			isTestingEnabled = false;
+		}
+
+		public void setConfiguration (SuperAwesome.SAConfiguration value) {
+			configuration = value;
+		}
+
+		public void setConfigurationProduction () {
+			configuration = SuperAwesome.SAConfiguration.PRODUCTION;
+		}
+
+		public void setConfigurationStaging () {
+			configuration = SuperAwesome.SAConfiguration.STAGING;
+		}
+
+		public void setListener (SAInterface value) {
+			listener = value;
+		}
+
+		public bool getIsParentalGateEnabled () {
+			return isParentalGateEnabled;
+		}
 		
-		/** 
-		 * Native callback interface implementation
-		 */
+		public BannerPosition getPosition () {
+			return position;
+		}
+		
+		public BannerSize getSize () {
+			return size;
+		}
+		
+		public BannerColor getColor () {
+			return color;
+		}
+
+		////////////////////////////////////////////////////////////////////
+		// Native callbacks
+		////////////////////////////////////////////////////////////////////
+
 		public void nativeCallback(string payload) {
 			Dictionary<string, object> payloadDict;
 			string type = "";
-			
-			/** try to get payload and type data */
+			int placementId = 0;
+
+			// try to get payload and type data
 			try {
 				payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
-				type = (string) payloadDict ["type"];
+				type = (string) payloadDict["type"];
+				string plac = (string) payloadDict["placementId"];
+				int.TryParse(plac, out placementId);
 			} catch {
-				if (adDelegate != null) {
-					adDelegate.adFailedToShow(ad.placementId);
-				}
+				Debug.Log ("Error w/ callback!");
 				return;
 			}
 			
 			switch (type) {
-			case "callback_adWasShown":{
-				if (adDelegate != null) adDelegate.adWasShown(ad.placementId); break;
+			case "sacallback_adLoaded":{
+				if (listener != null) listener.SAAdLoaded (placementId); break;
 			}
-			case "callback_adFailedToShow":{
-				if (adDelegate != null) adDelegate.adFailedToShow(ad.placementId); break;
+			case "sacallback_adFailedToLoad":{
+				if (listener != null) listener.SAAdFailedToLoad (placementId); break;
 			}
-			case "callback_adWasClosed":{
-				if (adDelegate != null) adDelegate.adWasClosed(ad.placementId); break;
+			case "sacallback_adShown":{
+				if (listener != null) listener.SAAdShown (); break;
 			}
-			case "callback_adWasClicked":{
-				if (adDelegate != null) adDelegate.adWasClicked(ad.placementId); break;
+			case "sacallback_adFailedToShow":{
+				if (listener != null) listener.SAAdFailedToShow (); break;
 			}
-			case "callback_adHasIncorrectPlacement":{
-				if (adDelegate != null) adDelegate.adHasIncorrectPlacement(ad.placementId); break;
+			case "sacallback_adClicked":{
+				if (listener != null) listener.SAAdClicked (); break;
 			}
-			case "callback_parentalGateWasCanceled":{
-				if (parentalGateDelegate != null) parentalGateDelegate.parentalGateWasCanceled(ad.placementId); break;
-			}
-			case "callback_parentalGateWasFailed":{
-				if (parentalGateDelegate != null) parentalGateDelegate.parentalGateWasFailed(ad.placementId); break;
-			}
-			case "callback_parentalGateWasSucceded":{
-				if (parentalGateDelegate != null) parentalGateDelegate.parentalGateWasSucceded(ad.placementId); break;
+			case "sacallback_adClosed":{
+				if (listener != null) listener.SAAdClosed (); break;
 			}
 			}
 		}
 	}
 }
-
-
-

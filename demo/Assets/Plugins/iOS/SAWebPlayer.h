@@ -8,34 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-//
-// @brief: A protocol that defines the three main callbacks for the custom
-// SAWebView
-@protocol SAWebPlayerProtocol <NSObject>
+// types of events
+typedef NS_ENUM(NSInteger, SAWebPlayerEvent) {
+    Web_Start = 0,
+    Web_Error = 1
+};
 
-// @brief: called when you want to navigate
-- (void) webPlayerWillNavigate:(NSURL*)url;
+// callbacks
+typedef void (^sawebplayerEventHandler)(SAWebPlayerEvent event);
+typedef void (^sawebplayerClickHandler)(NSURL* url);
 
-// @brief: callback to tell when a webview was loaded
-- (void) webPlayerDidLoad;
-
-// @brief: callback to tell when a webview wasn't loaded ok
-- (void) webPlayerDidFail;
-
-@end
-
+// main class
 @interface SAWebPlayer : UIWebView <UIWebViewDelegate>
 
-// delegate
-@property (nonatomic, weak) id<SAWebPlayerProtocol> sadelegate;
-
-// set size (for scaling purposes)
+// main public functions
 - (void) setAdSize:(CGSize)adSize;
-
-// load ad
 - (void) loadAdHTML:(NSString*)html;
-
-// re-arramge func
 - (void) updateToFrame:(CGRect)frame;
+- (void) setEventHandler:(sawebplayerEventHandler)eventHandler;
+- (void) setClickHandler:(sawebplayerClickHandler)clickHandler;
 
 @end

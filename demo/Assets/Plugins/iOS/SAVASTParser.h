@@ -9,21 +9,10 @@
 #import <Foundation/Foundation.h>
 
 // forward declaration
-@class SAVASTAd;
+@class SAAd;
 
-typedef void (^vastParsingDone)(SAVASTAd *ad);
-
-////////////////////////////////////////////////////////////////////////////////
-// The VASTParser main protocol
-////////////////////////////////////////////////////////////////////////////////
-
-// The SAVASTParserProtocol implements two functions
-@protocol SAVASTParserProtocol <NSObject>
-
-// Called as a callback when there are valid ads to be displayed
-- (void) didParseVAST:(SAVASTAd*)ad;
-
-@end
+// callback
+typedef void (^vastParsingDone)(SAAd *ad);
 
 ////////////////////////////////////////////////////////////////////////////////
 // The VASTParser main class
@@ -31,11 +20,7 @@ typedef void (^vastParsingDone)(SAVASTAd *ad);
 
 @interface SAVASTParser : NSObject
 
-// weak object delegate to SAVAStParserProtocol
-@property (nonatomic, weak) id<SAVASTParserProtocol> delegate;
-
-// parse the VAST URL
-- (void) parseVASTURL:(NSString*)url;
+// functions
 - (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing;
 
 @end

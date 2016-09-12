@@ -84,4 +84,12 @@ UIColor *UIColorFromRGB (NSInteger red, NSInteger green, NSInteger blue);
 // network connectivity
 + (SAConnectionType) getNetworkConnectivity;
 
+////////////////////////////////////////////////////////////////////////////////
+// Invocation
+////////////////////////////////////////////////////////////////////////////////
+
++ (NSValue*) invoke:(NSString*)method onTarget:(id) target, ...;
++ (NSValue*) invoke:(NSString*)method onClass:(NSString*) name, ...;
+
+
 @end

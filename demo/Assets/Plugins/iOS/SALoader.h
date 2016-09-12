@@ -13,50 +13,23 @@
 
 // predef classes
 @class SAAd;
+@class SASession;
 
-////////////////////////////////////////////////////////////////////////////////
-// SALoader protocol
-////////////////////////////////////////////////////////////////////////////////
+// callback
+typedef void (^didLoadAd)(SAAd *ad);
 
-// @brief:
-// SALoader protocol defines two main optional functions that a user might
-// implement if he wants to preload Ads
-// This protocol is implemented by a SALoader class delegate
-@protocol SALoaderProtocol <NSObject>
-
-// main protocol functions
-@optional
-
-// @brief: function that gets called when an Ad is succesfully called
-// @return: returns a valid SAAd object
-- (void) didLoadAd:(SAAd*)ad;
-
-// @brief: function that gets called when an Ad has failed to load
-// @return: it returns a placementId of the failing ad through callback
-- (void) didFailToLoadAdForPlacementId:(NSInteger)placementId;
-
-@end
-
-////////////////////////////////////////////////////////////////////////////////
-// SALoader main class
-////////////////////////////////////////////////////////////////////////////////
-
-// @brief:
-// This is a loader class that acts as Master loading class
-// It's main purpose if to be called either by the SDK user or by SAAd
-// to perform loading and preloading of ads
-//
-// It can preload ads using the SALoaderProtocol and - (void) preloadAdForPlacementId:
-//
-// The direct ad loading functions are hidden from the user
-//
+// class
 @interface SALoader : NSObject
 
-// set delegate function
-@property (nonatomic, weak) id<SALoaderProtocol> delegate;
-
-// laod ad function;
-// does not return anything directly, but via the SALoaderProtocol delegate
-- (void) loadAdForPlacementId:(NSInteger)placementId;
+/**
+ *  Method that loads an ad async
+ *
+ *  @param placementId the placement id
+ *  @param session     the session object that should contain base url, version, etc
+ *  @param result      the result callback
+ */
+- (void) loadAd:(NSInteger)placementId
+    withSession:(SASession*)session
+      andResult:(didLoadAd)result;
 
 @end

@@ -12,70 +12,34 @@
 @class AVPlayer;
 @class AVPlayerLayer;
 
-//
-// @protocol for the SAVideoPlayerProtocol
-@protocol SAVideoPlayerProtocol <NSObject>
+// events
+typedef NS_ENUM(NSInteger, SAVideoPlayerEvent) {
+    Video_Start = 0,
+    Video_1_4 = 1,
+    Video_1_2 = 2,
+    Video_3_4 = 3,
+    Video_End = 4,
+    Video_Error = 5
+};
 
-//
-// @brief: player ready
-- (void) didFindPlayerReady;
+// callbacks
+typedef void (^savideoplayerEventHandler)(SAVideoPlayerEvent event);
+typedef void (^savideoplayerClickHandler)();
 
-//
-// @brief: called when the player starts
-- (void) didStartPlayer;
-
-//
-// @brief: called when the player reaches 1/4 of playing time
-- (void) didReachFirstQuartile;
-
-//
-// @brief: called when the player reaches 1/2 of playing time
-- (void) didReachMidpoint;
-
-//
-// @brief: called when the player reaches 3/4 of playing time
-- (void) didReachThirdQuartile;
-
-//
-// @brief: called when the player reaches the end of playing time
-- (void) didReachEnd;
-
-//
-// @brief: called when the player terminates with error
-- (void) didPlayWithError;
-
-//
-// @brief: go to URL
-- (void) didGoToURL;
-
-@end
-
+// class
 @interface SAVideoPlayer : UIView
 
-// delegate method
-@property (nonatomic, weak) id<SAVideoPlayerProtocol> delegate;
-@property (nonatomic, assign) BOOL shouldShowSmallClickButton;
-
-// play with URL
+// public functions
 - (void) playWithMediaURL:(NSURL *)url;
-
-// play with file
 - (void) playWithMediaFile:(NSString*)file;
-
-// update
 - (void) updateToFrame:(CGRect)frame;
-
-// destroy for good
 - (void) destroy;
-
-// reset
 - (void) reset;
-
-// pause & resume
 - (void) resume;
 - (void) pause;
-
-// getters
+- (void) setEventHandler:(savideoplayerEventHandler)eventHandler;
+- (void) setClickHandler:(savideoplayerClickHandler)clickHandler;
+- (void) showSmallClickButton;
 - (AVPlayer*) getPlayer;
 - (AVPlayerLayer*) getPlayerLayer;
 

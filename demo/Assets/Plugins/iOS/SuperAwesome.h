@@ -10,26 +10,22 @@
 
 #import <Foundation/Foundation.h>
 
-// import system
-#import "SAUtils.h"
+/// also works as public headers
 
 // import model header files
 #import "SAAd.h"
 #import "SACreative.h"
 #import "SADetails.h"
-#import "SAData.h"
-
-// import load
-#import "SALoader.h"
+#import "SAMedia.h"
+#import "SATracking.h"
 
 // import views
 #import "SABannerAd.h"
 #import "SAInterstitialAd.h"
 #import "SAVideoAd.h"
-#import "SAFullscreenVideoAd.h"
 
-// load protocols
-#import "SAProtocols.h"
+// load callback header
+#import "SACallback.h"
 
 // @brief:
 // This is the main SuperAwesome class that handles the Ad Session
@@ -37,21 +33,10 @@
 @interface SuperAwesome : NSObject
 
 // singleton instance (instead of init)
-+ (instancetype)getInstance;
++ (instancetype) getInstance;
 
-// setters
-- (void) setConfiguration:(NSInteger)configuration;
-- (void) setConfigurationProduction;
-- (void) setConfigurationStaging;
-- (void) setTesting:(BOOL)enabled;
-- (void) disableTestMode;
-- (void) enableTestMode;
-
-// getters
+// get the dau id and the version
 - (NSString*) getSdkVersion;
-- (NSString*) getBaseURL;
-- (BOOL) isTestingEnabled;
-- (NSInteger) getConfiguration;
 - (NSUInteger) getDAUID;
 
 @end

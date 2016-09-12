@@ -41,4 +41,20 @@ typedef void (^response)(NSInteger status, NSString *payload, BOOL success);
           andBody:(NSDictionary*)body
      withResponse:(response)response;
 
+/**
+ *  Send a PUT request to an endpoint
+ *
+ *  @param endpoint base endpoint
+ *  @param query    dictionary w/ query paramters
+ *  @param header   dictionary w/ header params
+ *  @param body     dictionary w/ body params
+ *  @param response response callback
+ */
+- (void) sendPUT:(NSString*)endpoint
+       withQuery:(NSDictionary*)query
+       andHeader:(NSDictionary*)header
+         andBody:(NSDictionary*)body
+    withResponse:(response)response;
+
+
 @end

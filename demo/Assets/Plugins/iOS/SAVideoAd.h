@@ -2,31 +2,33 @@
 //  SAVideoAd2.h
 //  Pods
 //
-//  Created by Gabriel Coman on 13/02/2016.
+//  Created by Gabriel Coman on 01/09/2016.
 //
 //
 
 #import <UIKit/UIKit.h>
+#import "SACallback.h"
 
-// useful imports
-#import "SAProtocols.h"
-#import "SAVideoPlayer.h"
-#import "SAVASTManager.h"
+@interface SAVideoAd : UIViewController
 
+// static "action" methods
++ (void) load:(NSInteger) placementId;
++ (void) play:(UIViewController*)parent;
++ (BOOL) hasAdAvailable;
 
-// forward declarations
-@class SAParentalGate;
-@class SAAd;
-
-@interface SAVideoAd : UIView <SAViewProtocol>
-
-@property (nonatomic, weak) id<SAAdProtocol> adDelegate;
-@property (nonatomic, weak) id<SAParentalGateProtocol> parentalGateDelegate;
-@property (nonatomic, weak) id<SAVideoAdProtocol> videoDelegate;
-@property (nonatomic, assign) BOOL isParentalGateEnabled;
-@property (nonatomic, assign) BOOL shouldShowSmallClickButton;
-
-- (void) pause;
-- (void) resume;
+// static "state" methods
++ (void) setCallback:(sacallback)call;
++ (void) setIsParentalGateEnabled: (BOOL) value;
++ (void) setShouldAutomaticallyCloseAtEnd: (BOOL) value;
++ (void) setShouldShowCloseButton: (BOOL) value;
++ (void) setShouldLockOrientation: (BOOL) value;
++ (void) setShouldShowSmallClickButton: (BOOL) value;
++ (void) setLockOrientation: (NSUInteger) value;
++ (void) setTest:(BOOL) isTest;
++ (void) setTestEnabled;
++ (void) setTestDisabled;
++ (void) setConfiguration: (NSInteger) config;
++ (void) setConfigurationProduction;
++ (void) setConfigurationStaging;
 
 @end
