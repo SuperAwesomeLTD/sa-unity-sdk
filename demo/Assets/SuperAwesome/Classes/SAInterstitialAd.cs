@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using MiniJSON;
 using System.Runtime.InteropServices;
+using System;
 
 namespace SuperAwesome {
 	
@@ -35,11 +36,33 @@ namespace SuperAwesome {
 		private static SALockOrientation 			lockOrientation = SALockOrientation.ANY;
 		private static SuperAwesome.SAConfiguration configuration = SuperAwesome.SAConfiguration.PRODUCTION;
 		private static bool 						isTestingEnabled = false;
-		private static SAInterface 					listener;
+		private static Action<int, SAEvent>			callback = (p, e) => {};
 
-		// constructor
-		public SAInterstitialAd () {
-			this.name = "SAInterstitialAd";
+		// instance constructor
+		private static void tryAndCreateOnce () {
+			// create just one static instance for ever!
+			if (staticInstance == null) {
+				GameObject obj = new GameObject ();
+				staticInstance = obj.AddComponent<SAInterstitialAd> ();
+				staticInstance.name = "SAInterstitialAd";
+				DontDestroyOnLoad (staticInstance);
+				
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+				SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdCreate ();
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+				var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+				var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+				var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+				activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+					AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+					test.CallStatic("SuperAwesomeUnitySAInterstitialAdCreate", context);
+				}));
+#else 
+				Debug.Log("SAInterstitialAd Create");
+#endif
+				
+			}
 		}
 
 		// MonoDevelop start implementation
@@ -62,51 +85,72 @@ namespace SuperAwesome {
 
 		public static void load (int placementId) {
 
-			// create just one static instance for ever!
-			if (staticInstance == null) {
-				GameObject obj = new GameObject ();
-				staticInstance = obj.AddComponent<SAInterstitialAd> ();
-				staticInstance.name = "SAInterstitialAd";
-				DontDestroyOnLoad (staticInstance);
-
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
-				SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdCreate ();
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-				// do nothing
-#endif
-
-			}
+			// create an instrance of an SAInterstitialAd (for callbacks)
+			tryAndCreateOnce ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdLoad(placementId, 
 			                                                       (int)configuration,
 			                                                       isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			// do nothing
-#endif
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnitySAInterstitialAdLoad", context, placementId, (int)configuration, isTestingEnabled);
+			}));
+#else
+			Debug.Log ("SAInterstitialAd Load");
+#endif
+			
 		}
 
 		public static void play () {
+
+			// create an instrance of an SAInterstitialAd (for callbacks)
+			tryAndCreateOnce ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdPlay(isParentalGateEnabled,
 			                                                       shouldLockOrientation,
 			                                             		   (int)lockOrientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			// do nothing
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnitySAInterstitialAdPlay", context, isParentalGateEnabled, shouldLockOrientation, (int)lockOrientation);
+			}));
+#else
+			Debug.Log ("SAInterstitialAd Play");
 #endif
 
 		}
 
 		public static bool hasAdAvailable () {
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdHasAdAvailable();
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-			// do nothing
-#endif
+			// create an instrance of an SAInterstitialAd (for callbacks)
+			tryAndCreateOnce ();
 
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			return SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdHasAdAvailable();
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				return test.CallStatic("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", context);
+			}));
+#else 
+			Debug.Log ("SAInterstitialAd HasAdAvailable");
+			return false;
+#endif
 			return false;
 		}
 
@@ -150,8 +194,8 @@ namespace SuperAwesome {
 			configuration = SuperAwesome.SAConfiguration.STAGING;
 		}
 		
-		public static void setListener (SAInterface value) {
-			listener = value;
+		public static void setCallback (Action<int, SAEvent> value) {
+			callback = value != null ? value : callback;
 		}
 		
 		public static bool getIsParentalGateEnabled () {
@@ -187,24 +231,12 @@ namespace SuperAwesome {
 			}
 			
 			switch (type) {
-			case "sacallback_adLoaded":{
-				if (listener != null) listener.SAAdLoaded (placementId); break;
-			}
-			case "sacallback_adFailedToLoad":{
-				if (listener != null) listener.SAAdFailedToLoad (placementId); break;
-			}
-			case "sacallback_adShown":{
-				if (listener != null) listener.SAAdShown (); break;
-			}
-			case "sacallback_adFailedToShow":{
-				if (listener != null) listener.SAAdFailedToShow (); break;
-			}
-			case "sacallback_adClicked":{
-				if (listener != null) listener.SAAdClicked (); break;
-			}
-			case "sacallback_adClosed":{
-				if (listener != null) listener.SAAdClosed (); break;
-			}
+			case "sacallback_adLoaded":  callback(placementId, SAEvent.adLoaded); break;
+			case "sacallback_adFailedToLoad": callback(placementId, SAEvent.adFailedToLoad); break;
+			case "sacallback_adShown": callback(placementId, SAEvent.adShown); break;
+			case "sacallback_adFailedToShow": callback (placementId, SAEvent.adFailedToShow); break;
+			case "sacallback_adClicked": callback (placementId, SAEvent.adClicked); break;
+			case "sacallback_adClosed": callback (placementId, SAEvent.adClosed); break;
 			}
 		}
 	}

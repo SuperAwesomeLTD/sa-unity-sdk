@@ -20,35 +20,42 @@
 #endif
 #endif
 
+/**
+ *  Forward declaration for the UnitySendMessage function
+ *
+ *  @param identifier unique object identifier
+ *  @param function   the name of the method to call on the object
+ *  @param payload    the payload data (as JSON)
+ */
 void UnitySendMessage(const char *identifier, const char *function, const char *payload);
 
 extern "C" {
     
-//    NSMutableDictionary *extensionDict = [[NSMutableDictionary alloc] init];
+    /**
+     *  A dictionary that holds Unity banners
+     */
     NSMutableDictionary *bannerDictionary = [@{} mutableCopy];
     
-//    //
-//    // Setter / getter and remover functions for linker dictionary objects
-//    // @warn: this should be compatible with both Unity 4- and Unity 5+
-//    SAUnityExtension *getOrCreateExtension(NSString *name) {
-//        return [extensionDict objectForKey:name];
-//    }
-//    
-//    void removeExtension(NSString *name){
-//        if ([extensionDict objectForKey:name]){
-//            [extensionDict removeObjectForKey:name];
-//        }
-//    }
-    
-    void sendToUnity (NSString *unityName, NSInteger placementId, NSString *callback) {
+    /**
+     *  Function that groups some common Unity functionality
+     *
+     *  @param unityName   unique object identifier
+     *  @param placementId placement id
+     *  @param callback    callback method to call
+     */
+    void sendToUnity (NSString *unityName,
+                      NSInteger placementId,
+                      NSString *callback) {
         
-        // form payload
         NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"sacallback_%@\"}", placementId, callback];
-        
-        // send message to unity
         UnitySendMessage([unityName UTF8String], "nativeCallback", [payload UTF8String]);
     }
     
+    /**
+     *  Function that creates a new SABannerAd instance
+     *
+     *  @param unityName the name of the banner in unity
+     */
     void SuperAwesomeUnitySABannerAdCreate (const char *unityName) {
         
         
@@ -74,44 +81,71 @@ extern "C" {
         [bannerDictionary setObject:banner forKey:key];
     }
     
-    void SuperAwesomeUnitySABannerAdLoad (const char *unityName, int placementId, int configuration, bool test) {
+    /**
+     *  Function that loads an ad for a banner
+     *
+     *  @param unityName     the unique name of the banner in unity
+     *  @param placementId   placement id to load the ad for
+     *  @param configuration production = 0 / staging = 1
+     *  @param test          true / false
+     */
+    void SuperAwesomeUnitySABannerAdLoad (const char *unityName,
+                                          int placementId,
+                                          int configuration,
+                                          bool test) {
         
         // get the key
         NSString *key = [NSString stringWithUTF8String:unityName];
         
         if ([bannerDictionary objectForKey:key]) {
-         
-            // get banner
             SABannerAd *banner = [bannerDictionary objectForKey:key];
             
-            // customize before loading
-            [banner setConfiguration: configuration];
+            switch (configuration) {
+                case 0: [banner setConfigurationProduction]; break;
+                case 1: [banner setConfigurationStaging]; break;
+                default: [banner setConfigurationStaging]; break;
+            }
             [banner setTest: test];
-            
-            // load data
             [banner load:placementId];
         } else {
             // handle failure
         }
     }
     
+    /**
+     *  Function that checks wheter a banner has a loaded ad available or not
+     *
+     *  @param unityName the unique name of the banner in unity
+     *
+     *  @return true of false
+     */
     bool SuperAwesomeUnitySABannerAdHasAdAvailable (const char *unityName) {
         
         // get the key
         NSString *key = [NSString stringWithUTF8String:unityName];
         
         if ([bannerDictionary objectForKey:key]) {
-            // get banner
             SABannerAd *banner = [bannerDictionary objectForKey:key];
-            
-            // return
             return [banner hasAdAvailable];
         }
         
         return false;
     }
     
-    void SuperAwesomeUnitySABannerAdPlay (const char *unityName, bool isParentalGateEnabled, int position, int size, int color) {
+    /**
+     *  Function that plays a banner ad in unity
+     *
+     *  @param unityName             the unique name of the banner in unity
+     *  @param isParentalGateEnabled true / false
+     *  @param position              TOP = 0 / BOTTOM = 1
+     *  @param size                  BANNER_320_50 = 0 / BANNER_300_50 = 1 / BANNER_728_90 = 2 / BANNER_300_250 = 3
+     *  @param color                 BANNER_TRANSPARENT = 0 / BANNER_GRAY = 1
+     */
+    void SuperAwesomeUnitySABannerAdPlay (const char *unityName,
+                                          bool isParentalGateEnabled,
+                                          int position,
+                                          int size,
+                                          int color) {
         
         // get the key
         NSString *key = [NSString stringWithUTF8String:unityName];
@@ -143,17 +177,9 @@ extern "C" {
         
             // get banner
             SABannerAd *banner = [bannerDictionary objectForKey:key];
-            
-            // parental gate
             [banner setIsParentalGateEnabled:isParentalGateEnabled];
-            
-            // position
             banner.backgroundColor = color == 0 ? [UIColor clearColor] : [UIColor colorWithRed:191.0/255.0f green:191.0/255.0f blue:191.0/255.0f alpha:1];
-            
-            // get root vc, show fvad and then play it
             [root.view addSubview:banner];
-            
-            // set the banner's frame
             [banner resize:CGRectMake(realPos.x, realPos.y, realSize.width, realSize.height)];
             
             // add a block notification
@@ -189,33 +215,31 @@ extern "C" {
         }
     }
     
+    /**
+     *  Function that closes and removes a banner from view
+     *
+     *  @param unityName the unique name of the banner in unity
+     */
     void SuperAwesomeUnitySABannerAdClose (const char *unityName) {
         
         // get the key
         NSString *key = [NSString stringWithUTF8String:unityName];
         
         if ([bannerDictionary objectForKey:key]) {
-            
-            // get banner
             SABannerAd *banner = [bannerDictionary objectForKey:key];
-            
-            // close
             [banner close];
-            
-            // remove
             [banner removeFromSuperview];
-            
-            // remove from dictionary
             [bannerDictionary removeObjectForKey:key];
         } else {
             // handle failure
         }
     }
     
-    
+    /**
+     *  Methid that adds a callback to the SAInterstitialAd static method class
+     */
     void SuperAwesomeUnitySAInterstitialAdCreate () {
 
-        // set callback
         [SAInterstitialAd setCallback:^(NSInteger placementId, SAEvent event) {
             switch (event) {
                 case adLoaded: sendToUnity(@"SAInterstitialAd", placementId, @"adLoaded"); break;
@@ -229,48 +253,67 @@ extern "C" {
 
     }
     
-    void SuperAwesomeUnitySAInterstitialAdLoad (int placementId, int configuration, bool test) {
+    /**
+     *  Load an interstitial ad
+     *
+     *  @param placementId   the placement id to try to load an ad for
+     *  @param configuration production = 0 / staging = 1
+     *  @param test          true / false
+     */
+    void SuperAwesomeUnitySAInterstitialAdLoad (int placementId,
+                                                int configuration,
+                                                bool test) {
         
-        // set configuration
-        [SAInterstitialAd setConfiguration:configuration];
-        
-        // set test
+        switch (configuration) {
+            case 0: [SAInterstitialAd setConfigurationProduction]; break;
+            case 1: [SAInterstitialAd setConfigurationStaging]; break;
+            default: [SAInterstitialAd setConfigurationStaging]; break;
+        }
         [SAInterstitialAd setTest:test];
-        
-        // load
         [SAInterstitialAd load: placementId];
     }
     
+    /**
+     *  Check to see if there's an ad available
+     *
+     *  @return true / false
+     */
     bool SuperAwesomeUnitySAInterstitialAdHasAdAvailable() {
         return [SAVideoAd hasAdAvailable];
     }
     
-    void SuperAwesomeUnitySAInterstitialAdPlay (bool isParentalGateEnabled, bool shouldLockOrientation, int lockOrientation) {
+    /**
+     *  Play an interstitial ad
+     *
+     *  @param isParentalGateEnabled true / false
+     *  @param shouldLockOrientation true / false
+     *  @param lockOrientation       ANY = 0 / PORTRAIT = 1 / LANDSCAPE = 2
+     */
+    void SuperAwesomeUnitySAInterstitialAdPlay (bool isParentalGateEnabled,
+                                                bool shouldLockOrientation,
+                                                int lockOrientation) {
         
-        // configure pg
         [SAInterstitialAd setIsParentalGateEnabled: isParentalGateEnabled];
-         
-        // configure
         [SAInterstitialAd setShouldLockOrientation: shouldLockOrientation];
-        
-        // configure orientation
         NSUInteger orientation = UIInterfaceOrientationMaskAll;
         switch (lockOrientation) {
+            case 0: orientation = UIInterfaceOrientationMaskAll; break;
             case 1: orientation = UIInterfaceOrientationMaskPortrait; break;
             case 2: orientation = UIInterfaceOrientationMaskLandscape; break;
+            default: orientation = UIInterfaceOrientationMaskAll; break;
         }
-        
         [SAInterstitialAd setLockOrientation:orientation];
         
-        // play
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
         [SAInterstitialAd play: root];
         
     }
     
+    /**
+     *  Add a callback to the SAVideoAd static class
+     */
     void SuperAwesomeUnitySAVideoAdCreate () {
         
-        // set callback
         [SAVideoAd setCallback:^(NSInteger placementId, SAEvent event) {
             switch (event) {
                 case adLoaded: sendToUnity(@"SAVideoAd", placementId, @"adLoaded"); break;
@@ -283,237 +326,69 @@ extern "C" {
         }];
     }
     
-    void SuperAwesomeUnitySAVideoAdLoad(int placementId, int configuration, bool test) {
+    /**
+     *  Load a video ad
+     *
+     *  @param placementId   placement id
+     *  @param configuration production = 0 / staging = 1
+     *  @param test          true / false
+     */
+    void SuperAwesomeUnitySAVideoAdLoad(int placementId,
+                                        int configuration,
+                                        bool test) {
         
-        // set configuration
-        [SAVideoAd setConfiguration:configuration];
-        
-        // set test
+        switch (configuration) {
+            case 0: [SAVideoAd setConfigurationProduction]; break;
+            case 1: [SAVideoAd setConfigurationStaging]; break;
+            default: [SAVideoAd setConfigurationStaging]; break;
+        }
         [SAVideoAd setTest:test];
-        
-        // load
         [SAVideoAd load: placementId];
         
     }
     
+    /**
+     *  Check to see if there is an video ad available
+     *
+     *  @return true / false
+     */
     bool SuperAwesomeUnitySAVideoAdHasAdAvailable() {
         return [SAVideoAd hasAdAvailable];
     }
     
-    void SuperAwesomeUnitySAVideoAdPlay(bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldShowSmallClickButton, bool shouldAutomaticallyCloseAtEnd, bool shouldLockOrientation, int lockOrientation) {
+    /**
+     *  Play a video ad
+     *
+     *  @param isParentalGateEnabled         true / false
+     *  @param shouldShowCloseButton         true / false
+     *  @param shouldShowSmallClickButton    true / false
+     *  @param shouldAutomaticallyCloseAtEnd true / false
+     *  @param shouldLockOrientation         true / falsr
+     *  @param lockOrientation               ANY = 0 / PORTRAIT = 1 / LANDSCAPE = 2
+     */
+    void SuperAwesomeUnitySAVideoAdPlay(bool isParentalGateEnabled,
+                                        bool shouldShowCloseButton,
+                                        bool shouldShowSmallClickButton,
+                                        bool shouldAutomaticallyCloseAtEnd,
+                                        bool shouldLockOrientation,
+                                        int lockOrientation) {
         
-        // configure pg
         [SAVideoAd setIsParentalGateEnabled: isParentalGateEnabled];
-        
-        // lock orientation
         [SAVideoAd setShouldLockOrientation: shouldLockOrientation];
-        
-        // configure orientation
+        [SAVideoAd setShouldShowCloseButton: shouldShowCloseButton];
+        [SAVideoAd setShouldShowSmallClickButton: shouldShowSmallClickButton];
+        [SAVideoAd setShouldAutomaticallyCloseAtEnd: shouldAutomaticallyCloseAtEnd];
         NSUInteger orientation = UIInterfaceOrientationMaskAll;
         switch (lockOrientation) {
+            case 0: orientation = UIInterfaceOrientationMaskAll; break;
             case 1: orientation = UIInterfaceOrientationMaskPortrait; break;
             case 2: orientation = UIInterfaceOrientationMaskLandscape; break;
+            default: orientation = UIInterfaceOrientationMaskAll; break;
         }
-        
         [SAVideoAd setLockOrientation:orientation];
         
-        // close button
-        [SAVideoAd setShouldShowCloseButton: shouldShowCloseButton];
-        
-        // small click button
-        [SAVideoAd setShouldShowSmallClickButton: shouldShowSmallClickButton];
-        
-        // auto-close
-        [SAVideoAd setShouldAutomaticallyCloseAtEnd: shouldAutomaticallyCloseAtEnd];
-        
-        // play
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
         [SAVideoAd play: root];
         
     }
-    
-//    //
-//    // This function acts as a bridge between Unity-iOS-Unity
-//    // and loads an Ad with the help of the SuperAwesome iOS SDK
-//    void SuperAwesomeUnityLoadAd(const char *unityName, int placementId, BOOL isTestingEnabled, int config) {
-//        // transfrom the name
-//        NSString *name = [NSString stringWithUTF8String:unityName];
-//        NSLog(@"SuperAwesomeUnityLoadAd - %@", name);
-//        
-//        // create a linker
-//        SAUnityLoadAd *extension = (SAUnityLoadAd*)getOrCreateExtension(name);
-//        if (!extension) {
-//            extension = [[SAUnityLoadAd alloc] init];
-//            [extensionDict setObject:extension forKey: name];
-//        }
-//        
-//        // assign the success and error callbacks
-//        extension.loadingEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback, NSString *adString) {
-//            NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\", \"adJson\":%@}", placementId, unityCallback, adString];
-//            UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
-//        };
-//        
-//        // call to load
-//        [extension loadAd:placementId
-//               forUnityAd:name
-//             withTestMode:isTestingEnabled
-//        withConfiguration:config];
-//    }
-//    
-//    //
-//    // This function acts as a bridge between Unity-iOS-Unity
-//    // and displays a banner ad
-//    void SuperAwesomeUnitySABannerAd(int placementId, const char *adJson, const char *unityName, int position, int size, int color, BOOL isParentalGateEnabled) {
-//        
-//        // parse parameters
-//        NSString *name = [NSString stringWithUTF8String:unityName];
-//        NSString *json = [NSString stringWithUTF8String:adJson];
-//        NSLog(@"SuperAwesomeUnitySABannerAd - %@", name);
-//        
-//        // updat-eeeeed!
-//        SAUnityPlayBannerAd *extension = (SAUnityPlayBannerAd*)getOrCreateExtension(name);
-//        if (!extension) {
-//            extension = [[SAUnityPlayBannerAd alloc] init];
-//            [extensionDict setObject:extension forKey: name];
-//        }
-//        
-//        // add callbacks
-//        extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
-//            NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
-//            UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
-//        };
-//        
-//        // start
-//        [extension showBannerAdWith:placementId
-//                          andAdJson:json
-//                       andUnityName:name
-//                        andPosition:position
-//                            andSize:size
-//                           andColor:color
-//                 andHasParentalGate:isParentalGateEnabled];
-//    }
-//    
-//    //
-//    // function that removes a banner ad
-//    void SuperAwesomeUnityRemoveSABannerAd(const char *unityName) {
-//        // parse parameters
-//        NSString *name = [NSString stringWithUTF8String:unityName];
-//        NSLog(@"SuperAwesomeUnityRemoveSABannerAd - %@", name);
-//        
-//        // updat-eeeeed!
-//        SAUnityPlayBannerAd *extension = (SAUnityPlayBannerAd*)getOrCreateExtension(name);
-//        if (extension) {
-//            [extension removeBannerForUnityName:name];
-//            removeExtension(name);
-//        }
-//    }
-//    
-//    //
-//    // This function acts as a bridge between Unity-iOS-Unity
-//    // and displays an interstitial ad
-//    void SuperAwesomeUnitySAInterstitialAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled, BOOL shouldLockOrientation, int lockOrientation) {
-//        
-//        // parse parameters
-//        NSString *name = [NSString stringWithUTF8String:unityName];
-//        NSString *json = [NSString stringWithUTF8String:adJson];
-//        NSLog(@"SuperAwesomeUnitySAInterstitialAd - %@", name);
-//        
-//        NSUInteger orientation = UIInterfaceOrientationMaskAll;
-//        switch (lockOrientation) {
-//            case 1: orientation = UIInterfaceOrientationMaskPortrait; break;
-//            case 2: orientation = UIInterfaceOrientationMaskLandscape; break;
-//        }
-//
-//        // updat-eeeeed!
-//        SAUnityPlayInterstitialAd *extension = (SAUnityPlayInterstitialAd*)getOrCreateExtension(name);
-//        if (!extension) {
-//            extension = [[SAUnityPlayInterstitialAd alloc] init];
-//            [extensionDict setObject:extension forKey: name];
-//        }
-//        
-//        // add callbacks
-//        extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
-//            NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
-//            UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
-//        };
-//        
-//        // start
-//        [extension showInterstitialAdWith:placementId
-//                                andAdJson:json
-//                             andUnityName:name
-//                       andHasParentalGate:isParentalGateEnabled
-//                            andShouldLock:shouldLockOrientation
-//                          lockOrientation:orientation];
-//    }
-//    
-//    //
-//    // function that removes an interstitial ad
-//    void SuperAwesomeUnityCloseSAInterstitialAd(const char *unityName) {
-//        // parse parameters
-//        NSString *name = [NSString stringWithUTF8String:unityName];
-//        NSLog(@"SuperAwesomeUnityCloseSAInterstitialAd - %@", name);
-//        
-//        // updat-eeeeed!
-//        SAUnityPlayInterstitialAd *extension = (SAUnityPlayInterstitialAd*)getOrCreateExtension(name);
-//        if (extension) {
-//            [extension closeInterstitialForUnityName:name];
-//            removeExtension(name);
-//        }
-//    }
-//    
-//    //
-//    // This function acts as a bridge between Unity-iOS-Unity
-//    // and displays a video ad
-//    void SuperAwesomeUnitySAVideoAd(int placementId, const char *adJson, const char *unityName, BOOL isParentalGateEnabled, BOOL shouldShowCloseButton, BOOL shouldAutomaticallyCloseAtEnd, BOOL shouldShowSmallClickButton, BOOL shouldLockOrientation, int lockOrientation) {
-//        
-//        // parse parameters
-//        NSString *name = [NSString stringWithUTF8String:unityName];
-//        NSString *json = [NSString stringWithUTF8String:adJson];
-//        NSLog(@"SuperAwesomeUnitySAVideoAd - %@", name);
-//        
-//        NSUInteger orientation = UIInterfaceOrientationMaskAll;
-//        switch (lockOrientation) {
-//            case 1: orientation = UIInterfaceOrientationMaskPortrait; break;
-//            case 2: orientation = UIInterfaceOrientationMaskLandscape; break;
-//        }
-//        
-//        // updat-eeeeed!
-//        SAUnityPlayFullscreenVideoAd *extension = (SAUnityPlayFullscreenVideoAd*)getOrCreateExtension(name);
-//        if (!extension) {
-//            extension = [[SAUnityPlayFullscreenVideoAd alloc] init];
-//            [extensionDict setObject:extension forKey: name];
-//        }
-//        
-//        // add callbacks
-//        extension.adEvent = ^(NSString *unityAd, int placementId, NSString *unityCallback) {
-//            NSString *payload = [NSString stringWithFormat:@"{\"placementId\":\"%d\", \"type\":\"%@\"}", placementId, unityCallback];
-//            UnitySendMessage([unityAd UTF8String], "nativeCallback", [payload UTF8String]);
-//        };
-//        
-//        // start
-//        [extension showVideoAdWith:placementId
-//                         andAdJson:json
-//                      andUnityName:name
-//                andHasParentalGate:isParentalGateEnabled
-//                 andHasCloseButton:shouldShowCloseButton
-//                    andClosesAtEnd:shouldAutomaticallyCloseAtEnd
-//           andShouldShowSmallClick:shouldShowSmallClickButton
-//                     andShouldLock:shouldLockOrientation
-//                   lockOrientation:orientation];
-//    }
-//    
-//    //
-//    // function that closes a fullscreen ad
-//    void SuperAwesomeUnityCloseSAFullscreenVideoAd(const char *unityName) {
-//        // parse parameters
-//        NSString *name = [NSString stringWithUTF8String:unityName];
-//        NSLog(@"SuperAwesomeUnityCloseSAFullscreenVideoAd - %@", name);
-//        
-//        // updat-eeeeed!
-//        SAUnityPlayFullscreenVideoAd *extension = (SAUnityPlayFullscreenVideoAd*)getOrCreateExtension(name);
-//        if (extension) {
-//            [extension closeFullscreenVideoForUnityName:name];
-//            removeExtension(name);
-//        }
-//    }
 }

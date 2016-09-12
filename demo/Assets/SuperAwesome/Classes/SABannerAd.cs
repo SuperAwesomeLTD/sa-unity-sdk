@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using MiniJSON;
 using System.Runtime.InteropServices;
+using System;
 
 namespace SuperAwesome {
 
@@ -62,7 +63,7 @@ namespace SuperAwesome {
 		private BannerColor 					color = BannerColor.BANNER_GRAY;
 		private SuperAwesome.SAConfiguration 	configuration = SuperAwesome.SAConfiguration.PRODUCTION;
 		private bool 							isTestingEnabled = false;
-		private SAInterface 					listener;
+		private Action <int, SAEvent>	    	callback = (p, e) => {};
 
 		// create method
 		public static SABannerAd createInstance() {
@@ -74,9 +75,18 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SABannerAd.SuperAwesomeUnitySABannerAdCreate(adObj.name);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			// do nothing
-#endif
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnitySABannerAdCreate", context, adObj.name);
+			}));
+#else 
+			Debug.Log (adObj.name + " Create");
+#endif
+			
 			return adObj;
 		}
 
@@ -106,7 +116,16 @@ namespace SuperAwesome {
 			                                           (int)configuration,
 			                                           isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			// do nothing
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnitySABannerAdLoad", context, this.name, placementId, (int)configuration, isTestingEnabled);
+			}));
+#else
+			Debug.Log (this.name + " Load");
 #endif
 		
 		}
@@ -120,7 +139,16 @@ namespace SuperAwesome {
 			                                           (int)size,
 			                                           (int)color);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			// do nothing
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				test.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, this.name, isParentalGateEnabled, (int)position, (int)size, (int)color);
+			}));
+#else 
+			Debug.Log (this.name + " Play");
 #endif
 
 		}
@@ -130,7 +158,16 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			return SABannerAd.SuperAwesomeUnitySABannerAdHasAdAvailable(this.name);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			return false;
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				return test.CallStatic("SuperAwesomeUnitySABannerAdHasAdAvailabke", context, this.name);
+			}));
+#else 
+			Debug.Log (this.name + " HasAdAvailable");
 #endif
 			return false;
 
@@ -141,13 +178,26 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SABannerAd.SuperAwesomeUnitySABannerAdClose(this.name);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			// do nothing
-#endif
+			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+
+			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
+				return test.CallStatic("SuperAwesomeUnitySABannerAdClose", context, this.name);
+			}));
+#else 
+			Debug.Log (this.name + " Close");
+#endif 
 		}
 
 		////////////////////////////////////////////////////////////////////
 		// Setters & getters
 		////////////////////////////////////////////////////////////////////
+
+		public void setCallback (Action<int, SAEvent> value) {
+			this.callback = value != null ? value : this.callback;
+		}
 
 		public void setIsParentalGateEnabled (bool value) {
 			isParentalGateEnabled = value;
@@ -189,10 +239,6 @@ namespace SuperAwesome {
 			configuration = SuperAwesome.SAConfiguration.STAGING;
 		}
 
-		public void setListener (SAInterface value) {
-			listener = value;
-		}
-
 		public bool getIsParentalGateEnabled () {
 			return isParentalGateEnabled;
 		}
@@ -230,24 +276,12 @@ namespace SuperAwesome {
 			}
 			
 			switch (type) {
-			case "sacallback_adLoaded":{
-				if (listener != null) listener.SAAdLoaded (placementId); break;
-			}
-			case "sacallback_adFailedToLoad":{
-				if (listener != null) listener.SAAdFailedToLoad (placementId); break;
-			}
-			case "sacallback_adShown":{
-				if (listener != null) listener.SAAdShown (); break;
-			}
-			case "sacallback_adFailedToShow":{
-				if (listener != null) listener.SAAdFailedToShow (); break;
-			}
-			case "sacallback_adClicked":{
-				if (listener != null) listener.SAAdClicked (); break;
-			}
-			case "sacallback_adClosed":{
-				if (listener != null) listener.SAAdClosed (); break;
-			}
+			case "sacallback_adLoaded":  callback(placementId, SAEvent.adLoaded); break;
+			case "sacallback_adFailedToLoad": callback(placementId, SAEvent.adFailedToLoad); break;
+			case "sacallback_adShown": callback(placementId, SAEvent.adShown); break;
+			case "sacallback_adFailedToShow": callback (placementId, SAEvent.adFailedToShow); break;
+			case "sacallback_adClicked": callback (placementId, SAEvent.adClicked); break;
+			case "sacallback_adClosed": callback (placementId, SAEvent.adClosed); break;
 			}
 		}
 	}

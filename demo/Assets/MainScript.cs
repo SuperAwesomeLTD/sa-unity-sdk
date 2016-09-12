@@ -2,7 +2,7 @@
 using System.Collections;
 using SuperAwesome;
 
-public class MainScript : MonoBehaviour, SAInterface /*, SAAdInterface, SAParentalGateInterface, SAVideoAdInterface*/  {
+public class MainScript : MonoBehaviour {
 
 //	private SALoader loader = null, loader1 = null;
 //	private SAAd adBanner = null;
@@ -30,51 +30,40 @@ public class MainScript : MonoBehaviour, SAInterface /*, SAAdInterface, SAParent
 
 		SAInterstitialAd.setConfigurationStaging ();
 		SAInterstitialAd.setTestDisabled ();
-		SAInterstitialAd.setListener (this);
+		SAInterstitialAd.setCallback ((pid, evt) => {
+			Debug.Log ("SAInterstitialAd : " + pid + " - " + evt);
+		});
 		SAInterstitialAd.setIsParentalGateEnabled (true);
 		SAInterstitialAd.load (247);
 
 		SAVideoAd.setConfigurationStaging ();
-		SAVideoAd.setListener (this);
 		SAVideoAd.setTestDisabled ();
+		SAVideoAd.setCallback ((pid, evt) => {
+			Debug.Log ("SAVideoAd : " + pid + " - " + evt);
+		});
 		SAVideoAd.load (116);
 		SAVideoAd.load (252);
 
-//		banner = SABannerAd.createInstance ();
-//		banner.setSize (SABannerAd.BannerSize.BANNER_300_50);
-//		banner.setPosition (SABannerAd.BannerPosition.TOP);
-//		banner.setConfigurationStaging ();
-//		banner.setTestDisabled ();
-//		banner.setListener (this);
-//		banner.load (113);
-//
-//		banner2 = SABannerAd.createInstance ();
-//		banner2.setSize (SABannerAd.BannerSize.BANNER_320_50);
-//		banner2.setPosition (SABannerAd.BannerPosition.BOTTOM);
-//		banner2.setConfigurationStaging ();
-//		banner2.setTestDisabled ();
-//		banner2.setColor (SABannerAd.BannerColor.BANNER_GRAY);
-//		banner2.setListener (this);
-//		banner2.load (172);
+		banner = SABannerAd.createInstance ();
+		banner.setCallback ((pid, evt) => {
+			Debug.Log ("banner : " + pid + " - " + evt);
+		});
+		banner.setSize (SABannerAd.BannerSize.BANNER_300_50);
+		banner.setPosition (SABannerAd.BannerPosition.TOP);
+		banner.setConfigurationStaging ();
+		banner.setTestDisabled ();
+		banner.load (113);
 
-
-
-//		SuperAwesome.SuperAwesome.instance.setConfigurationStaging ();
-//		SuperAwesome.SuperAwesome.instance.disableTestMode ();
-//
-//		loader = SALoader.createInstance ();
-//		loader.loaderDelegate = this;
-//		loader.loadAd (113);	// banner
-//		SuperAwesome.SuperAwesome.instance.enableTestMode ();
-//		loader.loadAd (117); 	// interstitial
-//
-//		SuperAwesome.SuperAwesome.instance.setConfigurationProduction ();
-//		SuperAwesome.SuperAwesome.instance.enableTestMode ();
-//
-//		loader1 = SALoader.createInstance ();
-//		loader1.loaderDelegate = this;
-//		loader1.loadAd (28000);  // video
-		
+		banner2 = SABannerAd.createInstance ();
+		banner2.setSize (SABannerAd.BannerSize.BANNER_320_50);
+		banner2.setPosition (SABannerAd.BannerPosition.BOTTOM);
+		banner2.setConfigurationStaging ();
+		banner2.setTestDisabled ();
+		banner2.setColor (SABannerAd.BannerColor.BANNER_GRAY);
+		banner2.setCallback ((pid, evt) => {
+			Debug.Log ("banner2 : " + pid + " - " + evt);
+		});
+		banner2.load (172);
 	}
 	
 	public void playBanner () {
@@ -113,30 +102,6 @@ public class MainScript : MonoBehaviour, SAInterface /*, SAAdInterface, SAParent
 //		iad.play ();
 	}
 
-	public void SAAdLoaded (int placementId) {
-		Debug.Log ("From Unity - SAAdLoaded - " + placementId);
-	}
-
-	public void SAAdFailedToLoad (int placementId) {
-		Debug.Log ("From Unity - SAAdFailedToLoad - " + placementId);
-	}
-
-	public void SAAdShown () {
-		Debug.Log ("From Unity - SAAdShown");
-	}
-
-	public void SAAdFailedToShow () {
-		Debug.Log ("From Unity - SAAdFailedToShow");
-	}
-
-	public void SAAdClosed () {
-		Debug.Log ("From Unity - SAAdClosed");
-	}
-
-	public void SAAdClicked () {
-		Debug.Log ("From Unity - SAAdClicked");
-	}
-	
 	/** <SALoaderInterface> */
 //	public void didLoadAd(SAAd ad) {
 //		if (ad.placementId == 113) {

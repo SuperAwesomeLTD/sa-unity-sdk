@@ -3,10 +3,10 @@
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 <application>
-<activity android:name="tv.superawesome.sdk.views.SAFullscreenVideoAd$SAFullscreenVideoAdActivity" android:label="SAFullscreenVideoAd" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
-<activity android:name="tv.superawesome.sdk.views.SAInterstitialAd$SAInterstitialAdActivity" android:label="SAInterstitialAd" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" android:configChanges="keyboardHidden|orientation|screenSize"/>
+<activity android:name="tv.superawesome.sdk.views.SAVideoAd" android:label="SAFullscreenVideoAd" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
+<activity android:name="tv.superawesome.sdk.views.SAInterstitialAd" android:label="SAInterstitialAd" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" android:configChanges="keyboardHidden|orientation|screenSize"/>
 <service android:name="tv.superawesome.lib.sanetwork.asynctask.SAAsyncTask$SAAsync" android:exported="false"/>
-<receiver android:name="tv.superawesome.lib.saevents.SACPI" android:exported="true">
+<receiver android:name="tv.superawesome.sdk.cpi.SACPI" android:exported="true">
 <intent-filter><action android:name="com.android.vending.INSTALL_REFERRER"/></intent-filter>
 </receiver>
 </application>

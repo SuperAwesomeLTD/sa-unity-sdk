@@ -10,8 +10,9 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="0px"
-        android:layout_height="0px"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#ffff00"
         android:id="@+id/content_holder">
 
         <tv.superawesome.lib.sawebplayer.SAWebPlayer

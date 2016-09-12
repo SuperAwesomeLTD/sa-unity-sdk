@@ -4,7 +4,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="#ffefefef"
-             tools:context=".views.SAInterstitialAd$SAInterstitialActivityInner">
+             tools:context="tv.superawesome.sdk.views.SAInterstitialAd$SAInterstitialAdActivity">
 
     <tv.superawesome.sdk.views.SABannerAd
         android:id="@+id/interstitial_banner"
@@ -21,6 +21,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:adjustViewBounds="true"
-        android:onClick="closeInterstitial"/>
+        android:adjustViewBounds="true"/>
 </RelativeLayout>
