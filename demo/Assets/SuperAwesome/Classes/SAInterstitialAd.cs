@@ -21,12 +21,13 @@ namespace SuperAwesome {
 		                                                                 bool test);
 
 		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySAInterstitialAdPlay(bool isParentalGateEnabled,
+		private static extern void SuperAwesomeUnitySAInterstitialAdPlay(int placementId, 
+		                                                                 bool isParentalGateEnabled,
 		                                                                 bool shouldLockOrientation, 
 		                                                                 int lockOrientation);
 
 		[DllImport ("__Internal")]
-		private static extern bool SuperAwesomeUnitySAInterstitialAdHasAdAvailable();
+		private static extern bool SuperAwesomeUnitySAInterstitialAdHasAdAvailable(int placementId);
 #endif
 
 		// private state vars
@@ -99,7 +100,11 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAInterstitialAdLoad", context, placementId, (int)configuration, isTestingEnabled);
+				test.CallStatic("SuperAwesomeUnitySAInterstitialAdLoad", 
+				                context, 
+				                placementId, 
+				                (int)configuration, 
+				                isTestingEnabled);
 			}));
 #else
 			Debug.Log ("SAInterstitialAd Load");
@@ -107,13 +112,14 @@ namespace SuperAwesome {
 			
 		}
 
-		public static void play () {
+		public static void play (int placementId) {
 
 			// create an instrance of an SAInterstitialAd (for callbacks)
 			tryAndCreateOnce ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdPlay(isParentalGateEnabled,
+			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdPlay(placementId,
+			                                                       isParentalGateEnabled,
 			                                                       shouldLockOrientation,
 			                                             		   (int)lockOrientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
@@ -123,7 +129,12 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAInterstitialAdPlay", context, isParentalGateEnabled, shouldLockOrientation, (int)lockOrientation);
+				test.CallStatic("SuperAwesomeUnitySAInterstitialAdPlay", 
+				                context, 
+				                placementId, 
+				                isParentalGateEnabled, 
+				                shouldLockOrientation, 
+				                (int)lockOrientation);
 			}));
 #else
 			Debug.Log ("SAInterstitialAd Play");
@@ -131,13 +142,13 @@ namespace SuperAwesome {
 
 		}
 
-		public static bool hasAdAvailable () {
+		public static bool hasAdAvailable (int placementId) {
 
 			// create an instrance of an SAInterstitialAd (for callbacks)
 			tryAndCreateOnce ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			return SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdHasAdAvailable();
+			return SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdHasAdAvailable(placementId);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
@@ -145,7 +156,9 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				return test.CallStatic("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", context);
+				return test.CallStatic("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", 
+				                       context, 
+				                       placementId);
 			}));
 #else 
 			Debug.Log ("SAInterstitialAd HasAdAvailable");

@@ -77,11 +77,12 @@ namespace SuperAwesome {
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			string nameL = adObj.name;
 
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySABannerAdCreate", context, adObj.name);
+				test.CallStatic("SuperAwesomeUnitySABannerAdCreate", context, nameL);
 			}));
 #else 
 			Debug.Log (adObj.name + " Create");
@@ -118,11 +119,12 @@ namespace SuperAwesome {
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			string nameL = this.name;
 
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySABannerAdLoad", context, this.name, placementId, (int)configuration, isTestingEnabled);
+				test.CallStatic("SuperAwesomeUnitySABannerAdLoad", context, nameL, placementId, (int)configuration, isTestingEnabled);
 			}));
 #else
 			Debug.Log (this.name + " Load");
@@ -141,11 +143,12 @@ namespace SuperAwesome {
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			string nameL = this.name;
 
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, this.name, isParentalGateEnabled, (int)position, (int)size, (int)color);
+				test.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, nameL, isParentalGateEnabled, (int)position, (int)size, (int)color);
 			}));
 #else 
 			Debug.Log (this.name + " Play");
@@ -160,11 +163,12 @@ namespace SuperAwesome {
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var nameL = this.name;
 
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				return test.CallStatic("SuperAwesomeUnitySABannerAdHasAdAvailabke", context, this.name);
+				return test.CallStatic("SuperAwesomeUnitySABannerAdHasAdAvailabke", context, nameL);
 			}));
 #else 
 			Debug.Log (this.name + " HasAdAvailable");
@@ -180,11 +184,12 @@ namespace SuperAwesome {
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
+			var nameL = this.name;
 
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				return test.CallStatic("SuperAwesomeUnitySABannerAdClose", context, this.name);
+				return test.CallStatic("SuperAwesomeUnitySABannerAdClose", context, nameL);
 			}));
 #else 
 			Debug.Log (this.name + " Close");

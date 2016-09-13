@@ -21,7 +21,8 @@ namespace SuperAwesome {
 		                                                          bool test);
 		
 		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySAVideoAdPlay(bool isParentalGateEnabled,
+		private static extern void SuperAwesomeUnitySAVideoAdPlay(int placementId,
+		                                                          bool isParentalGateEnabled,
 		                                                          bool shouldShowCloseButton,
 		                                                          bool shouldShowSmallClickButton,
 		                                                          bool shouldAutomaticallyCloseAtEnd,
@@ -29,7 +30,7 @@ namespace SuperAwesome {
 		                                                          int lockOrientation);
 		
 		[DllImport ("__Internal")]
-		private static extern bool SuperAwesomeUnitySAVideoAdHasAdAvailable();
+		private static extern bool SuperAwesomeUnitySAVideoAdHasAdAvailable(int placementId);
 #endif
 		
 		// private state vars
@@ -104,7 +105,11 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAVideoAdLoad", context, placementId, (int)configuration, isTestingEnabled);
+				test.CallStatic("SuperAwesomeUnitySAVideoAdLoad", 
+				                context, 
+				                placementId, 
+				                (int)configuration, 
+				                isTestingEnabled);
 			}));
 #else
 			Debug.Log ("SAVideoAd Load");
@@ -112,13 +117,14 @@ namespace SuperAwesome {
 			
 		}
 		
-		public static void play () {
+		public static void play (int placementId) {
 
 			// create an instrance of an SAVideoAd (for callbacks)
 			tryAndCreateOnce ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAVideoAd.SuperAwesomeUnitySAVideoAdPlay(isParentalGateEnabled,
+			SAVideoAd.SuperAwesomeUnitySAVideoAdPlay(placementId,
+			                                         isParentalGateEnabled,
 			                                         shouldShowCloseButton,
 			                                         shouldShowSmallClickButton,
 			                                         shouldAutomaticallyCloseAtEnd,
@@ -131,7 +137,15 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAVideoAdPlay", context, isParentalGateEnabled, shouldShowCloseButton, shouldShowSmallClickButton, shouldAutomaticallyCloseAtEnd, shouldLockOrientation, (int)lockOrientation);
+				test.CallStatic("SuperAwesomeUnitySAVideoAdPlay", 
+				                context, 
+				                placementId, 
+				                isParentalGateEnabled, 
+				                shouldShowCloseButton, 
+				                shouldShowSmallClickButton, 
+				                shouldAutomaticallyCloseAtEnd, 
+				                shouldLockOrientation, 
+				                (int)lockOrientation);
 			}));
 #else 
 			Debug.Log ("SAVideoAd Play");
@@ -139,13 +153,13 @@ namespace SuperAwesome {
 			
 		}
 		
-		public static bool hasAdAvailable () {
+		public static bool hasAdAvailable (int placementId) {
 
 			// create an instrance of an SAVideoAd (for callbacks)
 			tryAndCreateOnce ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			return SAVideoAd.SuperAwesomeUnitySAVideoAdHasAdAvailable();
+			return SAVideoAd.SuperAwesomeUnitySAVideoAdHasAdAvailable(placementId);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
@@ -153,7 +167,9 @@ namespace SuperAwesome {
 			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
 			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				return test.CallStatic("SuperAwesomeUnitySAVideoAdHasAdAvailable", context);
+				return test.CallStatic("SuperAwesomeUnitySAVideoAdHasAdAvailable", 
+				                       context,
+				                       placementId);
 			}));
 #else 
 			Debug.Log ("SAVideoAd Has Ad Available");

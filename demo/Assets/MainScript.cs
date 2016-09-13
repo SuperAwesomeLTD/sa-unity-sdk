@@ -28,21 +28,21 @@ public class MainScript : MonoBehaviour {
 	// button actions
 	public void loadAds () {
 
-		SAInterstitialAd.setConfigurationStaging ();
-		SAInterstitialAd.setTestDisabled ();
-		SAInterstitialAd.setCallback ((pid, evt) => {
-			Debug.Log ("SAInterstitialAd : " + pid + " - " + evt);
-		});
-		SAInterstitialAd.setIsParentalGateEnabled (true);
-		SAInterstitialAd.load (247);
-
-		SAVideoAd.setConfigurationStaging ();
-		SAVideoAd.setTestDisabled ();
-		SAVideoAd.setCallback ((pid, evt) => {
-			Debug.Log ("SAVideoAd : " + pid + " - " + evt);
-		});
-		SAVideoAd.load (116);
-		SAVideoAd.load (252);
+//		SAInterstitialAd.setConfigurationStaging ();
+//		SAInterstitialAd.setTestDisabled ();
+//		SAInterstitialAd.setCallback ((pid, evt) => {
+//			Debug.Log ("SAInterstitialAd : " + pid + " - " + evt);
+//		});
+//		SAInterstitialAd.setIsParentalGateEnabled (true);
+//		SAInterstitialAd.load (247);
+//
+//		SAVideoAd.setConfigurationStaging ();
+//		SAVideoAd.setTestDisabled ();
+//		SAVideoAd.setCallback ((pid, evt) => {
+//			Debug.Log ("SAVideoAd : " + pid + " - " + evt);
+//		});
+//		SAVideoAd.load (224);
+//		SAVideoAd.load (252);
 
 		banner = SABannerAd.createInstance ();
 		banner.setCallback ((pid, evt) => {
@@ -67,9 +67,9 @@ public class MainScript : MonoBehaviour {
 	}
 	
 	public void playBanner () {
-		// banner.play ();
+		 banner2.play ();
 		// Debug.Log ("Playing banner");
-		SAVideoAd.play ();
+//		SAVideoAd.play (252);
 //		vad = SAVideoAd.createInstance ();
 //		vad.setAd (adVideo);
 //		vad.adDelegate = this;
@@ -89,9 +89,10 @@ public class MainScript : MonoBehaviour {
 	}
 	
 	public void playInterstitial () {
-//		banner2.play ();
+		banner.play ();
+//		SAVideoAd.play (224);
 //		Debug.Log ("Playing interstitial");
-		SAInterstitialAd.play ();
+//		SAInterstitialAd.play (247);
 //		iad = SAInterstitialAd.createInstance ();
 //		iad.setAd (adInterstitial);
 //		iad.isParentalGateEnabled = true;

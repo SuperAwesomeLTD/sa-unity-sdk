@@ -16,8 +16,8 @@
 
 // static "action" methods
 + (void) load:(NSInteger) placementId;
-+ (void) play:(UIViewController*) parent;
-+ (BOOL) hasAdAvailable;
++ (void) play:(NSInteger) placementId fromVC:(UIViewController*)parent;
++ (BOOL) hasAdAvailable:(NSInteger) placementId;
 
 // static "state" methods
 + (void) setCallback:(sacallback)call;

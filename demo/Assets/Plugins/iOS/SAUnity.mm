@@ -278,8 +278,8 @@ extern "C" {
      *
      *  @return true / false
      */
-    bool SuperAwesomeUnitySAInterstitialAdHasAdAvailable() {
-        return [SAVideoAd hasAdAvailable];
+    bool SuperAwesomeUnitySAInterstitialAdHasAdAvailable(int placementId) {
+        return [SAVideoAd hasAdAvailable: placementId];
     }
     
     /**
@@ -289,7 +289,8 @@ extern "C" {
      *  @param shouldLockOrientation true / false
      *  @param lockOrientation       ANY = 0 / PORTRAIT = 1 / LANDSCAPE = 2
      */
-    void SuperAwesomeUnitySAInterstitialAdPlay (bool isParentalGateEnabled,
+    void SuperAwesomeUnitySAInterstitialAdPlay (int placementId,
+                                                bool isParentalGateEnabled,
                                                 bool shouldLockOrientation,
                                                 int lockOrientation) {
         
@@ -305,7 +306,7 @@ extern "C" {
         [SAInterstitialAd setLockOrientation:orientation];
         
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
-        [SAInterstitialAd play: root];
+        [SAInterstitialAd play: placementId fromVC: root];
         
     }
     
@@ -352,8 +353,8 @@ extern "C" {
      *
      *  @return true / false
      */
-    bool SuperAwesomeUnitySAVideoAdHasAdAvailable() {
-        return [SAVideoAd hasAdAvailable];
+    bool SuperAwesomeUnitySAVideoAdHasAdAvailable(int placementId) {
+        return [SAVideoAd hasAdAvailable: placementId];
     }
     
     /**
@@ -366,7 +367,8 @@ extern "C" {
      *  @param shouldLockOrientation         true / falsr
      *  @param lockOrientation               ANY = 0 / PORTRAIT = 1 / LANDSCAPE = 2
      */
-    void SuperAwesomeUnitySAVideoAdPlay(bool isParentalGateEnabled,
+    void SuperAwesomeUnitySAVideoAdPlay(int placementId,
+                                        bool isParentalGateEnabled,
                                         bool shouldShowCloseButton,
                                         bool shouldShowSmallClickButton,
                                         bool shouldAutomaticallyCloseAtEnd,
@@ -388,7 +390,7 @@ extern "C" {
         [SAVideoAd setLockOrientation:orientation];
         
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
-        [SAVideoAd play: root];
+        [SAVideoAd play: placementId fromVC: root];
         
     }
 }
