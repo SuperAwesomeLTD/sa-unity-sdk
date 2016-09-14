@@ -51,14 +51,15 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 				SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdCreate ();
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-				var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-				var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-				var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-				activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-					AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-					test.CallStatic("SuperAwesomeUnitySAInterstitialAdCreate", context);
+				var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+				var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+				
+				context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+					var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+					saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdCreate", context);
 				}));
+
 #else 
 				Debug.Log("SAInterstitialAd Create");
 #endif
@@ -94,18 +95,19 @@ namespace SuperAwesome {
 			                                                       (int)configuration,
 			                                                       isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAInterstitialAdLoad", 
+			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+			
+			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdLoad", 
 				                context, 
 				                placementId, 
 				                (int)configuration, 
 				                isTestingEnabled);
 			}));
+
 #else
 			Debug.Log ("SAInterstitialAd Load");
 #endif
@@ -123,19 +125,20 @@ namespace SuperAwesome {
 			                                                       shouldLockOrientation,
 			                                             		   (int)lockOrientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAInterstitialAdPlay", 
+			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+			
+			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdPlay", 
 				                context, 
 				                placementId, 
 				                isParentalGateEnabled, 
 				                shouldLockOrientation, 
 				                (int)lockOrientation);
 			}));
+
 #else
 			Debug.Log ("SAInterstitialAd Play");
 #endif
@@ -150,16 +153,15 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			return SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdHasAdAvailable(placementId);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				return test.CallStatic("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", 
-				                       context, 
-				                       placementId);
-			}));
+			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+			
+			return saplugin.CallStatic<bool>("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", 
+			                       context, 
+			                       placementId);
+
 #else 
 			Debug.Log ("SAInterstitialAd HasAdAvailable");
 			return false;
@@ -170,35 +172,27 @@ namespace SuperAwesome {
 		////////////////////////////////////////////////////////////////////
 		// Setters & getters
 		////////////////////////////////////////////////////////////////////
-		
-		public static void setIsParentalGateEnabled (bool value) {
-			isParentalGateEnabled = value;
-		}
-		
-		public static void setShouldLockOrientation (bool value) {
-			shouldLockOrientation = value;
+
+		public static void setCallback (Action<int, SAEvent> value) {
+			callback = value != null ? value : callback;
 		}
 
-		public static void setLockOrientation (SALockOrientation value) {
-			lockOrientation = value;
+		public static void enableParentalGate () {
+			isParentalGateEnabled = true;
 		}
-		
-		public static void setTest (bool value) {
-			isTestingEnabled = value;
+
+		public static void disableParentalGate () {
+			isParentalGateEnabled = false;
 		}
-		
-		public static void setTestEnabled () {
+
+		public static void enableTestMode () {
 			isTestingEnabled = true;
 		}
-		
-		public static void setTestDisabled () {
+
+		public static void disableTestMode () {
 			isTestingEnabled = false;
 		}
-		
-		public static void setConfiguration (SuperAwesome.SAConfiguration value) {
-			configuration = value;
-		}
-		
+
 		public static void setConfigurationProduction () {
 			configuration = SuperAwesome.SAConfiguration.PRODUCTION;
 		}
@@ -206,21 +200,20 @@ namespace SuperAwesome {
 		public static void setConfigurationStaging () {
 			configuration = SuperAwesome.SAConfiguration.STAGING;
 		}
-		
-		public static void setCallback (Action<int, SAEvent> value) {
-			callback = value != null ? value : callback;
-		}
-		
-		public static bool getIsParentalGateEnabled () {
-			return isParentalGateEnabled;
+
+		public static void setOrientationAny () {
+			shouldLockOrientation = false;
+			lockOrientation = SALockOrientation.ANY;
 		}
 
-		public static bool getShouldLockOrientation () {
-			return shouldLockOrientation;
+		public static void setOrientationPortrait () {
+			shouldLockOrientation = true;
+			lockOrientation = SALockOrientation.PORTRAIT;
 		}
-		
-		public static SALockOrientation getLockOrientation () {
-			return lockOrientation;
+
+		public static void setOrientationLandscape () {
+			shouldLockOrientation = true;
+			lockOrientation = SALockOrientation.LANDSCAPE;
 		}
 
 		////////////////////////////////////////////////////////////////////

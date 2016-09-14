@@ -57,14 +57,15 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 				SAVideoAd.SuperAwesomeUnitySAVideoAdCreate ();
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-				var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-				var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-				var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-				activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-					AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-					test.CallStatic("SuperAwesomeUnitySAVideoAdCreate", context);
+				var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+				var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+				
+				context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+					var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+					saplugin.CallStatic("SuperAwesomeUnitySAVideoAdCreate", context);
 				}));
+
 #else 
 				Debug.Log ("SAVideoAd Create");
 #endif
@@ -99,18 +100,19 @@ namespace SuperAwesome {
 			                                         (int)configuration,
 			                                         isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAVideoAdLoad", 
+			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+			
+			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				saplugin.CallStatic("SuperAwesomeUnitySAVideoAdLoad", 
 				                context, 
 				                placementId, 
 				                (int)configuration, 
 				                isTestingEnabled);
 			}));
+
 #else
 			Debug.Log ("SAVideoAd Load");
 #endif
@@ -131,13 +133,13 @@ namespace SuperAwesome {
 			                                         shouldLockOrientation,
 			                                         (int)lockOrientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				test.CallStatic("SuperAwesomeUnitySAVideoAdPlay", 
+			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+			
+			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				saplugin.CallStatic("SuperAwesomeUnitySAVideoAdPlay", 
 				                context, 
 				                placementId, 
 				                isParentalGateEnabled, 
@@ -147,6 +149,7 @@ namespace SuperAwesome {
 				                shouldLockOrientation, 
 				                (int)lockOrientation);
 			}));
+		
 #else 
 			Debug.Log ("SAVideoAd Play");
 #endif
@@ -161,16 +164,16 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			return SAVideoAd.SuperAwesomeUnitySAVideoAdHasAdAvailable(placementId);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var androidJC = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = androidJC.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-			activity.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				AndroidJavaClass test = new AndroidJavaClass("tv.superawesome.plugins.unity.SAUnity");
-				return test.CallStatic("SuperAwesomeUnitySAVideoAdHasAdAvailable", 
-				                       context,
-				                       placementId);
-			}));
+			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+
+			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+			return saplugin.CallStatic<bool>("SuperAwesomeUnitySAVideoAdHasAdAvailable", 
+			                       context,
+			                       placementId);
+			
+
 #else 
 			Debug.Log ("SAVideoAd Has Ad Available");
 			return false;
@@ -183,44 +186,28 @@ namespace SuperAwesome {
 		// Setters & getters
 		////////////////////////////////////////////////////////////////////
 		
+		public static void setCallback (Action <int, SAEvent> value) {
+			callback = value != null ? value : callback;
+		}
+
 		public static void setIsParentalGateEnabled (bool value) {
 			isParentalGateEnabled = value;
 		}
-		
-		public static void setShouldLockOrientation (bool value) {
-			shouldLockOrientation = value;
-		}
-		
-		public static void setLockOrientation (SALockOrientation value) {
-			lockOrientation = value;
-		}
 
-		public static void setShouldShowCloseButton (bool value) {
-			shouldShowCloseButton = value;
-		}
-
-		public static void setShouldShowSmallClickButton (bool value) {
-			shouldShowSmallClickButton = value;
-		}
-
-		public static void setShouldAutomaticallyCloseAtEnd (bool value) {
-			shouldAutomaticallyCloseAtEnd = value;	
+		public static void enableParentalGate () {
+			isParentalGateEnabled = true;
 		}
 		
-		public static void setTest (bool value) {
-			isTestingEnabled = value;
+		public static void disableParentalGate () {
+			isParentalGateEnabled = false;
 		}
 		
-		public static void setTestEnabled () {
+		public static void enableTestMode () {
 			isTestingEnabled = true;
 		}
 		
-		public static void setTestDisabled () {
+		public static void disableTestMode () {
 			isTestingEnabled = false;
-		}
-		
-		public static void setConfiguration (SuperAwesome.SAConfiguration value) {
-			configuration = value;
 		}
 		
 		public static void setConfigurationProduction () {
@@ -230,33 +217,45 @@ namespace SuperAwesome {
 		public static void setConfigurationStaging () {
 			configuration = SuperAwesome.SAConfiguration.STAGING;
 		}
-		
-		public static void setCallback (Action <int, SAEvent> value) {
-			callback = value != null ? value : callback;
+
+
+		public static void setOrientationAny () {
+			shouldLockOrientation = false;
+			lockOrientation = SALockOrientation.ANY;
 		}
 		
-		public static bool getIsParentalGateEnabled () {
-			return isParentalGateEnabled;
+		public static void setOrientationPortrait () {
+			shouldLockOrientation = true;
+			lockOrientation = SALockOrientation.PORTRAIT;
 		}
 		
-		public static bool getShouldLockOrientation () {
-			return shouldLockOrientation;
-		}
-		
-		public static SALockOrientation getLockOrientation () {
-			return lockOrientation;
+		public static void setOrientationLandscape () {
+			shouldLockOrientation = true;
+			lockOrientation = SALockOrientation.LANDSCAPE;
 		}
 
-		public static bool getShouldShowCloseButton () {
-			return shouldShowCloseButton;
+		public static void enableCloseButton () {
+			shouldShowCloseButton = true;
 		}
-		
-		public static bool getShouldShowSmallClickButton () {
-			return shouldShowSmallClickButton;
+
+		public static void disableCloseButton () {
+			shouldShowCloseButton = false;
 		}
-		
-		public static bool getShouldAutomaticallyCloseAtEnd (bool value) {
-			return shouldAutomaticallyCloseAtEnd;	
+
+		public static void enableSmallClickButton () {
+			shouldShowSmallClickButton = true;
+		}
+
+		public static void disableSmallClickButton () {
+			shouldShowSmallClickButton = false;
+		}
+
+		public static void enableCloseAtEnd () {
+			shouldShowSmallClickButton = true;
+		}
+
+		public static void disableCloseAtEnd () {
+			shouldAutomaticallyCloseAtEnd = false;
 		}
 		
 		////////////////////////////////////////////////////////////////////

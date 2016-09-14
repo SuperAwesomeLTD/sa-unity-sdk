@@ -100,12 +100,18 @@ extern "C" {
         if ([bannerDictionary objectForKey:key]) {
             SABannerAd *banner = [bannerDictionary objectForKey:key];
             
-            switch (configuration) {
-                case 0: [banner setConfigurationProduction]; break;
-                case 1: [banner setConfigurationStaging]; break;
-                default: [banner setConfigurationStaging]; break;
+            if (test) {
+                [banner enableTestMode];
+            } else {
+                [banner disableTestMode];
             }
-            [banner setTest: test];
+            
+            if (configuration == 0) {
+                [banner setConfigurationProduction];
+            } else {
+                [banner setConfigurationStaging];
+            }
+            
             [banner load:placementId];
         } else {
             // handle failure
@@ -177,8 +183,19 @@ extern "C" {
         
             // get banner
             SABannerAd *banner = [bannerDictionary objectForKey:key];
-            [banner setIsParentalGateEnabled:isParentalGateEnabled];
-            banner.backgroundColor = color == 0 ? [UIColor clearColor] : [UIColor colorWithRed:191.0/255.0f green:191.0/255.0f blue:191.0/255.0f alpha:1];
+            
+            if (isParentalGateEnabled) {
+                [banner enableParentalGate];
+            } else {
+                [banner disableParentalGate];
+            }
+            
+            if (color == 0) {
+                [banner setColorTransparent];
+            } else {
+                [banner setColorGray];
+            }
+            
             [root.view addSubview:banner];
             [banner resize:CGRectMake(realPos.x, realPos.y, realSize.width, realSize.height)];
             
@@ -264,12 +281,18 @@ extern "C" {
                                                 int configuration,
                                                 bool test) {
         
-        switch (configuration) {
-            case 0: [SAInterstitialAd setConfigurationProduction]; break;
-            case 1: [SAInterstitialAd setConfigurationStaging]; break;
-            default: [SAInterstitialAd setConfigurationStaging]; break;
+        if (test) {
+            [SAInterstitialAd enableTestMode];
+        } else {
+            [SAInterstitialAd disableTestMode];
         }
-        [SAInterstitialAd setTest:test];
+        
+        if (configuration == 0) {
+            [SAInterstitialAd setConfigurationProduction];
+        } else {
+            [SAInterstitialAd setConfigurationStaging];
+        }
+        
         [SAInterstitialAd load: placementId];
     }
     
@@ -294,16 +317,21 @@ extern "C" {
                                                 bool shouldLockOrientation,
                                                 int lockOrientation) {
         
-        [SAInterstitialAd setIsParentalGateEnabled: isParentalGateEnabled];
-        [SAInterstitialAd setShouldLockOrientation: shouldLockOrientation];
-        NSUInteger orientation = UIInterfaceOrientationMaskAll;
-        switch (lockOrientation) {
-            case 0: orientation = UIInterfaceOrientationMaskAll; break;
-            case 1: orientation = UIInterfaceOrientationMaskPortrait; break;
-            case 2: orientation = UIInterfaceOrientationMaskLandscape; break;
-            default: orientation = UIInterfaceOrientationMaskAll; break;
+        if (isParentalGateEnabled) {
+            [SAInterstitialAd enableParentalGate];
+        } else {
+            [SAInterstitialAd disableParentalGate];
         }
-        [SAInterstitialAd setLockOrientation:orientation];
+        
+        if (shouldLockOrientation) {
+            if (lockOrientation == 0) {
+                [SAInterstitialAd setOrientationPortrait];
+            } else {
+                [SAInterstitialAd setOrientationLandscape];
+            }
+        } else {
+            [SAInterstitialAd setOrientationAny];
+        }
         
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
         [SAInterstitialAd play: placementId fromVC: root];
@@ -338,12 +366,18 @@ extern "C" {
                                         int configuration,
                                         bool test) {
         
-        switch (configuration) {
-            case 0: [SAVideoAd setConfigurationProduction]; break;
-            case 1: [SAVideoAd setConfigurationStaging]; break;
-            default: [SAVideoAd setConfigurationStaging]; break;
+        if (test) {
+            [SAVideoAd enableTestMode];
+        } else {
+            [SAVideoAd disableTestMode];
         }
-        [SAVideoAd setTest:test];
+        
+        if (configuration == 0) {
+            [SAVideoAd setConfigurationProduction];
+        } else {
+            [SAVideoAd setConfigurationStaging];
+        }
+        
         [SAVideoAd load: placementId];
         
     }
@@ -375,19 +409,39 @@ extern "C" {
                                         bool shouldLockOrientation,
                                         int lockOrientation) {
         
-        [SAVideoAd setIsParentalGateEnabled: isParentalGateEnabled];
-        [SAVideoAd setShouldLockOrientation: shouldLockOrientation];
-        [SAVideoAd setShouldShowCloseButton: shouldShowCloseButton];
-        [SAVideoAd setShouldShowSmallClickButton: shouldShowSmallClickButton];
-        [SAVideoAd setShouldAutomaticallyCloseAtEnd: shouldAutomaticallyCloseAtEnd];
-        NSUInteger orientation = UIInterfaceOrientationMaskAll;
-        switch (lockOrientation) {
-            case 0: orientation = UIInterfaceOrientationMaskAll; break;
-            case 1: orientation = UIInterfaceOrientationMaskPortrait; break;
-            case 2: orientation = UIInterfaceOrientationMaskLandscape; break;
-            default: orientation = UIInterfaceOrientationMaskAll; break;
+        if (isParentalGateEnabled) {
+            [SAVideoAd enableParentalGate];
+        } else {
+            [SAVideoAd disableParentalGate];
         }
-        [SAVideoAd setLockOrientation:orientation];
+        
+        if (shouldShowCloseButton) {
+            [SAVideoAd enableCloseButton];
+        } else {
+            [SAVideoAd disableCloseButton];
+        }
+        
+        if (shouldShowSmallClickButton) {
+            [SAVideoAd enableSmallClickButton];
+        } else {
+            [SAVideoAd disableSmallClickButton];
+        }
+        
+        if (shouldAutomaticallyCloseAtEnd) {
+            [SAVideoAd enableCloseAtEnd];
+        } else {
+            [SAVideoAd disableCloseAtEnd];
+        }
+        
+        if (shouldLockOrientation) {
+            if (lockOrientation == 0) {
+                [SAVideoAd setOrientationPortrait];
+            } else {
+                [SAVideoAd setOrientationLandscape];
+            }
+        } else {
+            [SAVideoAd setOrientationAny];
+        }
         
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
         [SAVideoAd play: placementId fromVC: root];

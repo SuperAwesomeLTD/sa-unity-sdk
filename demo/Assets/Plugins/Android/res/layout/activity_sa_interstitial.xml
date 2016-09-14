@@ -4,7 +4,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="#ffefefef"
-             tools:context="tv.superawesome.sdk.views.SAInterstitialAd$SAInterstitialAdActivity">
+             tools:context="tv.superawesome.sdk.views.SAInterstitialAd">
 
     <tv.superawesome.sdk.views.SABannerAd
         android:id="@+id/interstitial_banner"

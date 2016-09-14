@@ -33,6 +33,5 @@
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
         android:maxWidth="83dp"
-        android:maxHeight="31dp"
-        android:contentDescription="Padlock image" />
+        android:maxHeight="31dp"/>
 </RelativeLayout>

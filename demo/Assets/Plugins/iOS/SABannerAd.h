@@ -26,12 +26,13 @@
 
 // public "state" setters
 - (void) setCallback:(sacallback)callback;
-- (void) setIsParentalGateEnabled:(BOOL)isParentalGateEnabled;
-- (void) setTest:(BOOL) isTest;
-- (void) setTestEnabled;
-- (void) setTestDisabled;
-- (void) setConfiguration: (NSInteger) config;
+- (void) enableParentalGate;
+- (void) disableParentalGate;
+- (void) enableTestMode;
+- (void) disableTestMode;
 - (void) setConfigurationProduction;
 - (void) setConfigurationStaging;
+- (void) setColorTransparent;
+- (void) setColorGray;
 
 @end

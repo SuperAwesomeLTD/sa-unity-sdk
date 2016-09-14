@@ -28,46 +28,51 @@ public class MainScript : MonoBehaviour {
 	// button actions
 	public void loadAds () {
 
-//		SAInterstitialAd.setConfigurationStaging ();
-//		SAInterstitialAd.setTestDisabled ();
-//		SAInterstitialAd.setCallback ((pid, evt) => {
-//			Debug.Log ("SAInterstitialAd : " + pid + " - " + evt);
+		SAInterstitialAd.setConfigurationStaging ();
+		SAInterstitialAd.disableTestMode ();
+		SAInterstitialAd.setCallback ((pid, evt) => {
+			Debug.Log ("SAInterstitialAd : " + pid + " - " + evt);
+		});
+		SAInterstitialAd.enableParentalGate ();
+		SAInterstitialAd.load (247);
+
+		SAVideoAd.setConfigurationStaging ();
+		SAVideoAd.disableTestMode ();
+		SAVideoAd.setCallback ((pid, evt) => {
+			Debug.Log ("SAVideoAd : " + pid + " - " + evt);
+		});
+		SAVideoAd.load (224);
+		SAVideoAd.load (252);
+
+//		banner = SABannerAd.createInstance ();
+//		banner.setCallback ((pid, evt) => {
+//			Debug.Log ("banner : " + pid + " - " + evt);
 //		});
-//		SAInterstitialAd.setIsParentalGateEnabled (true);
-//		SAInterstitialAd.load (247);
+//		banner.setSize_300_50 ();
+//		banner.setPositionTop ();
+//		banner.setConfigurationStaging ();
+//		banner.disableTestMode ();
+//		banner.load (113);
 //
-//		SAVideoAd.setConfigurationStaging ();
-//		SAVideoAd.setTestDisabled ();
-//		SAVideoAd.setCallback ((pid, evt) => {
-//			Debug.Log ("SAVideoAd : " + pid + " - " + evt);
+//		banner2 = SABannerAd.createInstance ();
+//		banner2.setSize_320_50 ();
+//		banner2.setPositionBottom ();
+//		banner2.setConfigurationStaging ();
+//		banner2.disableTestMode ();
+//		banner2.setColorGray ();
+//		banner2.setCallback ((pid, evt) => {
+//			Debug.Log ("banner2 : " + pid + " - " + evt);
 //		});
-//		SAVideoAd.load (224);
-//		SAVideoAd.load (252);
-
-		banner = SABannerAd.createInstance ();
-		banner.setCallback ((pid, evt) => {
-			Debug.Log ("banner : " + pid + " - " + evt);
-		});
-		banner.setSize (SABannerAd.BannerSize.BANNER_300_50);
-		banner.setPosition (SABannerAd.BannerPosition.TOP);
-		banner.setConfigurationStaging ();
-		banner.setTestDisabled ();
-		banner.load (113);
-
-		banner2 = SABannerAd.createInstance ();
-		banner2.setSize (SABannerAd.BannerSize.BANNER_320_50);
-		banner2.setPosition (SABannerAd.BannerPosition.BOTTOM);
-		banner2.setConfigurationStaging ();
-		banner2.setTestDisabled ();
-		banner2.setColor (SABannerAd.BannerColor.BANNER_GRAY);
-		banner2.setCallback ((pid, evt) => {
-			Debug.Log ("banner2 : " + pid + " - " + evt);
-		});
-		banner2.load (172);
+//		banner2.load (172);
 	}
 	
 	public void playBanner () {
-		 banner2.play ();
+//		if (banner2.hasAdAvailable ()) {
+//			banner2.play ();
+//		}
+		if (SAInterstitialAd.hasAdAvailable (247)) {
+			SAInterstitialAd.play (247);
+		}
 		// Debug.Log ("Playing banner");
 //		SAVideoAd.play (252);
 //		vad = SAVideoAd.createInstance ();
@@ -89,7 +94,14 @@ public class MainScript : MonoBehaviour {
 	}
 	
 	public void playInterstitial () {
-		banner.play ();
+//		if (banner.hasAdAvailable ()) {
+//			banner.play ();
+//		}
+
+		if (SAVideoAd.hasAdAvailable (224)) {
+			SAVideoAd.play (224);
+		}
+//
 //		SAVideoAd.play (224);
 //		Debug.Log ("Playing interstitial");
 //		SAInterstitialAd.play (247);

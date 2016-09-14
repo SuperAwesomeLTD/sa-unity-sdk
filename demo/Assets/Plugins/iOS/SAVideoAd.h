@@ -18,17 +18,20 @@
 
 // static "state" methods
 + (void) setCallback:(sacallback)call;
-+ (void) setIsParentalGateEnabled: (BOOL) value;
-+ (void) setShouldAutomaticallyCloseAtEnd: (BOOL) value;
-+ (void) setShouldShowCloseButton: (BOOL) value;
-+ (void) setShouldLockOrientation: (BOOL) value;
-+ (void) setShouldShowSmallClickButton: (BOOL) value;
-+ (void) setLockOrientation: (NSUInteger) value;
-+ (void) setTest:(BOOL) isTest;
-+ (void) setTestEnabled;
-+ (void) setTestDisabled;
-+ (void) setConfiguration: (NSInteger) config;
++ (void) enableTestMode;
++ (void) disableTestMode;
++ (void) enableParentalGate;
++ (void) disableParentalGate;
 + (void) setConfigurationProduction;
 + (void) setConfigurationStaging;
++ (void) setOrientationAny;
++ (void) setOrientationPortrait;
++ (void) setOrientationLandscape;
++ (void) enableCloseButton;
++ (void) disableCloseButton;
++ (void) enableSmallClickButton;
++ (void) disableSmallClickButton;
++ (void) enableCloseAtEnd;
++ (void) disableCloseAtEnd;
 
 @end

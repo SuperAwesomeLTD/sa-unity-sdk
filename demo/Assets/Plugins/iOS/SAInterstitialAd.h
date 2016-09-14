@@ -21,14 +21,14 @@
 
 // static "state" methods
 + (void) setCallback:(sacallback)call;
-+ (void) setIsParentalGateEnabled: (BOOL) value;
-+ (void) setShouldLockOrientation: (BOOL) value;
-+ (void) setLockOrientation: (NSUInteger) value;
-+ (void) setTest:(BOOL) isTest;
-+ (void) setTestEnabled;
-+ (void) setTestDisabled;
-+ (void) setConfiguration: (NSInteger) config;
++ (void) enableTestMode;
++ (void) disableTestMode;
++ (void) enableParentalGate;
++ (void) disableParentalGate;
 + (void) setConfigurationProduction;
 + (void) setConfigurationStaging;
++ (void) setOrientationAny;
++ (void) setOrientationPortrait;
++ (void) setOrientationLandscape;
 
 @end
