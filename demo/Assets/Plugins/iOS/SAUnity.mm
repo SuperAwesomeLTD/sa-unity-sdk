@@ -17,6 +17,7 @@
 #import "SAUnityPlayBannerAd.h"
 #import "SAUnityPlayInterstitialAd.h"
 #import "SAUnityPlayFullscreenVideoAd.m"
+#import "SAOrientation.h"
 #endif
 #endif
 
@@ -314,8 +315,7 @@ extern "C" {
      */
     void SuperAwesomeUnitySAInterstitialAdPlay (int placementId,
                                                 bool isParentalGateEnabled,
-                                                bool shouldLockOrientation,
-                                                int lockOrientation) {
+                                                int orientation) {
         
         if (isParentalGateEnabled) {
             [SAInterstitialAd enableParentalGate];
@@ -323,12 +323,10 @@ extern "C" {
             [SAInterstitialAd disableParentalGate];
         }
         
-        if (shouldLockOrientation) {
-            if (lockOrientation == 1) {
-                [SAInterstitialAd setOrientationPortrait];
-            } else {
-                [SAInterstitialAd setOrientationLandscape];
-            }
+        if (orientation == LANDSCAPE) {
+            [SAInterstitialAd setOrientationLandscape];
+        } else if (orientation == PORTRAIT) {
+            [SAInterstitialAd setOrientationPortrait];
         } else {
             [SAInterstitialAd setOrientationAny];
         }
@@ -406,8 +404,7 @@ extern "C" {
                                         bool shouldShowCloseButton,
                                         bool shouldShowSmallClickButton,
                                         bool shouldAutomaticallyCloseAtEnd,
-                                        bool shouldLockOrientation,
-                                        int lockOrientation) {
+                                        int orientation) {
         
         if (isParentalGateEnabled) {
             [SAVideoAd enableParentalGate];
@@ -433,12 +430,10 @@ extern "C" {
             [SAVideoAd disableCloseAtEnd];
         }
         
-        if (shouldLockOrientation) {
-            if (lockOrientation == 1) {
-                [SAVideoAd setOrientationPortrait];
-            } else {
-                [SAVideoAd setOrientationLandscape];
-            }
+        if (orientation == LANDSCAPE) {
+            [SAVideoAd setOrientationLandscape];
+        } else if (orientation == PORTRAIT) {
+            [SAVideoAd setOrientationPortrait];
         } else {
             [SAVideoAd setOrientationAny];
         }

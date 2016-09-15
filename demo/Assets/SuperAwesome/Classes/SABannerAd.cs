@@ -61,7 +61,7 @@ namespace SuperAwesome {
 		private BannerPosition 					position = BannerPosition.BOTTOM;
 		private BannerSize 						size = BannerSize.LEADER_320_50;
 		private BannerColor 					color = BannerColor.GRAY;
-		private SuperAwesome.SAConfiguration 	configuration = SuperAwesome.SAConfiguration.PRODUCTION;
+		private SAConfiguration 				configuration = SAConfiguration.PRODUCTION;
 		private bool 							isTestingEnabled = false;
 		private Action <int, SAEvent>	    	callback = (p, e) => {};
 
@@ -226,11 +226,11 @@ namespace SuperAwesome {
 		}
 
 		public void setConfigurationProduction () {
-			configuration = SuperAwesome.SAConfiguration.PRODUCTION;
+			configuration = SAConfiguration.PRODUCTION;
 		}
 		
 		public void setConfigurationStaging () {
-			configuration = SuperAwesome.SAConfiguration.STAGING;
+			configuration = SAConfiguration.STAGING;
 		}
 
 		public void setPositionTop () {

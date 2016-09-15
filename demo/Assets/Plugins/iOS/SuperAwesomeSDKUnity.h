@@ -26,6 +26,7 @@
 #import "SALogger.h"
 #import "SAMedia.h"
 #import "SANetwork.h"
+#import "SAOrientation.h"
 #import "SAParentalGate.h"
 #import "SAPopup.h"
 #import "SASerializationProtocol.h"

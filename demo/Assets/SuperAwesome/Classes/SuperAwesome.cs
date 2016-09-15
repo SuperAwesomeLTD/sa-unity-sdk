@@ -10,11 +10,6 @@ namespace SuperAwesome {
 	// main singleton class
 	public class SuperAwesome {
 
-		public enum SAConfiguration {
-			PRODUCTION = 0,
-			STAGING = 1
-		}
-
 		// Singleton stuff
 		private static SuperAwesome _instance;
 		public static SuperAwesome instance {

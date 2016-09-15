@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace SuperAwesome {
 
-	public enum SALockOrientation {
+	public enum SAOrientation {
 		ANY = 0,
 		PORTRAIT = 1,
 		LANDSCAPE = 2
@@ -16,6 +16,11 @@ namespace SuperAwesome {
 		adFailedToShow = 3,
 		adClicked = 4,
 		adClosed = 5
+	}
+
+	public enum SAConfiguration {
+		PRODUCTION = 0,
+		STAGING = 1
 	}
 }
 

@@ -23,7 +23,6 @@ namespace SuperAwesome {
 		[DllImport ("__Internal")]
 		private static extern void SuperAwesomeUnitySAInterstitialAdPlay(int placementId, 
 		                                                                 bool isParentalGateEnabled,
-		                                                                 bool shouldLockOrientation, 
 		                                                                 int lockOrientation);
 
 		[DllImport ("__Internal")]
@@ -33,10 +32,9 @@ namespace SuperAwesome {
 		// private state vars
 		private static SAInterstitialAd 			staticInstance = null;
 		private static bool 						isParentalGateEnabled = true;
-		private static bool 						shouldLockOrientation = false;
-		private static SALockOrientation 			lockOrientation = SALockOrientation.ANY;
-		private static SuperAwesome.SAConfiguration configuration = SuperAwesome.SAConfiguration.PRODUCTION;
 		private static bool 						isTestingEnabled = false;
+		private static SAOrientation 				orientation = SAOrientation.ANY;
+		private static SAConfiguration 				configuration = SAConfiguration.PRODUCTION;
 		private static Action<int, SAEvent>			callback = (p, e) => {};
 
 		// instance constructor
@@ -122,8 +120,7 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdPlay(placementId,
 			                                                       isParentalGateEnabled,
-			                                                       shouldLockOrientation,
-			                                             		   (int)lockOrientation);
+			                                                       (int)orientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
 			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
@@ -135,8 +132,7 @@ namespace SuperAwesome {
 				                context, 
 				                placementId, 
 				                isParentalGateEnabled, 
-				                shouldLockOrientation, 
-				                (int)lockOrientation);
+				                (int)orientation);
 			}));
 
 #else
@@ -194,26 +190,23 @@ namespace SuperAwesome {
 		}
 
 		public static void setConfigurationProduction () {
-			configuration = SuperAwesome.SAConfiguration.PRODUCTION;
+			configuration = SAConfiguration.PRODUCTION;
 		}
 		
 		public static void setConfigurationStaging () {
-			configuration = SuperAwesome.SAConfiguration.STAGING;
+			configuration = SAConfiguration.STAGING;
 		}
 
 		public static void setOrientationAny () {
-			shouldLockOrientation = false;
-			lockOrientation = SALockOrientation.ANY;
+			orientation = SAOrientation.ANY;
 		}
 
 		public static void setOrientationPortrait () {
-			shouldLockOrientation = true;
-			lockOrientation = SALockOrientation.PORTRAIT;
+			orientation = SAOrientation.PORTRAIT;
 		}
 
 		public static void setOrientationLandscape () {
-			shouldLockOrientation = true;
-			lockOrientation = SALockOrientation.LANDSCAPE;
+			orientation = SAOrientation.LANDSCAPE;
 		}
 
 		////////////////////////////////////////////////////////////////////
