@@ -302,7 +302,7 @@ extern "C" {
      *  @return true / false
      */
     bool SuperAwesomeUnitySAInterstitialAdHasAdAvailable(int placementId) {
-        return [SAVideoAd hasAdAvailable: placementId];
+        return [SAInterstitialAd hasAdAvailable: placementId];
     }
     
     /**
@@ -324,7 +324,7 @@ extern "C" {
         }
         
         if (shouldLockOrientation) {
-            if (lockOrientation == 0) {
+            if (lockOrientation == 1) {
                 [SAInterstitialAd setOrientationPortrait];
             } else {
                 [SAInterstitialAd setOrientationLandscape];
@@ -434,7 +434,7 @@ extern "C" {
         }
         
         if (shouldLockOrientation) {
-            if (lockOrientation == 0) {
+            if (lockOrientation == 1) {
                 [SAVideoAd setOrientationPortrait];
             } else {
                 [SAVideoAd setOrientationLandscape];

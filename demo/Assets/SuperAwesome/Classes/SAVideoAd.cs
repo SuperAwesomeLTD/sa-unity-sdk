@@ -40,7 +40,7 @@ namespace SuperAwesome {
 		private static SALockOrientation 			lockOrientation = SALockOrientation.ANY;
 		private static bool 						shouldShowCloseButton = true;
 		private static bool 						shouldShowSmallClickButton = false;
-		private static bool 						shouldAutomaticallyCloseAtEnd = false;
+		private static bool 						shouldAutomaticallyCloseAtEnd = true;
 		private static SuperAwesome.SAConfiguration	configuration = SuperAwesome.SAConfiguration.PRODUCTION;
 		private static bool 						isTestingEnabled = false;
 		private static Action <int, SAEvent> 		callback = (p, e) => {};
