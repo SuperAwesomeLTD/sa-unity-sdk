@@ -38,16 +38,12 @@
 - (void) sendAllEventsForKey:(NSString*)key;
 
 /**
- *  Send viewable impression for fullscreen ad
- */
-- (void) sendViewableForFullscreen;
-
-/**
  *  Send viewable impresison for in-screen
  *
  *  @param view <#view description#>
  */
-- (void) sendViewableForInScreen:(UIView*) view;
+- (void) sendViewableImpressionForDisplay:(UIView*) view;
+- (void) sendViewableImpressionForVideo:(UIView*) view;
 
 /**
  *  Method that returns a MOAT string

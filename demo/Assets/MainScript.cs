@@ -8,7 +8,7 @@ public class MainScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// do nothing
+		SuperAwesome.SuperAwesome.instance.handleCPI ();
 	}
 	
 	// Update is called once per frame
@@ -21,6 +21,7 @@ public class MainScript : MonoBehaviour {
 		banner = SABannerAd.createInstance ();
 		banner.setConfigurationStaging ();
 		banner.disableParentalGate ();
+
 		banner.load (414);
 
 		SAInterstitialAd.setConfigurationStaging ();
@@ -35,6 +36,25 @@ public class MainScript : MonoBehaviour {
 		SAVideoAd.setOrientationLandscape ();
 		SAVideoAd.load (416);
 		SAVideoAd.load (417);
+		SAVideoAd.load (28000);
+		SAVideoAd.load (2782);
+
+		SAVideoAd.setCallback ((placementId, evt) => {
+			switch (evt) {
+			case SAEvent.adLoaded:{
+				Debug.Log ("Ad loaded for " + placementId);
+				break;
+			}
+			case SAEvent.adFailedToLoad:{ 
+				Debug.Log ("Ad failed to load for " + placementId);
+				break;
+			}
+			case SAEvent.adShown:break;
+			case SAEvent.adFailedToShow:break;
+			case SAEvent.adClicked:break;
+			case SAEvent.adClosed:break;
+			}
+		});
 	}
 	
 	public void playBanner () {
