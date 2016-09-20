@@ -3,6 +3,7 @@
  */
 using UnityEngine;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 /** part for the SuperAwesome namespace */
 namespace SuperAwesome {
@@ -33,7 +34,7 @@ namespace SuperAwesome {
 
 		// getters
 		private string getVersion (){
-			return "5.0.1";
+			return "5.0.2";
 		}
 		
 		private string getSdk () {

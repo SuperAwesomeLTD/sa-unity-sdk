@@ -53,6 +53,13 @@ extern "C" {
     }
     
     /**
+     *  Handle CPI
+     */
+    void SuperAwesomeUnitySuperAwesomeHandleCPI () {
+        [[SuperAwesome getInstance] handleCPI];
+    }
+    
+    /**
      *  Function that creates a new SABannerAd instance
      *
      *  @param unityName the name of the banner in unity

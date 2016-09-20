@@ -38,5 +38,6 @@
 // get the dau id and the version
 - (NSString*) getSdkVersion;
 - (NSUInteger) getDAUID;
+- (void) handleCPI;
 
 @end

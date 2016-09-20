@@ -18,6 +18,6 @@ typedef void (^didFindDAUId)(NSUInteger dauId);
 // The dauID can be non-0 -> in which case it's valid
 // or it can be 0 -> in which case it's not valid (user does not have tracking enabled or
 // gms enabled)
-+ (void) enableCapping:(didFindDAUId) callback;
+- (void) enableCapping:(didFindDAUId) callback;
 
 @end

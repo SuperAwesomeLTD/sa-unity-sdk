@@ -9,5 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface SACPI : NSObject
-+ (void) sendCPIEvent;
+
+/**
+ *  Send CPI event
+ */
+- (void) sendCPIEvent;
+
 @end
