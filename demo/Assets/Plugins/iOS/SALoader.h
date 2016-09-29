@@ -14,9 +14,10 @@
 // predef classes
 @class SAAd;
 @class SASession;
+@class SAResponse;
 
 // callback
-typedef void (^didLoadAd)(SAAd *ad);
+typedef void (^didLoadAd)(SAResponse *response);
 
 // class
 @interface SALoader : NSObject

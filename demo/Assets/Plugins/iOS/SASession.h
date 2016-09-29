@@ -34,5 +34,12 @@ typedef NS_ENUM(NSInteger, SAConfiguration) {
 - (NSInteger) getDauId;
 - (NSString*) getVersion;
 - (SAConfiguration) getConfiguration;
+- (NSString*) getBundleId;
+- (NSString*) getAppName;
+- (NSString*) getLang;
+- (NSString*) getDevice;
+- (NSInteger) getConnectivityType;
+- (NSInteger) getCachebuster;
+- (NSString*) getUserAgent;
 
 @end

@@ -34,7 +34,7 @@ namespace SuperAwesome {
 
 		// getters
 		private string getVersion (){
-			return "5.0.2";
+			return "5.1.0";
 		}
 		
 		private string getSdk () {

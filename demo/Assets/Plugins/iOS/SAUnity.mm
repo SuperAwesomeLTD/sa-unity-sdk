@@ -59,6 +59,10 @@ extern "C" {
         [[SuperAwesome getInstance] handleCPI];
     }
     
+    ////////////////////////////////////////////////////////////////////////////
+    // SABannerAd interface to Unity
+    ////////////////////////////////////////////////////////////////////////////
+    
     /**
      *  Function that creates a new SABannerAd instance
      *
@@ -260,6 +264,10 @@ extern "C" {
         }
     }
     
+    ////////////////////////////////////////////////////////////////////////////
+    // SAInterstitialAd interface to Unity
+    ////////////////////////////////////////////////////////////////////////////
+    
     /**
      *  Methid that adds a callback to the SAInterstitialAd static method class
      */
@@ -342,6 +350,10 @@ extern "C" {
         [SAInterstitialAd play: placementId fromVC: root];
         
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    // SAVideoAd interface to Unity
+    ////////////////////////////////////////////////////////////////////////////
     
     /**
      *  Add a callback to the SAVideoAd static class
@@ -447,6 +459,83 @@ extern "C" {
         
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
         [SAVideoAd play: placementId fromVC: root];
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    // SAGameWall interface to Unity
+    ////////////////////////////////////////////////////////////////////////////
+    
+    /**
+     *  Methid that adds a callback to the SAGameWall static method class
+     */
+    void SuperAwesomeUnitySAGameWallCreate () {
+        
+        [SAGameWall setCallback:^(NSInteger placementId, SAEvent event) {
+            switch (event) {
+                case adLoaded: sendToUnity(@"SAGameWall", placementId, @"adLoaded"); break;
+                case adFailedToLoad: sendToUnity(@"SAGameWall", placementId, @"adFailedToLoad"); break;
+                case adShown: sendToUnity(@"SAGameWall", placementId, @"adShown"); break;
+                case adFailedToShow: sendToUnity(@"SAGameWall", placementId, @"adFailedToShow"); break;
+                case adClicked: sendToUnity(@"SAGameWall", placementId, @"adClicked"); break;
+                case adClosed: sendToUnity(@"SAGameWall", placementId, @"adClosed"); break;
+            }
+        }];
+        
+    }
+    
+    /**
+     *  Load a gamewall ad
+     *
+     *  @param placementId   the placement id to try to load an ad for
+     *  @param configuration production = 0 / staging = 1
+     *  @param test          true / false
+     */
+    void SuperAwesomeUnitySAGameWallLoad (int placementId,
+                                          int configuration,
+                                          bool test) {
+        
+        if (test) {
+            [SAGameWall enableTestMode];
+        } else {
+            [SAGameWall disableTestMode];
+        }
+        
+        if (configuration == 0) {
+            [SAGameWall setConfigurationProduction];
+        } else {
+            [SAGameWall setConfigurationStaging];
+        }
+        
+        [SAGameWall load: placementId];
+    }
+    
+    /**
+     *  Check to see if there's an ad available for the GameWall
+     *
+     *  @return true / false
+     */
+    bool SuperAwesomeUnitySAGameWallHasAdAvailable(int placementId) {
+        return [SAGameWall hasAdAvailable: placementId];
+    }
+    
+    /**
+     *  Play a GameWall Ad
+     *
+     *  @param isParentalGateEnabled true / false
+     *  @param shouldLockOrientation true / false
+     *  @param lockOrientation       ANY = 0 / PORTRAIT = 1 / LANDSCAPE = 2
+     */
+    void SuperAwesomeUnitySAGameWallPlay (int placementId,
+                                          bool isParentalGateEnabled) {
+        
+        if (isParentalGateEnabled) {
+            [SAGameWall enableParentalGate];
+        } else {
+            [SAGameWall disableParentalGate];
+        }
+        
+        UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [SAGameWall play: placementId fromVC: root];
         
     }
 }

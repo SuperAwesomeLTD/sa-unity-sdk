@@ -11,15 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "SAJsonParser.h"
 #import "SATracking.h"
-
-// creative format typedef
-typedef NS_ENUM(NSInteger, SACreativeFormat) {
-    invalid = -1,
-    image = 0,
-    video = 1,
-    rich = 2,
-    tag = 3
-};
+#import "SACreativeFormat.h"
 
 // forward declarations
 @class SADetails;
@@ -38,7 +30,9 @@ typedef NS_ENUM(NSInteger, SACreativeFormat) {
 @property (nonatomic, assign) BOOL approved;
 @property (nonatomic, strong) NSString *customPayload;
 @property (nonatomic, strong) NSString *clickUrl;
+@property (nonatomic, strong) NSString *installUrl;
 @property (nonatomic, strong) NSString *impressionUrl;
+@property (nonatomic, strong) NSString *bundleId;
 @property (nonatomic, strong) NSMutableArray<SATracking*> *events;
 
 @property (nonatomic, strong) SADetails *details;

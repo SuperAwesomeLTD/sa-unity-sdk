@@ -55,6 +55,13 @@ public class MainScript : MonoBehaviour {
 			case SAEvent.adClosed:break;
 			}
 		});
+
+		SAGameWall.setConfigurationStaging ();
+		SAGameWall.load (470);
+		SAGameWall.load (437);
+		SAGameWall.setCallback ((placementId, evt) => {
+			Debug.Log ("Event for " + placementId + " ==> " + evt);
+		});
 	}
 	
 	public void playBanner () {
@@ -82,8 +89,13 @@ public class MainScript : MonoBehaviour {
 	}
 
 	public void playVideo2 () {
-		if (SAVideoAd.hasAdAvailable (417)) {
-			SAVideoAd.play (417);
+//		if (SAVideoAd.hasAdAvailable (417)) {
+//			SAVideoAd.play (417);
+//		}
+		if (SAGameWall.hasAdAvailable (470)) {
+			SAGameWall.play (470);
+		} else if (SAGameWall.hasAdAvailable (437)) {
+			SAGameWall.play (437);
 		}
 	}
 }

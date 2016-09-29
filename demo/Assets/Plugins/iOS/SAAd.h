@@ -11,11 +11,7 @@
 #import <Foundation/Foundation.h>
 
 #import "SAJsonParser.h"
-
-typedef NS_ENUM(NSInteger, SAVASTAdType) {
-    InLine = 0,
-    Wrapper = 1
-};
+#import "SAVASTAdType.h"
 
 // formward declarations
 @class SACreative;

@@ -18,11 +18,11 @@ typedef void (^downloadResponse)(BOOL success);
 @interface SAFileDownloader : NSObject
 
 /**
- *  Function that gets a new file location on disk
  *
- *  @return a new file location
+ * @param extension     the extension for the file
+ * @return a new disk location
  */
-+ (NSString*) getDiskLocation;
++ (NSString*) getDiskLocation:(NSString*) extension;
 
 /**
  *  Downloa a file from a remote URL to a predefined file path
