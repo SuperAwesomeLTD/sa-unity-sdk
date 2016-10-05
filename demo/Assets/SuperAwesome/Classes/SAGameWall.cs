@@ -31,6 +31,7 @@ namespace SuperAwesome {
 		private static SAGameWall		 			staticInstance = null;
 		private static bool 						isParentalGateEnabled = true;
 		private static bool 						isTestingEnabled = false;
+		private static bool							isBackButtonEnabled = false;
 		private static SAConfiguration 				configuration = SAConfiguration.PRODUCTION;
 		private static Action<int, SAEvent>			callback = (p, e) => {};
 
@@ -128,7 +129,8 @@ namespace SuperAwesome {
 				saplugin.CallStatic("SuperAwesomeUnitySAGameWallPlay", 
 				                    context, 
 				                    placementId, 
-				                    isParentalGateEnabled);
+				                    isParentalGateEnabled,
+				                    isBackButtonEnabled);
 			}));
 
 #else
@@ -191,6 +193,14 @@ namespace SuperAwesome {
 		
 		public static void setConfigurationStaging () {
 			configuration = SAConfiguration.STAGING;
+		}
+
+		public static void enableBackButton () {
+			isBackButtonEnabled = true;
+		}
+		
+		public static void disableBackButton () {
+			isBackButtonEnabled = false;
 		}
 		
 		////////////////////////////////////////////////////////////////////

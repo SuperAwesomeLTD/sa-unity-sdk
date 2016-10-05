@@ -17,6 +17,8 @@
 #import "SACronograph.h"
 #import "SADeserializationProtocol.h"
 #import "SADetails.h"
+#import "SADownloadItem.h"
+#import "SADownloadQueue.h"
 #import "SAEvents.h"
 #import "SAExtensions.h"
 #import "SAFileDownloader.h"

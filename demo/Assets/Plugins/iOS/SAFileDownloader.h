@@ -1,38 +1,26 @@
 //
-//  SAFileDownloader.h
+//  SASequentialFileDownloader.h
 //  Pods
 //
-//  Created by Gabriel Coman on 18/04/2016.
+//  Created by Gabriel Coman on 30/09/2016.
 //
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "SANetwork.h"
+#import "SADownloadItem.h"
 
 // callback for generic success
-typedef void (^downloadResponse)(BOOL success);
+typedef void (^seqDownloadResponse)(BOOL success, NSString* diskPath);
 
-//
-// class that deals with downloading (and cleaning-up) files
 @interface SAFileDownloader : NSObject
 
-/**
- *
- * @param extension     the extension for the file
- * @return a new disk location
- */
-+ (NSString*) getDiskLocation:(NSString*) extension;
+// singleton instance (instead of init)
++ (instancetype) getInstance;
 
-/**
- *  Downloa a file from a remote URL to a predefined file path
- *
- *  @param url      the remote URL
- *  @param fpath    the predefine lication
- *  @param response download response
- */
+// public methods
+- (NSString*) getDiskLocation:(NSString*) extension;
 - (void) downloadFileFrom:(NSString*)url
-                       to:(NSString*)fpath
-              withResponse:(downloadResponse)response;
+            withExtension:(NSString*)ext
+              andResponse:(seqDownloadResponse)response;
 
 @end

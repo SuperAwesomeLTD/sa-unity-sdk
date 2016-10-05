@@ -33,6 +33,7 @@ namespace SuperAwesome {
 		private static SAInterstitialAd 			staticInstance = null;
 		private static bool 						isParentalGateEnabled = true;
 		private static bool 						isTestingEnabled = false;
+		private static bool							isBackButtonEnabled = false;
 		private static SAOrientation 				orientation = SAOrientation.ANY;
 		private static SAConfiguration 				configuration = SAConfiguration.PRODUCTION;
 		private static Action<int, SAEvent>			callback = (p, e) => {};
@@ -132,7 +133,8 @@ namespace SuperAwesome {
 				                context, 
 				                placementId, 
 				                isParentalGateEnabled, 
-				                (int)orientation);
+				                (int)orientation,
+				                isBackButtonEnabled);
 			}));
 
 #else
@@ -187,6 +189,14 @@ namespace SuperAwesome {
 
 		public static void disableTestMode () {
 			isTestingEnabled = false;
+		}
+
+		public static void enableBackButton () {
+			isBackButtonEnabled = true;
+		}
+
+		public static void disableBackButton () {
+			isBackButtonEnabled = false;
 		}
 
 		public static void setConfigurationProduction () {

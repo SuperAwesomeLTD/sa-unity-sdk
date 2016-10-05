@@ -27,12 +27,14 @@ public class MainScript : MonoBehaviour {
 		SAInterstitialAd.setConfigurationStaging ();
 		SAInterstitialAd.setOrientationPortrait ();
 		SAInterstitialAd.enableParentalGate ();
+		SAInterstitialAd.enableBackButton ();
 		SAInterstitialAd.load (415);
 		SAInterstitialAd.load (418);
 
 		SAVideoAd.setConfigurationStaging ();
 		SAVideoAd.disableCloseButton ();
 		SAVideoAd.enableSmallClickButton ();
+		SAVideoAd.disableBackButton ();
 		SAVideoAd.setOrientationLandscape ();
 		SAVideoAd.load (416);
 		SAVideoAd.load (417);
@@ -57,6 +59,7 @@ public class MainScript : MonoBehaviour {
 		});
 
 		SAGameWall.setConfigurationStaging ();
+		SAGameWall.enableBackButton ();
 		SAGameWall.load (470);
 		SAGameWall.load (437);
 		SAGameWall.setCallback ((placementId, evt) => {
