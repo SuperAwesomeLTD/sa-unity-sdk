@@ -34,7 +34,7 @@ namespace SuperAwesome {
 
 		// getters
 		private string getVersion (){
-			return "5.1.1";
+			return "5.1.2";
 		}
 		
 		private string getSdk () {
@@ -57,5 +57,7 @@ namespace SuperAwesome {
 			Debug.Log ("Handle CPI");
 #endif
 		}
+
+	
 	}
 }
