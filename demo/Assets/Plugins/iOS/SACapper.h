@@ -13,6 +13,6 @@
 /**
  *  Get the Dau ID
  */
-- (NSInteger) getDauId;
+- (NSUInteger) getDauId;
 
 @end

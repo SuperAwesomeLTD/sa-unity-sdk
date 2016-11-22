@@ -10,8 +10,7 @@
 
 #import "SAJsonParser.h"
 #import "SACreativeFormat.h"
-
-@class SAAd;
+#import "SAAd.h"
 
 @interface SAResponse : SABaseObject <SASerializationProtocol, SADeserializationProtocol>
 

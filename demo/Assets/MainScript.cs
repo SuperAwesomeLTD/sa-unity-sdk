@@ -69,13 +69,13 @@ public class MainScript : MonoBehaviour {
 			}
 		});
 
-//		SAGameWall.setConfigurationStaging ();
-//		SAGameWall.enableBackButton ();
-//		SAGameWall.load (470);
-//		SAGameWall.load (437);
-//		SAGameWall.setCallback ((placementId, evt) => {
-//			Debug.Log ("Event for " + placementId + " ==> " + evt);
-//		});
+		SAAppWall.setConfigurationStaging ();
+		SAAppWall.enableBackButton ();
+		SAAppWall.load (470);
+		SAAppWall.load (437);
+		SAAppWall.setCallback ((placementId, evt) => {
+			Debug.Log ("Event for " + placementId + " ==> " + evt);
+		});
 	}
 	
 	public void playBanner () {
@@ -106,10 +106,10 @@ public class MainScript : MonoBehaviour {
 //		if (SAVideoAd.hasAdAvailable (417)) {
 //			SAVideoAd.play (417);
 //		}
-//		if (SAGameWall.hasAdAvailable (470)) {
-//			SAGameWall.play (470);
-//		} else if (SAGameWall.hasAdAvailable (437)) {
-//			SAGameWall.play (437);
-//		}
+		if (SAAppWall.hasAdAvailable (470)) {
+			SAAppWall.play (470);
+		} else if (SAAppWall.hasAdAvailable (437)) {
+			SAAppWall.play (437);
+		}
 	}
 }

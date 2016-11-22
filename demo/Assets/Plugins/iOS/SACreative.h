@@ -12,9 +12,7 @@
 #import "SAJsonParser.h"
 #import "SATracking.h"
 #import "SACreativeFormat.h"
-
-// forward declarations
-@class SADetails;
+#import "SADetails.h"
 
 // @brief:
 // The creative contains essential ad information like format, click url

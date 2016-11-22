@@ -25,13 +25,13 @@ typedef NS_ENUM(NSInteger, SAConfiguration) {
 - (void) disableTestMode;
 - (void) setTestMode:(BOOL) testEnabled;
 // others
-- (void) setDauId:(NSInteger)dauId;
+- (void) setDauId:(NSUInteger)dauId;
 - (void) setVersion:(NSString *)version;
 
 // getters
 - (NSString*) getBaseUrl;
 - (BOOL)      getTestMode;
-- (NSInteger) getDauId;
+- (NSUInteger) getDauId;
 - (NSString*) getVersion;
 - (SAConfiguration) getConfiguration;
 - (NSString*) getBundleId;

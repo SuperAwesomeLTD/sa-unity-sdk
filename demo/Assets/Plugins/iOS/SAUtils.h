@@ -15,7 +15,7 @@
 
 // enum that lists the available system sizes
 typedef enum SASystemSize {
-    size_mobile = 0,
+    size_phone = 0,
     size_tablet = 1
 }SASystemSize;
 

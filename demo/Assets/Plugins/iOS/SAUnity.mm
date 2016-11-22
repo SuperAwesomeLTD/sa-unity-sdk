@@ -13,11 +13,6 @@
 #import "SuperAwesomeSDKUnity.h"
 #else 
 #import "SuperAwesome.h"
-#import "SAUnityLoadAd.h"
-#import "SAUnityPlayBannerAd.h"
-#import "SAUnityPlayInterstitialAd.h"
-#import "SAUnityPlayFullscreenVideoAd.m"
-#import "SAOrientation.h"
 #endif
 #endif
 
@@ -468,16 +463,16 @@ extern "C" {
     /**
      *  Methid that adds a callback to the SAGameWall static method class
      */
-    void SuperAwesomeUnitySAGameWallCreate () {
+    void SuperAwesomeUnitySAAppWallCreate () {
         
-        [SAGameWall setCallback:^(NSInteger placementId, SAEvent event) {
+        [SAAppWall setCallback:^(NSInteger placementId, SAEvent event) {
             switch (event) {
-                case adLoaded: sendToUnity(@"SAGameWall", placementId, @"adLoaded"); break;
-                case adFailedToLoad: sendToUnity(@"SAGameWall", placementId, @"adFailedToLoad"); break;
-                case adShown: sendToUnity(@"SAGameWall", placementId, @"adShown"); break;
-                case adFailedToShow: sendToUnity(@"SAGameWall", placementId, @"adFailedToShow"); break;
-                case adClicked: sendToUnity(@"SAGameWall", placementId, @"adClicked"); break;
-                case adClosed: sendToUnity(@"SAGameWall", placementId, @"adClosed"); break;
+                case adLoaded: sendToUnity(@"SAAppWall", placementId, @"adLoaded"); break;
+                case adFailedToLoad: sendToUnity(@"SAAppWall", placementId, @"adFailedToLoad"); break;
+                case adShown: sendToUnity(@"SAAppWall", placementId, @"adShown"); break;
+                case adFailedToShow: sendToUnity(@"SAAppWall", placementId, @"adFailedToShow"); break;
+                case adClicked: sendToUnity(@"SAAppWall", placementId, @"adClicked"); break;
+                case adClosed: sendToUnity(@"SAAppWall", placementId, @"adClosed"); break;
             }
         }];
         
@@ -490,23 +485,23 @@ extern "C" {
      *  @param configuration production = 0 / staging = 1
      *  @param test          true / false
      */
-    void SuperAwesomeUnitySAGameWallLoad (int placementId,
-                                          int configuration,
-                                          bool test) {
+    void SuperAwesomeUnitySAAppWallLoad (int placementId,
+                                         int configuration,
+                                         bool test) {
         
         if (test) {
-            [SAGameWall enableTestMode];
+            [SAAppWall enableTestMode];
         } else {
-            [SAGameWall disableTestMode];
+            [SAAppWall disableTestMode];
         }
         
         if (configuration == 0) {
-            [SAGameWall setConfigurationProduction];
+            [SAAppWall setConfigurationProduction];
         } else {
-            [SAGameWall setConfigurationStaging];
+            [SAAppWall setConfigurationStaging];
         }
         
-        [SAGameWall load: placementId];
+        [SAAppWall load: placementId];
     }
     
     /**
@@ -514,8 +509,8 @@ extern "C" {
      *
      *  @return true / false
      */
-    bool SuperAwesomeUnitySAGameWallHasAdAvailable(int placementId) {
-        return [SAGameWall hasAdAvailable: placementId];
+    bool SuperAwesomeUnitySAAppWallHasAdAvailable(int placementId) {
+        return [SAAppWall hasAdAvailable: placementId];
     }
     
     /**
@@ -525,17 +520,17 @@ extern "C" {
      *  @param shouldLockOrientation true / false
      *  @param lockOrientation       ANY = 0 / PORTRAIT = 1 / LANDSCAPE = 2
      */
-    void SuperAwesomeUnitySAGameWallPlay (int placementId,
-                                          bool isParentalGateEnabled) {
+    void SuperAwesomeUnitySAAppWallPlay (int placementId,
+                                         bool isParentalGateEnabled) {
         
         if (isParentalGateEnabled) {
-            [SAGameWall enableParentalGate];
+            [SAAppWall enableParentalGate];
         } else {
-            [SAGameWall disableParentalGate];
+            [SAAppWall disableParentalGate];
         }
         
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
-        [SAGameWall play: placementId fromVC: root];
+        [SAAppWall play: placementId fromVC: root];
         
     }
 }

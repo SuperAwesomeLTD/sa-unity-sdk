@@ -24,10 +24,11 @@
 #import "SABannerAd.h"
 #import "SAInterstitialAd.h"
 #import "SAVideoAd.h"
-#import "SAGameWall.h"
+#import "SAAppWall.h"
 
 // load callback header
 #import "SACallback.h"
+#import "SAOrientation.h"
 
 // @brief:
 // This is the main SuperAwesome class that handles the Ad Session

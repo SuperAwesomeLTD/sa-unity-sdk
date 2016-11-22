@@ -10,6 +10,7 @@
 
 // forward declaration
 @class SAAd;
+@class SASession;
 
 // callback
 typedef void (^vastParsingDone)(SAAd *ad);
@@ -21,6 +22,8 @@ typedef void (^vastParsingDone)(SAAd *ad);
 @interface SAVASTParser : NSObject
 
 // functions
-- (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing;
+- (void) parseVASTURL:(NSString *)url
+          withSession:(SASession*)session
+                 done:(vastParsingDone)vastParsing;
 
 @end

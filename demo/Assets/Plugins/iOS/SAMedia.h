@@ -13,5 +13,6 @@
 @property (nonatomic, strong) NSString *playableDiskUrl;
 @property (nonatomic, strong) NSString *playableMediaUrl;
 @property (nonatomic, strong) NSString *type;
+@property (nonatomic, assign) NSInteger bitrate;
 @property (nonatomic, assign) BOOL isOnDisk;
 @end

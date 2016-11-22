@@ -13,11 +13,17 @@
 
 @interface SADownloadQueue : NSObject
 
+// queue operation methods
 - (void) addToQueue:(SADownloadItem*)item;
 - (void) removeFromQueue:(SADownloadItem*)item;
+- (void) moveToBackOfQueue:(SADownloadItem*)item;
+
+// item check & retrieve for queue
 - (BOOL) hasItemForURL:(NSString*)url;
 - (SADownloadItem*) itemForURL:(NSString*)url;
-- (NSInteger) getLength;
 - (SADownloadItem*) getNext;
+
+// get the queue length
+- (NSInteger) getLength;
 
 @end
