@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SACallback.h"
+#import "SAOrientation.h"
 
 @interface SAVideoAd : UIViewController
 
@@ -33,5 +34,14 @@
 + (void) disableSmallClickButton;
 + (void) enableCloseAtEnd;
 + (void) disableCloseAtEnd;
+
++ (void) setTestMode: (BOOL) value;
++ (void) setParentalGate: (BOOL) value;
++ (void) setConfiguration: (NSInteger) value;
++ (void) setOrientation: (SAOrientation) value;
++ (void) setCloseButton: (BOOL) value;
++ (void) setSmallClick: (BOOL) value;
++ (void) setCloseAtEnd: (BOOL) value;
+
 
 @end

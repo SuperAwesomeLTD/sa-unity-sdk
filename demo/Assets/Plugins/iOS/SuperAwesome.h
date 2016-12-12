@@ -10,16 +10,6 @@
 
 #import <Foundation/Foundation.h>
 
-/// also works as public headers
-
-// import model header files
-#import "SAResponse.h"
-#import "SAAd.h"
-#import "SACreative.h"
-#import "SADetails.h"
-#import "SAMedia.h"
-#import "SATracking.h"
-
 // import views
 #import "SABannerAd.h"
 #import "SAInterstitialAd.h"

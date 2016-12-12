@@ -25,4 +25,9 @@
 + (void) setConfigurationProduction;
 + (void) setConfigurationStaging;
 
++ (void) setTestMode: (BOOL) value;
++ (void) setParentalGate: (BOOL) value;
++ (void) setConfiguration: (NSInteger) value;
+
+
 @end

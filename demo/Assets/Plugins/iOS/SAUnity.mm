@@ -11,8 +11,10 @@
 #if defined(__has_include)
 #if __has_include("SuperAwesomeSDKUnity.h")
 #import "SuperAwesomeSDKUnity.h"
+#import "SASession.h"
 #else 
 #import "SuperAwesome.h"
+#import "SASession.h"
 #endif
 #endif
 
@@ -105,21 +107,12 @@ extern "C" {
         NSString *key = [NSString stringWithUTF8String:unityName];
         
         if ([bannerDictionary objectForKey:key]) {
+            
             SABannerAd *banner = [bannerDictionary objectForKey:key];
-            
-            if (test) {
-                [banner enableTestMode];
-            } else {
-                [banner disableTestMode];
-            }
-            
-            if (configuration == 0) {
-                [banner setConfigurationProduction];
-            } else {
-                [banner setConfigurationStaging];
-            }
-            
+            [banner setTestMode:test];
+            [banner setConfiguration:configuration == 0 ? PRODUCTION : STAGING];
             [banner load:placementId];
+        
         } else {
             // handle failure
         }
@@ -190,19 +183,8 @@ extern "C" {
         
             // get banner
             SABannerAd *banner = [bannerDictionary objectForKey:key];
-            
-            if (isParentalGateEnabled) {
-                [banner enableParentalGate];
-            } else {
-                [banner disableParentalGate];
-            }
-            
-            if (color == 0) {
-                [banner setColorTransparent];
-            } else {
-                [banner setColorGray];
-            }
-            
+            [banner setParentalGate:isParentalGateEnabled];
+            [banner setColor:color == 0 ? true : false];
             [root.view addSubview:banner];
             [banner resize:CGRectMake(realPos.x, realPos.y, realSize.width, realSize.height)];
             
@@ -292,18 +274,8 @@ extern "C" {
                                                 int configuration,
                                                 bool test) {
         
-        if (test) {
-            [SAInterstitialAd enableTestMode];
-        } else {
-            [SAInterstitialAd disableTestMode];
-        }
-        
-        if (configuration == 0) {
-            [SAInterstitialAd setConfigurationProduction];
-        } else {
-            [SAInterstitialAd setConfigurationStaging];
-        }
-        
+        [SAInterstitialAd setTestMode:test];
+        [SAInterstitialAd setConfiguration:configuration == 0 ? PRODUCTION : STAGING];
         [SAInterstitialAd load: placementId];
     }
     
@@ -327,19 +299,8 @@ extern "C" {
                                                 bool isParentalGateEnabled,
                                                 int orientation) {
         
-        if (isParentalGateEnabled) {
-            [SAInterstitialAd enableParentalGate];
-        } else {
-            [SAInterstitialAd disableParentalGate];
-        }
-        
-        if (orientation == LANDSCAPE) {
-            [SAInterstitialAd setOrientationLandscape];
-        } else if (orientation == PORTRAIT) {
-            [SAInterstitialAd setOrientationPortrait];
-        } else {
-            [SAInterstitialAd setOrientationAny];
-        }
+        [SAInterstitialAd setParentalGate:isParentalGateEnabled];
+        [SAInterstitialAd setOrientation:orientation == 2 ? LANDSCAPE : orientation == 1 ? PORTRAIT : ANY];
         
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
         [SAInterstitialAd play: placementId fromVC: root];
@@ -378,18 +339,8 @@ extern "C" {
                                         int configuration,
                                         bool test) {
         
-        if (test) {
-            [SAVideoAd enableTestMode];
-        } else {
-            [SAVideoAd disableTestMode];
-        }
-        
-        if (configuration == 0) {
-            [SAVideoAd setConfigurationProduction];
-        } else {
-            [SAVideoAd setConfigurationStaging];
-        }
-        
+        [SAVideoAd setTestMode:test];
+        [SAVideoAd setConfiguration:configuration == 0 ? PRODUCTION : STAGING];
         [SAVideoAd load: placementId];
         
     }
@@ -420,37 +371,11 @@ extern "C" {
                                         bool shouldAutomaticallyCloseAtEnd,
                                         int orientation) {
         
-        if (isParentalGateEnabled) {
-            [SAVideoAd enableParentalGate];
-        } else {
-            [SAVideoAd disableParentalGate];
-        }
-        
-        if (shouldShowCloseButton) {
-            [SAVideoAd enableCloseButton];
-        } else {
-            [SAVideoAd disableCloseButton];
-        }
-        
-        if (shouldShowSmallClickButton) {
-            [SAVideoAd enableSmallClickButton];
-        } else {
-            [SAVideoAd disableSmallClickButton];
-        }
-        
-        if (shouldAutomaticallyCloseAtEnd) {
-            [SAVideoAd enableCloseAtEnd];
-        } else {
-            [SAVideoAd disableCloseAtEnd];
-        }
-        
-        if (orientation == LANDSCAPE) {
-            [SAVideoAd setOrientationLandscape];
-        } else if (orientation == PORTRAIT) {
-            [SAVideoAd setOrientationPortrait];
-        } else {
-            [SAVideoAd setOrientationAny];
-        }
+        [SAVideoAd setParentalGate:isParentalGateEnabled];
+        [SAVideoAd setCloseButton:shouldShowCloseButton];
+        [SAVideoAd setSmallClick:shouldShowSmallClickButton];
+        [SAVideoAd setCloseAtEnd:shouldAutomaticallyCloseAtEnd];
+        [SAVideoAd setOrientation:orientation == 2 ? LANDSCAPE : orientation == 1 ? PORTRAIT : ANY];
         
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
         [SAVideoAd play: placementId fromVC: root];
@@ -489,18 +414,8 @@ extern "C" {
                                          int configuration,
                                          bool test) {
         
-        if (test) {
-            [SAAppWall enableTestMode];
-        } else {
-            [SAAppWall disableTestMode];
-        }
-        
-        if (configuration == 0) {
-            [SAAppWall setConfigurationProduction];
-        } else {
-            [SAAppWall setConfigurationStaging];
-        }
-        
+        [SAAppWall setTestMode:test];
+        [SAAppWall setConfiguration:configuration == 0 ? PRODUCTION : STAGING];
         [SAAppWall load: placementId];
     }
     
@@ -518,17 +433,11 @@ extern "C" {
      *
      *  @param isParentalGateEnabled true / false
      *  @param shouldLockOrientation true / false
-     *  @param lockOrientation       ANY = 0 / PORTRAIT = 1 / LANDSCAPE = 2
      */
     void SuperAwesomeUnitySAAppWallPlay (int placementId,
                                          bool isParentalGateEnabled) {
         
-        if (isParentalGateEnabled) {
-            [SAAppWall enableParentalGate];
-        } else {
-            [SAAppWall disableParentalGate];
-        }
-        
+        [SAAppWall setParentalGate:isParentalGateEnabled];
         UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
         [SAAppWall play: placementId fromVC: root];
         

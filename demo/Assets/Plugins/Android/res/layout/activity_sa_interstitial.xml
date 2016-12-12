@@ -3,7 +3,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#ffefefef"
+             android:background="#e0e0e0"
              tools:context="tv.superawesome.sdk.views.SAInterstitialAd">
 
     <tv.superawesome.sdk.views.SABannerAd
