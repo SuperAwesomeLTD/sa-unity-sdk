@@ -23,4 +23,5 @@ sysinfo.txt
 
 ios_unity4_demo/*
 android_unity4_demo/*
-demo/Assets/Plugins/*
+demo/Assets/Plugins/Android
+demo/Assets/Plugins/iOS
