@@ -46,7 +46,7 @@ namespace SuperAwesome {
 				DontDestroyOnLoad (staticInstance);
 				
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-				SAGameWall.SuperAwesomeUnitySAAppWallCreate ();
+				SAAppWall.SuperAwesomeUnitySAAppWallCreate ();
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 				
 				var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
@@ -88,7 +88,7 @@ namespace SuperAwesome {
 			tryAndCreateOnce ();
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAGameWall.SuperAwesomeUnitySAAppWallLoad(placementId, 
+			SAAppWall.SuperAwesomeUnitySAAppWallLoad(placementId, 
 			                                          (int)configuration,
 			                                          isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
@@ -117,7 +117,7 @@ namespace SuperAwesome {
 			tryAndCreateOnce ();
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SAGameWall.SuperAwesomeUnitySAAppWallPlay(placementId,
+			SAAppWall.SuperAwesomeUnitySAAppWallPlay(placementId,
 			                                          isParentalGateEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			
@@ -145,7 +145,7 @@ namespace SuperAwesome {
 			tryAndCreateOnce ();
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			return SAGameWall.SuperAwesomeUnitySAAppWallHasAdAvailable(placementId);
+			return SAAppWall.SuperAwesomeUnitySAAppWallHasAdAvailable(placementId);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			
 			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
