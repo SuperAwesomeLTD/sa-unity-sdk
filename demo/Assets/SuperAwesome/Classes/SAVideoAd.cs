@@ -32,17 +32,22 @@ namespace SuperAwesome {
 		private static extern bool SuperAwesomeUnitySAVideoAdHasAdAvailable(int placementId);
 #endif
 		
-		// private state vars
+		// the video ad static instance
 		private static SAVideoAd					staticInstance = null;
-		private static bool 						isParentalGateEnabled = true;
-		private static bool 						shouldShowCloseButton = true;
-		private static bool 						shouldShowSmallClickButton = false;
-		private static bool 						shouldAutomaticallyCloseAtEnd = true;
-		private static bool 						isTestingEnabled = false;
-		private static bool							isBackButtonEnabled = false;
-		private static SAOrientation 				orientation = SAOrientation.ANY;
-		private static SAConfiguration				configuration = SAConfiguration.PRODUCTION;
+
+		// define a default callback so that it's never null and I don't have
+		// to do a check every time I want to call it
 		private static Action <int, SAEvent> 		callback = (p, e) => {};
+
+		// assign default values to all of these fields
+		private static bool isParentalGateEnabled 			= SuperAwesome.instance.defaultParentalGate ();
+		private static bool shouldShowCloseButton 			= SuperAwesome.instance.defaultCloseButton ();
+		private static bool shouldShowSmallClickButton 		= SuperAwesome.instance.defaultSmallClick ();
+		private static bool shouldAutomaticallyCloseAtEnd 	= SuperAwesome.instance.defaultCloseAtEnd ();
+		private static bool isTestingEnabled 				= SuperAwesome.instance.defaultTestMode ();
+		private static bool	isBackButtonEnabled 			= SuperAwesome.instance.defaultBackButton ();
+		private static SAOrientation orientation 			= SuperAwesome.instance.defaultOrientation ();
+		private static SAConfiguration configuration 		= SuperAwesome.instance.defaultConfiguration ();
 
 		// instance constructor
 		private static void tryAndCreateOnce () {

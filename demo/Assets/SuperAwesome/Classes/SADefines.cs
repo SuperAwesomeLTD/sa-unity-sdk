@@ -9,6 +9,11 @@ namespace SuperAwesome {
 		LANDSCAPE = 2
 	}
 
+	public enum SAConfiguration {
+		PRODUCTION = 0,
+		STAGING = 1
+	}
+
 	public enum SAEvent {
 		adLoaded = 0,
 		adFailedToLoad = 1,
@@ -18,9 +23,10 @@ namespace SuperAwesome {
 		adClosed = 5
 	}
 
-	public enum SAConfiguration {
-		PRODUCTION = 0,
-		STAGING = 1
+	// enums for different banner specific properties
+	public enum SABannerPosition {
+		TOP = 0,
+		BOTTOM = 1
 	}
 }
 

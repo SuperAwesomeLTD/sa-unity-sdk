@@ -29,41 +29,30 @@ namespace SuperAwesome {
 		private static extern void SuperAwesomeUnitySABannerAdPlay(string unityName,
 		                                                           bool isParentalGateEnabled, 
 		                                                           int position, 
-		                                                           int size, 
-		                                                           int color);
+		                                                           int width,
+		                                                           int height,
+		                                                           bool color);
 
 		[DllImport ("__Internal")]
 		private static extern void SuperAwesomeUnitySABannerAdClose(string unityName);
 
 #endif
 
-		// enums for different banner specific properties
-		public enum BannerPosition {
-			TOP = 0,
-			BOTTOM = 1
-		}
-		public enum BannerSize {
-			LEADER_320_50 = 0,
-			LEADER_300_50 = 1,
-			LEADER_728_90 = 2,
-			MPU_300_250 = 3
-		}
-		public enum BannerColor {
-			TRANSPARENT = 0,
-			GRAY = 1
-		}
-
 		// banner index
 		private static uint 					index = 0;
 
-		// private state vars
-		private bool 							isParentalGateEnabled = true;
-		private BannerPosition 					position = BannerPosition.BOTTOM;
-		private BannerSize 						size = BannerSize.LEADER_320_50;
-		private BannerColor 					color = BannerColor.GRAY;
-		private SAConfiguration 				configuration = SAConfiguration.PRODUCTION;
-		private bool 							isTestingEnabled = false;
+		// define a default callback so that it's never null and I don't have
+		// to do a check every time I want to call it
 		private Action <int, SAEvent>	    	callback = (p, e) => {};
+
+		// private state vars
+		private bool isParentalGateEnabled 		= SuperAwesome.instance.defaultParentalGate ();
+		private SABannerPosition position 		= SuperAwesome.instance.defaultBannerPosition ();
+		private int bannerWidth 				= SuperAwesome.instance.defaultBannerWidth ();
+		private int bannerHeight 				= SuperAwesome.instance.defaultBannerHeight ();
+		private bool color 						= SuperAwesome.instance.defaultBgColor ();
+		private SAConfiguration configuration 	= SuperAwesome.instance.defaultConfiguration ();
+		private bool isTestingEnabled 			= SuperAwesome.instance.defaultTestMode ();
 
 		// create method
 		public static SABannerAd createInstance() {
@@ -142,8 +131,9 @@ namespace SuperAwesome {
 			SABannerAd.SuperAwesomeUnitySABannerAdPlay(this.name,
 			                                           isParentalGateEnabled,
 			                                           (int)position,
-			                                           (int)size,
-			                                           (int)color);
+			                                           bannerWidth,
+			                                           bannerHeight,
+			                                           color);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 			var nameL = this.name;
 
@@ -152,7 +142,7 @@ namespace SuperAwesome {
 
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
-				saplugin.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, nameL, isParentalGateEnabled, (int)position, (int)size, (int)color);
+				saplugin.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, nameL, isParentalGateEnabled, (int)position, bannerWidth, bannerHeight, color);
 			}));
 			            
 #else 
@@ -234,35 +224,39 @@ namespace SuperAwesome {
 		}
 
 		public void setPositionTop () {
-			position = BannerPosition.TOP;
+			position = SABannerPosition.TOP;
 		}
 
 		public void setPositionBottom () {
-			position = BannerPosition.BOTTOM;
+			position = SABannerPosition.BOTTOM;
 		}
 
 		public void setSize_300_50 () {
-			size = BannerSize.LEADER_300_50;
+			bannerWidth = 300;
+			bannerHeight = 50;
 		}
 
 		public void setSize_320_50 () {
-			size = BannerSize.LEADER_320_50;
+			bannerWidth = 320;
+			bannerHeight = 50;
 		}
 
 		public void setSize_728_90 () {
-			size = BannerSize.LEADER_728_90;
+			bannerWidth = 728;
+			bannerHeight = 90;
 		}
 
 		public void setSize_300_250 () {
-			size = BannerSize.MPU_300_250;
+			bannerWidth = 300;
+			bannerHeight = 250;
 		}
 
 		public void setColorGray () {
-			color = BannerColor.GRAY;
+			color = false;
 		}
 
 		public void setColorTransparent () {
-			color = BannerColor.TRANSPARENT;
+			color = true;
 		}
 
 		////////////////////////////////////////////////////////////////////

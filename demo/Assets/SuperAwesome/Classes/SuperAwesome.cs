@@ -58,6 +58,57 @@ namespace SuperAwesome {
 #endif
 		}
 
+		// default state vars
+		public int defaultPlacementId () {
+			return 0;
+		}
+
+		public bool defaultTestMode () {
+			return false;
+		}
+
+		public bool defaultParentalGate () {
+			return true;
+		}
+
+		public SAConfiguration defaultConfiguration () {
+			return SAConfiguration.PRODUCTION;
+		}
+
+		public SAOrientation defaultOrientation () {
+			return SAOrientation.ANY;
+		}
 	
+		public bool defaultCloseButton () {
+			return false;
+		}
+
+		public bool defaultSmallClick () {
+			return false;
+		}
+
+		public bool defaultCloseAtEnd () {
+			return true;
+		}
+
+		public bool defaultBgColor () {
+			return false;
+		}
+
+		public bool defaultBackButton () {
+			return false;
+		}
+
+		public SABannerPosition defaultBannerPosition () {
+			return SABannerPosition.BOTTOM;
+		}
+
+		public int defaultBannerWidth () {
+			return 320;
+		}
+
+		public int defaultBannerHeight () {
+			return 50;
+		}
 	}
 }
