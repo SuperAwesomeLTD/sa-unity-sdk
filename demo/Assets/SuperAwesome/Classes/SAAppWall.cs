@@ -58,7 +58,7 @@ namespace SuperAwesome {
 				var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 				
 				context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-					var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+					var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityAppWall");
 					saplugin.CallStatic("SuperAwesomeUnitySAAppWallCreate", context);
 				}));
 				
@@ -102,7 +102,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 			
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityAppWall");
 				saplugin.CallStatic("SuperAwesomeUnitySAAppWallLoad", 
 				                    context, 
 				                    placementId, 
@@ -130,7 +130,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 			
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityAppWall");
 				saplugin.CallStatic("SuperAwesomeUnitySAAppWallPlay", 
 				                    context, 
 				                    placementId, 
@@ -155,11 +155,9 @@ namespace SuperAwesome {
 			
 			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityAppWall");
 			
-			return saplugin.CallStatic<bool>("SuperAwesomeUnitySAAppWallHasAdAvailable", 
-			                                 context, 
-			                                 placementId);
+			return saplugin.CallStatic<bool>("SuperAwesomeUnitySAAppWallHasAdAvailable", context, placementId);
 			
 #else 
 			Debug.Log ("SAAppWall HasAdAvailable");

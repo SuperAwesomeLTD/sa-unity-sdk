@@ -66,7 +66,7 @@ namespace SuperAwesome {
 				var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 				
 				context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-					var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+					var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityVideoAd");
 					saplugin.CallStatic("SuperAwesomeUnitySAVideoAdCreate", context);
 				}));
 
@@ -109,7 +109,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 			
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityVideoAd");
 				saplugin.CallStatic("SuperAwesomeUnitySAVideoAdLoad", 
 				                context, 
 				                placementId, 
@@ -141,7 +141,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 			
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityVideoAd");
 				saplugin.CallStatic("SuperAwesomeUnitySAVideoAdPlay", 
 				                context, 
 				                placementId, 
@@ -170,11 +170,9 @@ namespace SuperAwesome {
 
 			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityVideoAd");
 
-			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
-			return saplugin.CallStatic<bool>("SuperAwesomeUnitySAVideoAdHasAdAvailable", 
-			                       context,
-			                       placementId);
+			return saplugin.CallStatic<bool>("SuperAwesomeUnitySAVideoAdHasAdAvailable", context, placementId);
 			
 
 #else 

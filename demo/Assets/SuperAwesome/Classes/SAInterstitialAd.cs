@@ -60,7 +60,7 @@ namespace SuperAwesome {
 				var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 				
 				context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-					var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+					var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityInterstitialAd");
 					saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdCreate", context);
 				}));
 
@@ -104,7 +104,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 			
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityInterstitialAd");
 				saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdLoad", 
 				                context, 
 				                placementId, 
@@ -133,7 +133,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 			
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityInterstitialAd");
 				saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdPlay", 
 				                context, 
 				                placementId, 
@@ -159,11 +159,9 @@ namespace SuperAwesome {
 
 			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityInterstitialAd");
 			
-			return saplugin.CallStatic<bool>("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", 
-			                       context, 
-			                       placementId);
+			return saplugin.CallStatic<bool>("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", context, placementId);
 
 #else 
 			Debug.Log ("SAInterstitialAd HasAdAvailable");

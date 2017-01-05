@@ -71,7 +71,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 			
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
 				saplugin.CallStatic("SuperAwesomeUnitySABannerAdCreate", context, nameL);
 			}));
 
@@ -115,7 +115,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
 				saplugin.CallStatic("SuperAwesomeUnitySABannerAdLoad", context, nameL, placementId, (int)configuration, isTestingEnabled);
 			}));
 
@@ -141,7 +141,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
 				saplugin.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, nameL, isParentalGateEnabled, (int)position, bannerWidth, bannerHeight, color);
 			}));
 			            
@@ -160,7 +160,7 @@ namespace SuperAwesome {
 
 			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
 
 			return saplugin.CallStatic<bool> ("SuperAwesomeUnitySABannerAdHasAdAvailable", context, nameL);
 #else 
@@ -182,7 +182,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnity");
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
 				saplugin.CallStatic("SuperAwesomeUnitySABannerAdClose", context, nameL);
 			}));
 		
