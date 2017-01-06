@@ -21,7 +21,7 @@ namespace SuperAwesome {
 #endif
 
 		// sdk & version
-		private const string version = "5.1.7";
+		private const string version = "5.1.8";
 		private const string sdk = "unity";
 
 		// Singleton stuff

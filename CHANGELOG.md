@@ -1,9 +1,13 @@
 CHANGELOG
 =========
 
+5.1.8
+ - Updated the Unity SDK to be able to override iOS & Android native SDK version & sdk type. This means that all requests from the Unity SDK will be labeled as "unity_x.y.z" instead of "android_x.y.z" or "ios_x.y.z", which in turn provide more accurate statistics for reporting.
+ - Updated the method calls in each of the Unity-to-native methods so as to correspond to the new Android & iOS modular plugin structure.
+
 5.1.7
  - Updated the main SDK classes to correspond to the new iOS and Android Plugins (for iOS 5.3.15 and Android 5.3.9)
- - Removed some internal enums such as SABannerSize that were causing problems
+ - Removed some internal enums such as SABannerSize that were causing problems. Now banners get sent the actual desired witdth & height (e.g. 320x50, 768x90, etc). This simplifies code a little bit and reduced dependency between SDKs (e.g. the Unity SDK and iOS SDKs don't need to know about the same enums)
  - Added default values in the SuperAwesome singleton - now all SDK customizable values are initialised from those values. These should be kept in line with the iOS and Android ones.
 
 3.1.2
