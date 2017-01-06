@@ -14,7 +14,15 @@ namespace SuperAwesome {
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 		[DllImport ("__Internal")]
 		private static extern void SuperAwesomeUnitySuperAwesomeHandleCPI ();
+
+		[DllImport ("__Internal")]
+		private static extern void SuperAwesomeUnitySetVersion (string version, string sdk);
+
 #endif
+
+		// sdk & version
+		private const string version = "5.1.7";
+		private const string sdk = "unity";
 
 		// Singleton stuff
 		private static SuperAwesome _instance;
@@ -28,17 +36,34 @@ namespace SuperAwesome {
 		}
 
 		// constructor
-		private SuperAwesome (){
-			// do nothing
+		private SuperAwesome () {
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+			SuperAwesome.SuperAwesomeUnitySetVersion (version, sdk);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			
+			var versionL = version;
+			var sdkL = sdk;
+			
+			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+			
+			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityVersion");
+				saplugin.CallStatic("SuperAwesomeUnitySetVersion", context, versionL, sdkL);
+			}));
+			
+#else 
+			Debug.Log ("Set Sdk version to " + getSdkVersion());
+#endif
 		}
 
 		// getters
 		private string getVersion (){
-			return "5.1.7";
+			return version;
 		}
 		
 		private string getSdk () {
-			return "unity";
+			return sdk;
 		}
 		
 		public string getSdkVersion () {
