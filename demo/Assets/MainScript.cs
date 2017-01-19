@@ -8,7 +8,7 @@ public class MainScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SuperAwesome.SuperAwesome.instance.handleCPI ();
+//		SuperAwesome.SuperAwesome.instance.handleCPI ();
 	}
 	
 	// Update is called once per frame
