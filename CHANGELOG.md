@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+5.1.9
+ - Updated the Unity SDK to communicate with the new iOS (5.3.17) and Android (5.3.13) SDKs.
+ - Removed the staging CPI method from the SuperAwesome singleton class
+ - All CPI calls now interact with both iOS and Android
+ - All CPI calls now have a callback that lets the SDK user know if the Ad Server considered the inst
+all event to be valid or not.
+ - Refactored some navtive method calls.
+
 5.1.8
  - Updated the Unity SDK to be able to override iOS & Android native SDK version & sdk type. This means that all requests from the Unity SDK will be labeled as "unity_x.y.z" instead of "android_x.y.z" or "ios_x.y.z", which in turn provide more accurate statistics for reporting.
  - Updated the method calls in each of the Unity-to-native methods so as to correspond to the new Android & iOS modular plugin structure.
