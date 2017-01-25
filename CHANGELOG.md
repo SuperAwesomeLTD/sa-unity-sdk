@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+5.2.0
+ - Updated the Unity SDK to communicate with the new iOS (5.4.0) and Android (5.4.0) SDKs
+ - Those added support for a new WebPlayer that scales the ad using native code matrix manipulation
+ - Also added support for the adEnded event, fired when a video ad ends (but not necessarily closes)
+ - Added support for the adAlreadyLoaded event, fired when an Interstitial, Video or AppWall tries to
+ load ad data for an already existing placement
+ - Added support for the clickCounterUrl; that's been added as part of the native Ad Creative model class and is now fired when a user clicks an ad.
+
 5.1.9
  - Updated the Unity SDK to communicate with the new iOS (5.3.17) and Android (5.3.13) SDKs.
  - Removed the staging CPI method from the SuperAwesome singleton class
