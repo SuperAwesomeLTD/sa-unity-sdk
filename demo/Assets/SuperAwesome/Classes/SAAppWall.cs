@@ -229,9 +229,11 @@ namespace SuperAwesome {
 			switch (type) {
 			case "sacallback_adLoaded":  callback(placementId, SAEvent.adLoaded); break;
 			case "sacallback_adFailedToLoad": callback(placementId, SAEvent.adFailedToLoad); break;
+			case "sacallback_adAlreadyLoaded": callback (placementId, SAEvent.adAlreadyLoaded); break;
 			case "sacallback_adShown": callback(placementId, SAEvent.adShown); break;
 			case "sacallback_adFailedToShow": callback (placementId, SAEvent.adFailedToShow); break;
 			case "sacallback_adClicked": callback (placementId, SAEvent.adClicked); break;
+			case "sacallback_adEnded": callback (placementId, SAEvent.adEnded); break;
 			case "sacallback_adClosed": callback (placementId, SAEvent.adClosed); break;
 			}
 		}
