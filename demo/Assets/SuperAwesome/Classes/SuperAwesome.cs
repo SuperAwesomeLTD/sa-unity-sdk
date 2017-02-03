@@ -30,7 +30,7 @@ namespace SuperAwesome {
 
 
 		// sdk & version
-		private const string version = "5.2.0";
+		private const string version = "5.2.1";
 		private const string sdk = "unity";
 
 		// Singleton stuff

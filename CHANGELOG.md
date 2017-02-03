@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+5.2.1
+ - Updated the Unity SDK to communicate with the new Android (5.4.8) SDK
+ - This will mean less files in the resulting .unitypackage import, since the 5.4.8 version removes all dependencies of xml layouts or drawables - all UI elements are now generated in code.
+ - This also adds a new and improved video player that is much more versatile.
+
 5.2.0
  - Updated the Unity SDK to communicate with the new iOS (5.4.0) and Android (5.4.0) SDKs
  - Those added support for a new WebPlayer that scales the ad using native code matrix manipulation
