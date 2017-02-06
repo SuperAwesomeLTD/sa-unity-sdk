@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+5.2.2
+ - Updated the Unity SDK to communicate with the new Android (5.4.8) and iOS (5.4.1) SDK
+ - Banner ads don't fire up an "adClosed" event on first load
+ - The "adFailedToLoad" events get triggered correctly by the android video ad plugin (before the "adFailedToShow" event got triggered wrongly)
+ - On iOS the "setOrientationLandscape" and "setOrientationPortrait"  methods will take into account the availabl
+e orientations the app provides
+ - The video ad close button will appear by default after 15 seconds of content playing
+
 5.2.1
  - Updated the Unity SDK to communicate with the new Android (5.4.8) SDK
  - This will mean less files in the resulting .unitypackage import, since the 5.4.8 version removes all dependencies of xml layouts or drawables - all UI elements are now generated in code.
