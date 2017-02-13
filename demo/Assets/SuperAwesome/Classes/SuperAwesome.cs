@@ -12,22 +12,17 @@ using System.Runtime.InteropServices;
 namespace SuperAwesome {
 
 	// main singleton class
-	public class SuperAwesome {
+	public class SuperAwesome : MonoBehaviour {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
-		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySuperAwesomeHandleCPI ();
 
 		[DllImport ("__Internal")]
 		private static extern void SuperAwesomeUnitySuperAwesomeSetVersion (string version, string sdk);
 
 #endif
 
-		// define a default callback so that it's never null and I don't have
-		// to do a check every time I want to call it
-		private static Action<bool>	cpiCallback = (p) => {};
-		private static Action<bool> cpiStagingCallback = (p) => {};
-
+		// local cpi module 
+		private SACPI sacpi = null;
 
 		// sdk & version
 		private const string version = "5.3.0";
@@ -46,6 +41,13 @@ namespace SuperAwesome {
 
 		// constructor
 		private SuperAwesome () {
+
+			// create the cpi module
+			GameObject obj  = new GameObject ();
+			sacpi = obj.AddComponent<SACPI> ();
+			sacpi.name = "SACPI";
+			DontDestroyOnLoad (sacpi);
+
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SuperAwesome.SuperAwesomeUnitySuperAwesomeSetVersion (version, sdk);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
@@ -66,6 +68,16 @@ namespace SuperAwesome {
 #endif
 		}
 
+		// MonoDevelop start implementation
+		void Start (){
+			// do nothing
+		}
+
+		// MonoDevelop update implementation
+		void Update () {
+			// do nothing
+		}
+
 		// getters
 		private string getVersion (){
 			return version;
@@ -80,26 +92,7 @@ namespace SuperAwesome {
 		}
 
 		public void handleCPI (Action<bool> value) {
-			// get the callback
-			cpiCallback = value != null ? value : cpiCallback;
-
-#if (UNITY_IPHONE && !UNITY_EDITOR)
-
-			SuperAwesome.SuperAwesomeUnitySuperAwesomeHandleCPI ();
-
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-
-			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-			
-			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnitySuperAwesome");
-				saplugin.CallStatic("SuperAwesomeUnitySuperAwesomeHandleCPI", context);
-			}));
-
-#else
-			Debug.Log ("Handle CPI");
-#endif
+			sacpi.handleCPI (value);
 		}
 
 		// default state vars
@@ -153,32 +146,6 @@ namespace SuperAwesome {
 
 		public int defaultBannerHeight () {
 			return 50;
-		}
-
-		////////////////////////////////////////////////////////////////////
-		// Native callbacks
-		////////////////////////////////////////////////////////////////////
-		
-		public void nativeCallback(string payload) {
-			Dictionary<string, object> payloadDict;
-			string type = "";
-			bool success = false;
-			
-			// try to get payload and type data
-			try {
-				payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
-				type = (string) payloadDict["type"];
-				string suc = (string) payloadDict["success"];
-				bool.TryParse(suc, out success);
-			} catch {
-				Debug.Log ("Error w/ callback!");
-				return;
-			}
-
-			switch (type) {
-			case "sacallback_HandleCPI": cpiCallback (success); break;
-			}
-
 		}
 	}
 }
