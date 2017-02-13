@@ -19,12 +19,27 @@ namespace SuperAwesome {
 
 		// define a default callback so that it's never null and I don't have
 		// to do a check every time I want to call it
-		private static Action<bool>	cpiCallback = (p) => {};
+		private static Action<bool>	installCallback = (p) => {};
 
+		// a private instance
+		private static SACPI sharedInstance = null;
 
-		public void handleCPI (Action<bool> value) {
+		public static SACPI getInstance () {
+
+			if (sharedInstance == null) {
+				GameObject obj = new GameObject ();
+				sharedInstance = obj.AddComponent<SACPI> ();
+				sharedInstance.name = "SAUnityCPI";
+				DontDestroyOnLoad (sharedInstance);
+			}
+
+			return sharedInstance;
+		
+		}
+
+		public void handleInstall (Action<bool> value) {
 			// get the callback
-			cpiCallback = value != null ? value : cpiCallback;
+			installCallback = value != null ? value : installCallback;
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 
@@ -76,7 +91,7 @@ namespace SuperAwesome {
 			}
 
 			switch (type) {
-			case "sacallback_HandleCPI": cpiCallback (success); break;
+			case "sacallback_HandleCPI": installCallback (success); break;
 			}
 
 		}

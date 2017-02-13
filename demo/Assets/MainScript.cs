@@ -10,7 +10,9 @@ public class MainScript : MonoBehaviour {
 	void Start () {
 //		SuperAwesome.SuperAwesome.instance.handleCPI ();
 
-		SuperAwesome.SuperAwesome.instance.handleCPI ((success) => {
+		SACPI.getInstance ().handleInstall ((success) => {
+
+
 
 		});
 	}

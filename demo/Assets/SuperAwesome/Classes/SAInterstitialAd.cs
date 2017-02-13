@@ -37,11 +37,11 @@ namespace SuperAwesome {
 		private static Action<int, SAEvent>			callback = (p, e) => {};
 
 		// assign default values to all of these fields
-		private static bool isParentalGateEnabled 		= SuperAwesome.instance.defaultParentalGate ();
-		private static bool isTestingEnabled 			= SuperAwesome.instance.defaultTestMode ();
-		private static bool isBackButtonEnabled 		= SuperAwesome.instance.defaultBackButton ();
-		private static SAOrientation orientation 		= SuperAwesome.instance.defaultOrientation ();
-		private static SAConfiguration configuration	= SuperAwesome.instance.defaultConfiguration ();
+		private static bool isParentalGateEnabled 		= SuperAwesome.getInstance().defaultParentalGate ();
+		private static bool isTestingEnabled 			= SuperAwesome.getInstance().defaultTestMode ();
+		private static bool isBackButtonEnabled 		= SuperAwesome.getInstance().defaultBackButton ();
+		private static SAOrientation orientation 		= SuperAwesome.getInstance().defaultOrientation ();
+		private static SAConfiguration configuration	= SuperAwesome.getInstance().defaultConfiguration ();
 
 		// instance constructor
 		private static void tryAndCreateOnce () {

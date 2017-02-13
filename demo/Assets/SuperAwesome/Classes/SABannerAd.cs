@@ -46,13 +46,13 @@ namespace SuperAwesome {
 		private Action <int, SAEvent>	    	callback = (p, e) => {};
 
 		// private state vars
-		private bool isParentalGateEnabled 		= SuperAwesome.instance.defaultParentalGate ();
-		private SABannerPosition position 		= SuperAwesome.instance.defaultBannerPosition ();
-		private int bannerWidth 				= SuperAwesome.instance.defaultBannerWidth ();
-		private int bannerHeight 				= SuperAwesome.instance.defaultBannerHeight ();
-		private bool color 						= SuperAwesome.instance.defaultBgColor ();
-		private SAConfiguration configuration 	= SuperAwesome.instance.defaultConfiguration ();
-		private bool isTestingEnabled 			= SuperAwesome.instance.defaultTestMode ();
+		private bool isParentalGateEnabled 		= SuperAwesome.getInstance().defaultParentalGate ();
+		private SABannerPosition position 		= SuperAwesome.getInstance().defaultBannerPosition ();
+		private int bannerWidth 				= SuperAwesome.getInstance().defaultBannerWidth ();
+		private int bannerHeight 				= SuperAwesome.getInstance().defaultBannerHeight ();
+		private bool color 						= SuperAwesome.getInstance().defaultBgColor ();
+		private SAConfiguration configuration 	= SuperAwesome.getInstance().defaultConfiguration ();
+		private bool isTestingEnabled 			= SuperAwesome.getInstance().defaultTestMode ();
 
 		// create method
 		public static SABannerAd createInstance() {

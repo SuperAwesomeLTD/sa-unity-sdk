@@ -21,53 +21,43 @@ namespace SuperAwesome {
 
 #endif
 
-		// local cpi module 
-		private SACPI sacpi = null;
-
 		// sdk & version
 		private const string version = "5.3.0";
 		private const string sdk = "unity";
 
-		// Singleton stuff
-		private static SuperAwesome _instance;
-		public static SuperAwesome instance {
-			get {
-				if(_instance == null){
-					_instance = new SuperAwesome();
-				}
-				return _instance;
-			}
-		}
+		// private only instance
+		private static SuperAwesome sharedInstance = null;
 
-		// constructor
-		private SuperAwesome () {
+		public static SuperAwesome getInstance () {
 
-			// create the cpi module
-			if (sacpi == null) {
-				GameObject obj = new GameObject ();
-				sacpi = obj.AddComponent<SACPI> ();
-				sacpi.name = "SAUnityCPI";
-				// DontDestroyOnLoad (sacpi);
-			}
+			if (sharedInstance == null) {
+
+				// create it
+				sharedInstance = new SuperAwesome ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SuperAwesome.SuperAwesomeUnitySuperAwesomeSetVersion (version, sdk);
+				SuperAwesome.SuperAwesomeUnitySuperAwesomeSetVersion (version, sdk);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			
-			var versionL = version;
-			var sdkL = sdk;
-			
-			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-			
-			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+
+				var versionL = version;
+				var sdkL = sdk;
+
+				var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+				var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+
+				context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnitySuperAwesome");
 				saplugin.CallStatic("SuperAwesomeUnitySuperAwesomeSetVersion", context, versionL, sdkL);
-			}));
-			
+				}));
+
 #else 
-			Debug.Log ("Set Sdk version to " + getSdkVersion());
+				Debug.Log ("Set Sdk version to " + sharedInstance.getSdkVersion());
 #endif
+
+			}
+
+			return sharedInstance;
+		
 		}
 
 		// getters
@@ -81,10 +71,6 @@ namespace SuperAwesome {
 		
 		public string getSdkVersion () {
 			return getSdk () + "_" + getVersion ();
-		}
-
-		public void handleCPI (Action<bool> value) {
-			sacpi.handleCPI (value);
 		}
 
 		// default state vars
