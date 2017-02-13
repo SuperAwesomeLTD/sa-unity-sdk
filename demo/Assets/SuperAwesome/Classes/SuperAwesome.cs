@@ -45,7 +45,7 @@ namespace SuperAwesome {
 			// create the cpi module
 			GameObject obj  = new GameObject ();
 			sacpi = obj.AddComponent<SACPI> ();
-			sacpi.name = "SACPI";
+			sacpi.name = "SAUnityCPI";
 			DontDestroyOnLoad (sacpi);
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
