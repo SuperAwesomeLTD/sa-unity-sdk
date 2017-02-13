@@ -36,7 +36,7 @@ namespace SuperAwesome {
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnitySuperAwesome");
+			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityCPI");
 			saplugin.CallStatic("SuperAwesomeUnitySACPIHandleCPI", context);
 			}));
 

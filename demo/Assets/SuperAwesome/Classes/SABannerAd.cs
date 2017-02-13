@@ -56,6 +56,7 @@ namespace SuperAwesome {
 
 		// create method
 		public static SABannerAd createInstance() {
+
 			GameObject obj = new GameObject ();
 			SABannerAd adObj = obj.AddComponent<SABannerAd> ();
 			adObj.name = "SABannerAd_" + (++SABannerAd.index);
@@ -66,29 +67,33 @@ namespace SuperAwesome {
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
 			var nameL = adObj.name;
-			
+
 			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-			
+
 			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
-				saplugin.CallStatic("SuperAwesomeUnitySABannerAdCreate", context, nameL);
+			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
+			saplugin.CallStatic("SuperAwesomeUnitySABannerAdCreate", context, nameL);
 			}));
 
 #else 
 			Debug.Log (adObj.name + " Create");
 #endif
-			
+
 			return adObj;
 		}
 
 		// start method for MonoObject
 		void Start () {
+			
 			if (this.GetComponent<Image> () != null) {
 				Color current = this.GetComponent<Image>().color;
 				current.a = 0;
 				this.GetComponent<Image>().color = current;
 			}
+
+			// set the name of the banner
+			// this.name = "SABannerAd_" + (++SABannerAd.index);
 		}
 
 		// update method for MonoObject

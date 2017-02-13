@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 namespace SuperAwesome {
 
 	// main singleton class
-	public class SuperAwesome : MonoBehaviour {
+	public class SuperAwesome {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 
@@ -43,10 +43,12 @@ namespace SuperAwesome {
 		private SuperAwesome () {
 
 			// create the cpi module
-			GameObject obj  = new GameObject ();
-			sacpi = obj.AddComponent<SACPI> ();
-			sacpi.name = "SAUnityCPI";
-			DontDestroyOnLoad (sacpi);
+			if (sacpi == null) {
+				GameObject obj = new GameObject ();
+				sacpi = obj.AddComponent<SACPI> ();
+				sacpi.name = "SAUnityCPI";
+				// DontDestroyOnLoad (sacpi);
+			}
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SuperAwesome.SuperAwesomeUnitySuperAwesomeSetVersion (version, sdk);
@@ -66,16 +68,6 @@ namespace SuperAwesome {
 #else 
 			Debug.Log ("Set Sdk version to " + getSdkVersion());
 #endif
-		}
-
-		// MonoDevelop start implementation
-		void Start (){
-			// do nothing
-		}
-
-		// MonoDevelop update implementation
-		void Update () {
-			// do nothing
 		}
 
 		// getters
