@@ -29,7 +29,7 @@ namespace SuperAwesome {
 			if (sharedInstance == null) {
 				GameObject obj = new GameObject ();
 				sharedInstance = obj.AddComponent<SACPI> ();
-				sharedInstance.name = "SAUnityCPI";
+				sharedInstance.name = "SACPI";
 				DontDestroyOnLoad (sharedInstance);
 			}
 
