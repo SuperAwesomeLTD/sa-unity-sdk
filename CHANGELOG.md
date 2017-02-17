@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+5.3.1
+ - Minor improvement to SAInterstitialAd, SAVideoAd and SAAppWall to remove all prefabs.
+ - Now you can pre-create any of those instances in Awake or Start
+ - Removed calls to update
+
 5.3.0
  - Updated the Unity SDK to communicate with the new Android (5.5.0) and iOS (5.5.0) SDKs
  - Added a separate SACPI class (singleton) to handle all CPI:

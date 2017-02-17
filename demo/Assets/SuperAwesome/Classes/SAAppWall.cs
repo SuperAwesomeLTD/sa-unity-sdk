@@ -41,7 +41,7 @@ namespace SuperAwesome {
 		private static SAConfiguration configuration 	= SuperAwesome.getInstance().defaultConfiguration ();
 
 		// instance constructor
-		private static void tryAndCreateOnce () {
+		private static void createInstance () {
 
 			// create just one static instance for ever!
 			if (staticInstance == null) {
@@ -69,20 +69,6 @@ namespace SuperAwesome {
 			}
 		}
 
-		// Use this for initialization
-		void Start () {
-			if (this.GetComponent<Image> () != null) {
-				Color current = this.GetComponent<Image>().color;
-				current.a = 0;
-				this.GetComponent<Image>().color = current;
-			}
-		}
-		
-		// Update is called once per frame
-		void Update () {
-		
-		}
-
 		////////////////////////////////////////////////////////////////////
 		// GameWall specific methods
 		////////////////////////////////////////////////////////////////////
@@ -90,7 +76,7 @@ namespace SuperAwesome {
 		public static void load (int placementId) {
 			
 			// create an instrance of an SAAppWall (for callbacks)
-			tryAndCreateOnce ();
+			createInstance ();
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SAAppWall.SuperAwesomeUnitySAAppWallLoad(placementId, 
@@ -119,7 +105,7 @@ namespace SuperAwesome {
 		public static void play (int placementId) {
 			
 			// create an instrance of an SAAppWall (for callbacks)
-			tryAndCreateOnce ();
+			createInstance ();
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			SAAppWall.SuperAwesomeUnitySAAppWallPlay(placementId,
@@ -147,7 +133,7 @@ namespace SuperAwesome {
 		public static bool hasAdAvailable (int placementId) {
 			
 			// create an instrance of an SAAppWall (for callbacks)
-			tryAndCreateOnce ();
+			createInstance ();
 			
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
 			return SAAppWall.SuperAwesomeUnitySAAppWallHasAdAvailable(placementId);

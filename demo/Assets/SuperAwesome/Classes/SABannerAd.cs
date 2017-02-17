@@ -83,24 +83,6 @@ namespace SuperAwesome {
 			return adObj;
 		}
 
-		// start method for MonoObject
-		void Start () {
-			
-			if (this.GetComponent<Image> () != null) {
-				Color current = this.GetComponent<Image>().color;
-				current.a = 0;
-				this.GetComponent<Image>().color = current;
-			}
-
-			// set the name of the banner
-			// this.name = "SABannerAd_" + (++SABannerAd.index);
-		}
-
-		// update method for MonoObject
-		void Update () {
-			// do nothing
-		}
-
 		////////////////////////////////////////////////////////////////////
 		// Banner specific method
 		////////////////////////////////////////////////////////////////////
