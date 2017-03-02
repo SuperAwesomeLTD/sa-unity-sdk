@@ -1,4 +1,4 @@
-﻿/** 
+﻿/**
  * Imports used for this class
  */
 using UnityEngine;
@@ -22,7 +22,7 @@ namespace SuperAwesome {
 #endif
 
 		// sdk & version
-		private const string version = "5.3.1";
+		private const string version = "5.3.2";
 		private const string sdk = "unity";
 
 		// private only instance
@@ -35,7 +35,7 @@ namespace SuperAwesome {
 				// create it
 				sharedInstance = new SuperAwesome ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 				SuperAwesome.SuperAwesomeUnitySuperAwesomeSetVersion (version, sdk);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
@@ -50,25 +50,25 @@ namespace SuperAwesome {
 				saplugin.CallStatic("SuperAwesomeUnitySuperAwesomeSetVersion", context, versionL, sdkL);
 				}));
 
-#else 
+#else
 				Debug.Log ("Set Sdk version to " + sharedInstance.getSdkVersion());
 #endif
 
 			}
 
 			return sharedInstance;
-		
+
 		}
 
 		// getters
 		private string getVersion (){
 			return version;
 		}
-		
+
 		private string getSdk () {
 			return sdk;
 		}
-		
+
 		public string getSdkVersion () {
 			return getSdk () + "_" + getVersion ();
 		}
@@ -93,7 +93,7 @@ namespace SuperAwesome {
 		public SAOrientation defaultOrientation () {
 			return SAOrientation.ANY;
 		}
-	
+
 		public bool defaultCloseButton () {
 			return false;
 		}
