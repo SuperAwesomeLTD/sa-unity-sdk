@@ -22,7 +22,7 @@ namespace SuperAwesome {
 #endif
 
 		// sdk & version
-		private const string version = "5.3.2";
+		private const string version = "5.3.3";
 		private const string sdk = "unity";
 
 		// private only instance

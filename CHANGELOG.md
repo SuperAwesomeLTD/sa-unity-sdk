@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+5.3.3
+ - Updated the Unity SDK to communicate with the new Android (5.5.3) and iOS (5.5.3) SDKs that add support for scrollable interstitial ads
+
 5.3.2
  - Updated the Unity SDK to communicate with the new Android (5.5.2) and iOS (5.5.2) SDKs that add improvements to the modelspace and eventing systems
  - Fixed bitcode support for iOS
