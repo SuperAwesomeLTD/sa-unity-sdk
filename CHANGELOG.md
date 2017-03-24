@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+5.3.4
+ - Updated the Unity SDK to work with the new Android (5.5.4) and iOS (5.5.4) SDKs that load data in webviews using a base url as well
+
 5.3.3
  - Updated the Unity SDK to communicate with the new Android (5.5.3) and iOS (5.5.3) SDKs that add support for scrollable interstitial ads
 
