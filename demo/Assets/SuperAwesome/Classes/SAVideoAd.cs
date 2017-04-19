@@ -235,7 +235,7 @@ namespace SuperAwesome {
 		}
 
 		public static void enableCloseAtEnd () {
-			shouldShowSmallClickButton = true;
+			shouldAutomaticallyCloseAtEnd = true;
 		}
 
 		public static void disableCloseAtEnd () {

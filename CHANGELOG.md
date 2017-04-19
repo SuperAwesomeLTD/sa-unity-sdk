@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+5.3.6
+ - Updated the Unity SDK to work wiith the Android (5.5.7) and iOS (5.5.8) SDKs
+ - Added camel & snake case options when parsing the SACreative object - for click, impression and install
+ - Added the osTarget parameter to the SACreative
+ - Fixed some bugs occuring for SAEvents / SAVideoAd / SAInterstitialAd/ SAAppWall on Android
+
 5.3.5
  - Updated the Unity SDK to work with the new Android (5.5.6) and iOS (5.5.5) SDKs. This fixes a small error when the video player tries to play a non-video creative but doesn't auto-close.
 
