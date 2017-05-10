@@ -1,8 +1,13 @@
 CHANGELOG
 =========
 
+5.4.0
+ - Uodate the Unity SDK to work with the Android (5.6.0) and iOS (5.6.0) SDKs
+ - Add MRAID support for banner & interstitial ads
+ - Update MOAT version to latest supported
+
 5.3.6
- - Updated the Unity SDK to work wiith the Android (5.5.7) and iOS (5.5.8) SDKs
+ - Updated the Unity SDK to work with the Android (5.5.7) and iOS (5.5.8) SDKs
  - Added camel & snake case options when parsing the SACreative object - for click, impression and install
  - Added the osTarget parameter to the SACreative
  - Fixed some bugs occuring for SAEvents / SAVideoAd / SAInterstitialAd/ SAAppWall on Android
