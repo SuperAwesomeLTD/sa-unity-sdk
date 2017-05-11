@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 5.4.0
- - Uodate the Unity SDK to work with the Android (5.6.0) and iOS (5.6.0) SDKs
+ - Update the Unity SDK to work with the Android (5.6.0) and iOS (5.6.0) SDKs
  - Add MRAID support for banner & interstitial ads
  - Update MOAT version to latest supported
 
