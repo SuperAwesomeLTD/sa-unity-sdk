@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+5.5.0
+ - Added support for iOS & Android 5.7.0 version, which:
+ - Adds support for AdMob
+ - Fixed bugs in iOS & Android related to banners, padlocks, etc
+ - Refactores the MoPub plugin to have the same naming convention as the AdMob, Unity and AIR plugins
+
 5.4.0
  - Update the Unity SDK to work with the Android (5.6.0) and iOS (5.6.0) SDKs
  - Add MRAID support for banner & interstitial ads
