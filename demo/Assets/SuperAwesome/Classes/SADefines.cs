@@ -16,13 +16,14 @@ namespace SuperAwesome {
 
 	public enum SAEvent {
 		adLoaded = 0,
-		adFailedToLoad = 1,
-		adAlreadyLoaded = 2,
-		adShown = 3,
-		adFailedToShow = 4,
-		adClicked = 5,
-		adEnded = 6,
-		adClosed = 7
+		adEmpty = 1,
+		adFailedToLoad = 2,
+		adAlreadyLoaded = 3,
+		adShown = 4,
+		adFailedToShow = 5,
+		adClicked = 6,
+		adEnded = 7,
+		adClosed = 8
 	}
 
 	// enums for different banner specific properties

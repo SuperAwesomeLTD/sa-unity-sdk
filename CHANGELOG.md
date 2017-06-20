@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+5.5.1 
+ - Added support for iOS 5.7.1 and Android 5.7.3
+ - Those add support for the adEmpty callback
+ - And fix an issue with displaying banner ads on Unity v5.6.x
+
 5.5.0
  - Added support for iOS & Android 5.7.0 version, which:
  - Adds support for AdMob

@@ -272,6 +272,7 @@ namespace SuperAwesome {
 			
 			switch (type) {
 			case "sacallback_adLoaded":  callback(placementId, SAEvent.adLoaded); break;
+			case "sacallback_adEmpty": callback (placementId, SAEvent.adEmpty); break;
 			case "sacallback_adFailedToLoad": callback(placementId, SAEvent.adFailedToLoad); break;
 			case "sacallback_adAlreadyLoaded": callback (placementId, SAEvent.adAlreadyLoaded); break;
 			case "sacallback_adShown": callback(placementId, SAEvent.adShown); break;
