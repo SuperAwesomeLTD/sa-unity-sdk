@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+5.5.2
+ - Added support for iOS 5.7.2 and Android 5.7.4
+ - Fixed a bug that caused video & interstitial ads that failed to load once, sending the adFailedToLoad callback event, start always sending adAlreadyLoaded on subsequent failed loads
+
 5.5.1 
  - Added support for iOS 5.7.1 and Android 5.7.3
  - Those add support for the adEmpty callback
