@@ -6,276 +6,278 @@ using MiniJSON;
 using System.Runtime.InteropServices;
 using System;
 
-namespace SuperAwesome {
+namespace tv {
+	namespace superawesome {
+		namespace sdk {
+			namespace publisher {
 
-	public class SABannerAd: MonoBehaviour {
+				public class SABannerAd: MonoBehaviour {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 
-		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySABannerAdCreate(string unityName);
+					[DllImport ("__Internal")]
+					private static extern void SuperAwesomeUnitySABannerAdCreate(string unityName);
 
-		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySABannerAdLoad(string unityName,
-		                                                           int placementId,
-		                                                           int configuration, 
-		                                                           bool test);
+					[DllImport ("__Internal")]
+					private static extern void SuperAwesomeUnitySABannerAdLoad(string unityName,
+					int placementId,
+					int configuration, 
+					bool test);
 
-		[DllImport ("__Internal")]
-		private static extern bool SuperAwesomeUnitySABannerAdHasAdAvailable(string unityName);
-		
+					[DllImport ("__Internal")]
+					private static extern bool SuperAwesomeUnitySABannerAdHasAdAvailable(string unityName);
 
-		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySABannerAdPlay(string unityName,
-		                                                           bool isParentalGateEnabled, 
-		                                                           int position, 
-		                                                           int width,
-		                                                           int height,
-		                                                           bool color);
 
-		[DllImport ("__Internal")]
-		private static extern void SuperAwesomeUnitySABannerAdClose(string unityName);
+					[DllImport ("__Internal")]
+					private static extern void SuperAwesomeUnitySABannerAdPlay(string unityName,
+					bool isParentalGateEnabled, 
+					int position, 
+					int width,
+					int height,
+					bool color);
+
+					[DllImport ("__Internal")]
+					private static extern void SuperAwesomeUnitySABannerAdClose(string unityName);
 
 #endif
 
-		// banner index
-		private static uint 					index = 0;
+					// banner index
+					private static uint 					index = 0;
 
-		// define a default callback so that it's never null and I don't have
-		// to do a check every time I want to call it
-		private Action <int, SAEvent>	    	callback = (p, e) => {};
+					// define a default callback so that it's never null and I don't have
+					// to do a check every time I want to call it
+					private Action <int, SAEvent>	    	callback = (p, e) => {};
 
-		// private state vars
-		private bool isParentalGateEnabled 		= SuperAwesome.getInstance().defaultParentalGate ();
-		private SABannerPosition position 		= SuperAwesome.getInstance().defaultBannerPosition ();
-		private int bannerWidth 				= SuperAwesome.getInstance().defaultBannerWidth ();
-		private int bannerHeight 				= SuperAwesome.getInstance().defaultBannerHeight ();
-		private bool color 						= SuperAwesome.getInstance().defaultBgColor ();
-		private SAConfiguration configuration 	= SuperAwesome.getInstance().defaultConfiguration ();
-		private bool isTestingEnabled 			= SuperAwesome.getInstance().defaultTestMode ();
+					// private state vars
+					private bool isParentalGateEnabled 		= SADefines.defaultParentalGate ();
+					private SABannerPosition position 		= SADefines.defaultBannerPosition ();
+					private int bannerWidth 				= SADefines.defaultBannerWidth ();
+					private int bannerHeight 				= SADefines.defaultBannerHeight ();
+					private bool color 						= SADefines.defaultBgColor ();
+					private SAConfiguration configuration 	= SADefines.defaultConfiguration ();
+					private bool isTestingEnabled 			= SADefines.defaultTestMode ();
 
-		// create method
-		public static SABannerAd createInstance() {
+					// create method
+					public static SABannerAd createInstance() {
 
-			GameObject obj = new GameObject ();
-			SABannerAd adObj = obj.AddComponent<SABannerAd> ();
-			adObj.name = "SABannerAd_" + (++SABannerAd.index);
-			DontDestroyOnLoad (obj);
+						GameObject obj = new GameObject ();
+						SABannerAd adObj = obj.AddComponent<SABannerAd> ();
+						adObj.name = "SABannerAd_" + (++SABannerAd.index);
+						DontDestroyOnLoad (obj);
+
+						//
+						// set native version
+						SAVersion.setVersionInNative ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SABannerAd.SuperAwesomeUnitySABannerAdCreate(adObj.name);
+						SABannerAd.SuperAwesomeUnitySABannerAdCreate(adObj.name);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
-			var nameL = adObj.name;
+						var nameL = adObj.name;
 
-			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
-			saplugin.CallStatic("SuperAwesomeUnitySABannerAdCreate", context, nameL);
-			}));
+						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityBannerAd");
+							saplugin.CallStatic("SuperAwesomeUnitySABannerAdCreate", context, nameL);
+						}));
 
 #else 
-			Debug.Log (adObj.name + " Create");
+						Debug.Log (adObj.name + " Create");
 #endif
 
-			return adObj;
-		}
+						return adObj;
+					}
 
-		////////////////////////////////////////////////////////////////////
-		// Banner specific method
-		////////////////////////////////////////////////////////////////////
+					////////////////////////////////////////////////////////////////////
+					// Banner specific method
+					////////////////////////////////////////////////////////////////////
 
-		public void load (int placementId) {
+					public void load (int placementId) {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SABannerAd.SuperAwesomeUnitySABannerAdLoad(this.name,
-			                                           placementId, 
-			                                           (int)configuration,
-			                                           isTestingEnabled);
+						SABannerAd.SuperAwesomeUnitySABannerAdLoad(this.name, placementId, (int)configuration, isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
-			var nameL = this.name;
+						var nameL = this.name;
 
-			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
-				saplugin.CallStatic("SuperAwesomeUnitySABannerAdLoad", context, nameL, placementId, (int)configuration, isTestingEnabled);
-			}));
+						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityBannerAd");
+							saplugin.CallStatic("SuperAwesomeUnitySABannerAdLoad", context, nameL, placementId, (int)configuration, isTestingEnabled);
+						}));
 
 #else
-			Debug.Log (this.name + " Load");
-#endif
-		
-		}
-
-		public void play () {
-
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SABannerAd.SuperAwesomeUnitySABannerAdPlay(this.name,
-			                                           isParentalGateEnabled,
-			                                           (int)position,
-			                                           bannerWidth,
-			                                           bannerHeight,
-			                                           color);
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var nameL = this.name;
-
-			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-
-			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
-				saplugin.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, nameL, isParentalGateEnabled, (int)position, bannerWidth, bannerHeight, color);
-			}));
-			            
-#else 
-			Debug.Log (this.name + " Play");
+						Debug.Log (this.name + " Load");
 #endif
 
-		}
+					}
 
-		public bool hasAdAvailable () {
-
+					public void play () {
+					
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			return SABannerAd.SuperAwesomeUnitySABannerAdHasAdAvailable(this.name);
+						SABannerAd.SuperAwesomeUnitySABannerAdPlay(this.name, isParentalGateEnabled, (int)position, bannerWidth, bannerHeight, color);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
-			var nameL = this.name;
+						var nameL = this.name;
 
-			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-			var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
+						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			return saplugin.CallStatic<bool> ("SuperAwesomeUnitySABannerAdHasAdAvailable", context, nameL);
+						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityBannerAd");
+							saplugin.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, nameL, isParentalGateEnabled, (int)position, bannerWidth, bannerHeight, color);
+						}));
+
 #else 
-			Debug.Log (this.name + " HasAdAvailable");
+						Debug.Log (this.name + " Play");
 #endif
-			return false;
 
-		}
+					}
 
-		public void close () {
+					public bool hasAdAvailable () {
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-			SABannerAd.SuperAwesomeUnitySABannerAdClose(this.name);
+						return SABannerAd.SuperAwesomeUnitySABannerAdHasAdAvailable(this.name);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+						var nameL = this.name;
+
+						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityBannerAd");
+
+						return saplugin.CallStatic<bool> ("SuperAwesomeUnitySABannerAdHasAdAvailable", context, nameL);
+#else 
+						Debug.Log (this.name + " HasAdAvailable");
+#endif
+						return false;
+
+					}
+
+					public void close () {
+
+#if (UNITY_IPHONE && !UNITY_EDITOR) 
+						SABannerAd.SuperAwesomeUnitySABannerAdClose(this.name);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
-			var nameL = this.name;
+						var nameL = this.name;
 
-			var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-				var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.unity.SAUnityBannerAd");
-				saplugin.CallStatic("SuperAwesomeUnitySABannerAdClose", context, nameL);
-			}));
-		
+						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityBannerAd");
+							saplugin.CallStatic("SuperAwesomeUnitySABannerAdClose", context, nameL);
+						}));
+
 #else 
-			Debug.Log (this.name + " Close");
+						Debug.Log (this.name + " Close");
 #endif 
-		}
+					}
 
-		////////////////////////////////////////////////////////////////////
-		// Setters & getters
-		////////////////////////////////////////////////////////////////////
+					////////////////////////////////////////////////////////////////////
+					// Setters & getters
+					////////////////////////////////////////////////////////////////////
 
-		public void setCallback (Action<int, SAEvent> value) {
-			this.callback = value != null ? value : this.callback;
-		}
+					public void setCallback (Action<int, SAEvent> value) {
+						this.callback = value != null ? value : this.callback;
+					}
 
-		public void enableParentalGate () {
-			isParentalGateEnabled = true;
-		}
+					public void enableParentalGate () {
+						isParentalGateEnabled = true;
+					}
 
-		public void disableParentalGate () {
-			isParentalGateEnabled = false;
-		}
+					public void disableParentalGate () {
+						isParentalGateEnabled = false;
+					}
 
-		public void enableTestMode () {
-			isTestingEnabled = true;
-		}
+					public void enableTestMode () {
+						isTestingEnabled = true;
+					}
 
-		public void disableTestMode () {
-			isTestingEnabled = false;
-		}
+					public void disableTestMode () {
+						isTestingEnabled = false;
+					}
 
-		public void setConfigurationProduction () {
-			configuration = SAConfiguration.PRODUCTION;
-		}
-		
-		public void setConfigurationStaging () {
-			configuration = SAConfiguration.STAGING;
-		}
+					public void setConfigurationProduction () {
+						configuration = SAConfiguration.PRODUCTION;
+					}
 
-		public void setPositionTop () {
-			position = SABannerPosition.TOP;
-		}
+					public void setConfigurationStaging () {
+						configuration = SAConfiguration.STAGING;
+					}
 
-		public void setPositionBottom () {
-			position = SABannerPosition.BOTTOM;
-		}
+					public void setPositionTop () {
+						position = SABannerPosition.TOP;
+					}
 
-		public void setSize_300_50 () {
-			bannerWidth = 300;
-			bannerHeight = 50;
-		}
+					public void setPositionBottom () {
+						position = SABannerPosition.BOTTOM;
+					}
 
-		public void setSize_320_50 () {
-			bannerWidth = 320;
-			bannerHeight = 50;
-		}
+					public void setSize_300_50 () {
+						bannerWidth = 300;
+						bannerHeight = 50;
+					}
 
-		public void setSize_728_90 () {
-			bannerWidth = 728;
-			bannerHeight = 90;
-		}
+					public void setSize_320_50 () {
+						bannerWidth = 320;
+						bannerHeight = 50;
+					}
 
-		public void setSize_300_250 () {
-			bannerWidth = 300;
-			bannerHeight = 250;
-		}
+					public void setSize_728_90 () {
+						bannerWidth = 728;
+						bannerHeight = 90;
+					}
 
-		public void setColorGray () {
-			color = false;
-		}
+					public void setSize_300_250 () {
+						bannerWidth = 300;
+						bannerHeight = 250;
+					}
 
-		public void setColorTransparent () {
-			color = true;
-		}
+					public void setColorGray () {
+						color = false;
+					}
 
-		////////////////////////////////////////////////////////////////////
-		// Native callbacks
-		////////////////////////////////////////////////////////////////////
+					public void setColorTransparent () {
+						color = true;
+					}
 
-		public void nativeCallback(string payload) {
-			Dictionary<string, object> payloadDict;
-			string type = "";
-			int placementId = 0;
+					////////////////////////////////////////////////////////////////////
+					// Native callbacks
+					////////////////////////////////////////////////////////////////////
 
-			// try to get payload and type data
-			try {
-				payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
-				type = (string) payloadDict["type"];
-				string plac = (string) payloadDict["placementId"];
-				int.TryParse(plac, out placementId);
-			} catch {
-				Debug.Log ("Error w/ callback!");
-				return;
-			}
-			
-			switch (type) {
-			case "sacallback_adLoaded":  callback(placementId, SAEvent.adLoaded); break;
-			case "sacallback_adEmpty": callback (placementId, SAEvent.adEmpty); break;
-			case "sacallback_adFailedToLoad": callback(placementId, SAEvent.adFailedToLoad); break;
-			case "sacallback_adAlreadyLoaded": callback (placementId, SAEvent.adAlreadyLoaded); break;
-			case "sacallback_adShown": callback(placementId, SAEvent.adShown); break;
-			case "sacallback_adFailedToShow": callback (placementId, SAEvent.adFailedToShow); break;
-			case "sacallback_adClicked": callback (placementId, SAEvent.adClicked); break;
-			case "sacallback_adEnded": callback (placementId, SAEvent.adEnded); break;
-			case "sacallback_adClosed": callback (placementId, SAEvent.adClosed); break;
+					public void nativeCallback(string payload) {
+						Dictionary<string, object> payloadDict;
+						string type = "";
+						int placementId = 0;
+
+						// try to get payload and type data
+						try {
+							payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
+							type = (string) payloadDict["type"];
+							string plac = (string) payloadDict["placementId"];
+							int.TryParse(plac, out placementId);
+						} catch {
+							Debug.Log ("Error w/ callback!");
+							return;
+						}
+
+						switch (type) {
+						case "sacallback_adLoaded":  callback(placementId, SAEvent.adLoaded); break;
+						case "sacallback_adEmpty": callback (placementId, SAEvent.adEmpty); break;
+						case "sacallback_adFailedToLoad": callback(placementId, SAEvent.adFailedToLoad); break;
+						case "sacallback_adAlreadyLoaded": callback (placementId, SAEvent.adAlreadyLoaded); break;
+						case "sacallback_adShown": callback(placementId, SAEvent.adShown); break;
+						case "sacallback_adFailedToShow": callback (placementId, SAEvent.adFailedToShow); break;
+						case "sacallback_adClicked": callback (placementId, SAEvent.adClicked); break;
+						case "sacallback_adEnded": callback (placementId, SAEvent.adEnded); break;
+						case "sacallback_adClosed": callback (placementId, SAEvent.adClosed); break;
+						}
+					}
+				}
 			}
 		}
 	}

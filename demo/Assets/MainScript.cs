@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using SuperAwesome;
+
+using tv.superawesome.sdk.publisher;
 
 public class MainScript : MonoBehaviour {
 
@@ -8,13 +9,7 @@ public class MainScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-//		SuperAwesome.SuperAwesome.instance.handleCPI ();
-
-		SACPI.getInstance ().handleInstall ((success) => {
-
-
-
-		});
+		// do nothing
 	}
 	
 	// Update is called once per frame

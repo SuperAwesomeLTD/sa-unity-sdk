@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+6.0.0
+ - Added support for iOS 6.0.0 and Android 6.0.0
+ - Split the SDK into Publishers and Advertisers SDKs (another separate one)
+ - Changed the namespacing convention from SuperAwesome to tv.superawesome.sdk.publisher
+ - Got rid of the SuperAwesome base class and now I have SADefines and SAVersion
+
 5.5.2
  - Added support for iOS 5.7.2 and Android 5.7.4
  - Fixed a bug that caused video & interstitial ads that failed to load once, sending the adFailedToLoad callback event, start always sending adAlreadyLoaded on subsequent failed loads
