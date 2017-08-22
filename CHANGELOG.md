@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+6.0.1
+ - Update to work with Android 6.0.2
+
 6.0.0
  - Added support for iOS 6.0.0 and Android 6.0.0
  - Split the SDK into Publishers and Advertisers SDKs (another separate one)
