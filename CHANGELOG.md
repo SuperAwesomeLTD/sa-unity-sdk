@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+6.0.3
+ - Updated to work with Android 6.0.4
+ - Fixes a bug in SABannerAd related to playing an ad and quickly closing it before rendering
+
 6.0.2
  - Updated to work with Android 6.0.3
  - In that I reverted MoPub adapter to work with classic class path
