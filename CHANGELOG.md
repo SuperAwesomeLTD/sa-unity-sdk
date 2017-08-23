@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+6.0.2
+ - Updated to work with Android 6.0.3
+ - In that I reverted MoPub adapter to work with classic class path
+
 6.0.1
  - Update to work with Android 6.0.2
 
