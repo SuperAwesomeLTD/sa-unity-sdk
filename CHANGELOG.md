@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+6.1.0
+ - Updated to work with iOS and Android 6.1.0
+ - Added a Bumper Page that can overlap any ad (video, banner, interstitial, app wall)
+ - Separated Parental Gate into separate library
+
 6.0.3
  - Updated to work with Android 6.0.4
  - Fixes a bug in SABannerAd related to playing an ad and quickly closing it before rendering

@@ -22,7 +22,7 @@ namespace tv {
 					private static extern void SuperAwesomeUnitySAVideoAdLoad(int placementId, int configuration, bool test);
 
 					[DllImport ("__Internal")]
-					private static extern void SuperAwesomeUnitySAVideoAdPlay(int placementId, bool isParentalGateEnabled, bool shouldShowCloseButton, bool shouldShowSmallClickButton, bool shouldAutomaticallyCloseAtEnd, int lockOrientation);
+					private static extern void SuperAwesomeUnitySAVideoAdPlay(int placementId, bool isParentalGateEnabled, bool isBumperPageEnabled, bool shouldShowCloseButton, bool shouldShowSmallClickButton, bool shouldAutomaticallyCloseAtEnd, int lockOrientation);
 
 					[DllImport ("__Internal")]
 					private static extern bool SuperAwesomeUnitySAVideoAdHasAdAvailable(int placementId);
@@ -37,6 +37,7 @@ namespace tv {
 
 					// assign default values to all of these fields
 					private static bool isParentalGateEnabled 			= SADefines.defaultParentalGate ();
+					private static bool isBumperPageEnabled 			= SADefines.defaultBumperPage ();
 					private static bool shouldShowCloseButton 			= SADefines.defaultCloseButton ();
 					private static bool shouldShowSmallClickButton 		= SADefines.defaultSmallClick ();
 					private static bool shouldAutomaticallyCloseAtEnd 	= SADefines.defaultCloseAtEnd ();
@@ -112,7 +113,7 @@ namespace tv {
 						createInstance ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-						SAVideoAd.SuperAwesomeUnitySAVideoAdPlay(placementId, isParentalGateEnabled, shouldShowCloseButton, shouldShowSmallClickButton, shouldAutomaticallyCloseAtEnd, (int)orientation);
+						SAVideoAd.SuperAwesomeUnitySAVideoAdPlay(placementId, isParentalGateEnabled, isBumperPageEnabled, shouldShowCloseButton, shouldShowSmallClickButton, shouldAutomaticallyCloseAtEnd, (int)orientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
 						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
@@ -124,6 +125,7 @@ namespace tv {
 								context, 
 								placementId, 
 								isParentalGateEnabled, 
+								isBumperPageEnabled,
 								shouldShowCloseButton, 
 								shouldShowSmallClickButton, 
 								shouldAutomaticallyCloseAtEnd, 
@@ -178,6 +180,14 @@ namespace tv {
 
 					public static void disableParentalGate () {
 						isParentalGateEnabled = false;
+					}
+
+					public static void enableBumperPage () {
+						isBumperPageEnabled = true; 
+					}
+
+					public static void disableBumperPage () {
+						isBumperPageEnabled = false;
 					}
 
 					public static void enableTestMode () {

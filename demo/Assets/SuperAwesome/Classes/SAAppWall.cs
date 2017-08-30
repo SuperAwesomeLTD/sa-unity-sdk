@@ -22,7 +22,7 @@ namespace tv {
 					private static extern void SuperAwesomeUnitySAAppWallLoad(int placementId, int configuration,  bool test);
 
 					[DllImport ("__Internal")]
-					private static extern void SuperAwesomeUnitySAAppWallPlay(int placementId, bool isParentalGateEnabled);
+					private static extern void SuperAwesomeUnitySAAppWallPlay(int placementId, bool isParentalGateEnabled, bool isBumperPageEnabled);
 
 					[DllImport ("__Internal")]
 					private static extern bool SuperAwesomeUnitySAAppWallHasAdAvailable(int placementId);
@@ -37,6 +37,7 @@ namespace tv {
 
 					// assign default values to all of these fields
 					private static bool isParentalGateEnabled 		= SADefines.defaultParentalGate ();
+					private static bool isBumperPageEnabled 		= SADefines.defaultBumperPage ();
 					private static bool isTestingEnabled 			= SADefines.defaultTestMode ();
 					private static bool	isBackButtonEnabled 		= SADefines.defaultBackButton ();
 					private static SAConfiguration configuration 	= SADefines.defaultConfiguration ();
@@ -110,7 +111,7 @@ namespace tv {
 						createInstance ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-						SAAppWall.SuperAwesomeUnitySAAppWallPlay(placementId, isParentalGateEnabled);
+						SAAppWall.SuperAwesomeUnitySAAppWallPlay(placementId, isParentalGateEnabled, isBumperPageEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
 						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
@@ -122,6 +123,7 @@ namespace tv {
 								context, 
 								placementId, 
 								isParentalGateEnabled,
+								isBumperPageEnabled,
 								isBackButtonEnabled);
 							}));
 
@@ -166,6 +168,14 @@ namespace tv {
 
 					public static void disableParentalGate () {
 						isParentalGateEnabled = false;
+					}
+
+					public static void enableBumperPage () {
+						isBumperPageEnabled = true; 
+					}
+
+					public static void disableBumperPage () {
+						isBumperPageEnabled = false;
 					}
 
 					public static void enableTestMode () {

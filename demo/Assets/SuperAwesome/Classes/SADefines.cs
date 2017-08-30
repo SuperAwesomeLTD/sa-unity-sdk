@@ -47,9 +47,13 @@ namespace tv {
 					}
 
 					public static bool defaultParentalGate () {
-						return true;
+						return false;
 					}
 
+					public static bool defaultBumperPage () {
+						return false; 
+					}
+ 
 					public static SAConfiguration defaultConfiguration () {
 						return SAConfiguration.PRODUCTION;
 					}

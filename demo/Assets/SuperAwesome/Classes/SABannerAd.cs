@@ -31,6 +31,7 @@ namespace tv {
 					[DllImport ("__Internal")]
 					private static extern void SuperAwesomeUnitySABannerAdPlay(string unityName,
 					bool isParentalGateEnabled, 
+					bool isBumperPageEnabled,
 					int position, 
 					int width,
 					int height,
@@ -50,6 +51,7 @@ namespace tv {
 
 					// private state vars
 					private bool isParentalGateEnabled 		= SADefines.defaultParentalGate ();
+					private bool isBumperPageEnabled		= SADefines.defaultBumperPage ();
 					private SABannerPosition position 		= SADefines.defaultBannerPosition ();
 					private int bannerWidth 				= SADefines.defaultBannerWidth ();
 					private int bannerHeight 				= SADefines.defaultBannerHeight ();
@@ -119,7 +121,7 @@ namespace tv {
 					public void play () {
 					
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-						SABannerAd.SuperAwesomeUnitySABannerAdPlay(this.name, isParentalGateEnabled, (int)position, bannerWidth, bannerHeight, color);
+						SABannerAd.SuperAwesomeUnitySABannerAdPlay(this.name, isParentalGateEnabled, isBumperPageEnabled, (int)position, bannerWidth, bannerHeight, color);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 						var nameL = this.name;
 
@@ -128,7 +130,7 @@ namespace tv {
 
 						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityBannerAd");
-							saplugin.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, nameL, isParentalGateEnabled, (int)position, bannerWidth, bannerHeight, color);
+						saplugin.CallStatic("SuperAwesomeUnitySABannerAdPlay", context, nameL, isParentalGateEnabled, isBumperPageEnabled, (int)position, bannerWidth, bannerHeight, color);
 						}));
 
 #else 
@@ -191,6 +193,14 @@ namespace tv {
 
 					public void disableParentalGate () {
 						isParentalGateEnabled = false;
+					}
+
+					public void enableBumperPage () {
+						isBumperPageEnabled = true; 
+					}
+
+					public void disableBumperPage () {
+						isBumperPageEnabled = false;
 					}
 
 					public void enableTestMode () {
