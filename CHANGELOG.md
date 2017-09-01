@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+6.1.1
+ - Updated to work with iOS 6.1.2 and Android 6.1.1
+ - Fixed some small bugs
+
 6.1.0
  - Updated to work with iOS and Android 6.1.0
  - Added a Bumper Page that can overlap any ad (video, banner, interstitial, app wall)
