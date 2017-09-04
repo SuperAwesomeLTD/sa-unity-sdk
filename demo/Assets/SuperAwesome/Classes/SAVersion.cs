@@ -9,13 +9,13 @@ namespace tv {
 			namespace publisher {
 
 				public class SAVersion {
-
-					#if (UNITY_IPHONE && !UNITY_EDITOR)
+				
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 
 					[DllImport ("__Internal")]
 					private static extern void SuperAwesomeUnityVersionSetVersion (string version, string sdk);
 
-					#endif
+#endif
 
 					// sdk & version
 					private static string version = "6.1.1";
