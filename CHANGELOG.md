@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+6.1.2
+ - Updated to work with iOS 6.1.3 & Android 6.1.2
+ - Fixed MoPub failover by handling all types of ad empty / load fail / etc events as well as the special case when the fallback tag is mopub://failLoad
+
 6.1.1
  - Updated to work with iOS 6.1.2 and Android 6.1.1
  - Fixed some small bugs
