@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+6.1.3
+ - Updated to work with iOS 6.1.4 & Android 6.1.3
+ - Updated BumperPage copy
+
 6.1.2
  - Updated to work with iOS 6.1.3 & Android 6.1.2
  - Fixed MoPub failover by handling all types of ad empty / load fail / etc events as well as the special case when the fallback tag is mopub://failLoad
