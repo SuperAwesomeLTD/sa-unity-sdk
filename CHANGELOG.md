@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+6.1.4 
+ - Updated imports for SABumperPage to make it work
+
 6.1.3
  - Updated to work with iOS 6.1.4 & Android 6.1.3
  - Updated BumperPage copy
