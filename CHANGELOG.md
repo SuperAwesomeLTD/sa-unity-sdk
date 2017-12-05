@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+6.1.6 
+ - Improved Bumper Page Experience
+
 6.1.5
  - Update to Work with iOS 6.1.5 & Android 6.1.4 (removed video auto-loading code)
 
