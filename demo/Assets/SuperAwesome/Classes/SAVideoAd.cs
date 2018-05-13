@@ -19,7 +19,7 @@ namespace tv {
 					private static extern void SuperAwesomeUnitySAVideoAdCreate ();
 
 					[DllImport ("__Internal")]
-					private static extern void SuperAwesomeUnitySAVideoAdLoad(int placementId, int configuration, bool test);
+					private static extern void SuperAwesomeUnitySAVideoAdLoad(int placementId, int configuration, bool test, int playback);
 
 					[DllImport ("__Internal")]
 					private static extern void SuperAwesomeUnitySAVideoAdPlay(int placementId, bool isParentalGateEnabled, bool isBumperPageEnabled, bool shouldShowCloseButton, bool shouldShowSmallClickButton, bool shouldAutomaticallyCloseAtEnd, int lockOrientation);
@@ -87,7 +87,7 @@ namespace tv {
 						createInstance ();
 
 #if (UNITY_IPHONE && !UNITY_EDITOR) 
-						SAVideoAd.SuperAwesomeUnitySAVideoAdLoad(placementId, (int)configuration, isTestingEnabled);
+						SAVideoAd.SuperAwesomeUnitySAVideoAdLoad(placementId, (int)configuration, isTestingEnabled, 0);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
 						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
@@ -99,7 +99,8 @@ namespace tv {
 								context, 
 								placementId, 
 								(int)configuration, 
-								isTestingEnabled);
+								isTestingEnabled,
+								0);
 							}));
 
 #else
