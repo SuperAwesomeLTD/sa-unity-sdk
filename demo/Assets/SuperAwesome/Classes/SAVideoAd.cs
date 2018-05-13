@@ -154,8 +154,6 @@ namespace tv {
 						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityVideoAd");
 
 						return saplugin.CallStatic<bool>("SuperAwesomeUnitySAVideoAdHasAdAvailable", context, placementId);
-
-
 #else 
 						Debug.Log ("SAVideoAd Has Ad Available");
 						return false;
