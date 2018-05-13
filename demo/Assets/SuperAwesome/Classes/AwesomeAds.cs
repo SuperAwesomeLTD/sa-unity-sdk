@@ -22,6 +22,17 @@ namespace tv {
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 						var loggingEnabledL = loggingEnabled;
 						AwesomeAds.SuperAwesomeUnityAwesomeAdsInit (loggingEnabledL);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+
+						var loggingEnabledL = loggingEnabled;
+
+						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+
+						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityAwesomeAds");
+							saplugin.CallStatic("SuperAwesomeUnityAwesomeAdsInit", context, loggingEnabledL);
+						}));
 #else
 						Debug.Log ("Initialising SDK");
 #endif
