@@ -92,7 +92,7 @@ namespace tv {
 					// Native callbacks
 					////////////////////////////////////////////////////////////////////
 
-					public static void nativeCallback(string payload) {
+					public void nativeCallback(string payload) {
 						Dictionary<string, object> payloadDict;
 						string country;
 						int consentAgeForCountry;
