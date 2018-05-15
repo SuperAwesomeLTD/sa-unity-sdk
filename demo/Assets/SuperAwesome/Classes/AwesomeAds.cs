@@ -11,11 +11,25 @@ namespace tv {
 		namespace sdk {
 			namespace publisher {
 
-				public class AwesomeAds {
+				public class AwesomeAds: MonoBehaviour {
 
 					// define a default callback so that it's never null and I don't have
 					// to do a check every time I want to call it
 					private static Action <GetIsMinorModel> 		callback = (model) => {};
+
+					// the video ad static instance
+					private static AwesomeAds staticInstance = null;
+
+					// instance constructor
+					private static void createInstance () {
+						// create just one static instance for ever!
+						if (staticInstance == null) {
+							GameObject obj = new GameObject ();
+							staticInstance = obj.AddComponent<AwesomeAds> ();
+							staticInstance.name = "AwesomeAds";
+							DontDestroyOnLoad (staticInstance);
+						}
+					}
 
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
@@ -27,6 +41,9 @@ namespace tv {
 #endif
 
 					public static void init (bool loggingEnabled) {
+
+						createInstance ();
+
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 						var loggingEnabledL = loggingEnabled;
 						AwesomeAds.SuperAwesomeUnityAwesomeAdsInit (loggingEnabledL);
@@ -47,6 +64,9 @@ namespace tv {
 					}
 
 					public static void triggerAgeCheck (string age, Action<GetIsMinorModel> value) {
+
+						createInstance ();
+
 						callback = value;
 
 #if (UNITY_IPHONE && !UNITY_EDITOR)
