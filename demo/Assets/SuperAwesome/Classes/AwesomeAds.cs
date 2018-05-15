@@ -93,30 +93,10 @@ namespace tv {
 					////////////////////////////////////////////////////////////////////
 
 					public void nativeCallback(string payload) {
-						Dictionary<string, object> payloadDict;
-						string country;
-						int consentAgeForCountry;
-						int age;
-						bool isMinor;
-
 						// try to get payload and type data
 						try {
-							payloadDict = Json.Deserialize (payload) as Dictionary<string, object>;
-							country = (string) payloadDict["country"];
-
-							string cafc = (string) payloadDict["consentAgeForCountry"];
-							int.TryParse(cafc, out consentAgeForCountry);
-
-							string sage = (string) payloadDict["age"];
-							int.TryParse(sage, out age);
-
-							string sisMinor = (string) payloadDict["isMinor"];
-							bool.TryParse(sisMinor, out isMinor);
-
-							GetIsMinorModel model = new GetIsMinorModel(country, consentAgeForCountry, age, isMinor);
-
+							GetIsMinorModel model = JsonUtility.FromJson<GetIsMinorModel>(payload);
 							callback(model);
-
 						} catch {
 							Debug.Log ("Error parsing GetIsMinorModel");
 							return;

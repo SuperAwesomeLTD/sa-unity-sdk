@@ -6,7 +6,8 @@ namespace tv {
 		namespace sdk {
 			namespace publisher {
 
-				public struct GetIsMinorModel {
+				[System.Serializable]
+				public class GetIsMinorModel {
 					public string country;
 					public int consentAgeForCountry;
 					public int age;
