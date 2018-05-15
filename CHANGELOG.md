@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+7.0.0
+ - Updated dependencies to iOS 7.0.0 and Android 7.0.0 SDKs
+ - Added the AwesomeAds class (MonoDevelop subclass) with two methods: triggerAgeCheck and init
+
 6.1.6 
  - Improved Bumper Page Experience
 
