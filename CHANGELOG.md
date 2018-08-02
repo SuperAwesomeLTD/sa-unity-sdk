@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+7.0.1
+ - Transitioned to a non-scaling WebView to display banner & interstitial type ads
+
 7.0.0
  - Updated dependencies to iOS 7.0.0 and Android 7.0.0 SDKs
  - Added the AwesomeAds class (MonoDevelop subclass) with two methods: triggerAgeCheck and init
