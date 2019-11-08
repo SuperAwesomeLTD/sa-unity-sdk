@@ -52,7 +52,7 @@ namespace tv {
 						if (staticInstance == null) {
 							GameObject obj = new GameObject ();
 							staticInstance = obj.AddComponent<SAVideoAd> ();
-							staticInstance.name = "SAVideoActivity";
+							staticInstance.name = "SAVideoAd";
 							DontDestroyOnLoad (staticInstance);
 
 							//
