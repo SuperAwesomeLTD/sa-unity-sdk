@@ -30,15 +30,6 @@ In order to override the name on the bumper dialog, please use the following cod
 SABumperPage.overrideName("__CUSTOM_APP_NAME__");
 {% endhighlight %}
 
-### 2. Bumper customisation - custom logo
-
-In order to override the logo on the bumper dialog, please use the following code:
-
-{% highlight java %}
-// customize the logo displayed on the bumper page
-SABumperPage.overrideLogo(R.drawable.__MY_CUSTOM_LOGO__);
-{% endhighlight %}
-
 By default the Bumper page will try to use the application name and the AwesomeAds logo and will look like following:
 
 ![image-title-here]({{ site.baseurl }}/assets/img/IMG_06_BumperPage.png){:class="img-responsive"}

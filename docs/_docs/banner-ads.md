@@ -7,59 +7,51 @@ description: Banner Ads
 
 The following block of code creates and loads a banner ad:
 
-In your layout:
+```c#
+public class MainScript : MonoBehaviour {
 
-{% highlight xml %}
-<tv.superawesome.sdk.publisher.SABannerAd
-    android:id="@+id/mybanner"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"/>
-{% endhighlight %}
+    private SABannerAd banner = null;
 
-In your activity or fragment:
+    // initialization
+    void Start () {
 
-{% highlight java %}
-public class MainActivity extends Activity {
+        // create a new banner
+        banner = SABannerAd.createInstance ();
 
-    // define a SABannerAd
-    private SABannerAd bannerAd = null;
-
-    @Override
-    protected void onCreate (Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.activity_main);
-
-        // get the banner from the layout
-        bannerAd = (SABannerAd) findViewById (R.id.mybanner);
+        // set configuration production
+        banner.setConfigurationProduction ();
 
         // to display test ads
-        bannerAd.enableTestMode ();
-
-        // set configuration to production
-        bannerAd.setConfigurationProduction ();
-
-        // set background color as transparent
-        bannerAd.setColorTransparent ();
+        banner.enableTestMode ();
 
         // start loading ad data for a placement
-        bannerAd.load (30471);
+        banner.load (30471);
     }
 }
-{% endhighlight %}
+```
 
 Once you’ve loaded an ad, you can also display it:
 
-{% highlight java %}
-public void onClick (View view) {
+```c#
+public void onClick () {
 
     // check if ad is loaded
-    if (bannerAd.hasAdAvailable ()) {
+    if (banner.hasAdAvailable ()) {
+
+        // set a size template
+        banner.setSize_320_50 ();
+
+        // set a background color
+        banner.setColorGray ();
+
+        // choose between top or bottom
+        banner.setPositionTop ();
 
         // display the ad
-        bannerAd.play (MainActivity.this);
+        banner.play ();
     }
 }
-{% endhighlight %}
+```
 
 These are the default values:
 
@@ -68,5 +60,7 @@ These are the default values:
 | Configuration | Production |
 | Test mode | Disabled |
 | Background | Gray | 
+| Size | 320x50 |
+| Position | Bottom |
 
 {% include alert.html type="warning" title="Warning" content="All instances of SABannerAd <strong>must</strong> have an Android ID assigned. Avoiding to correctly set one either in your XML layout or in code will cause the banner to crash with an exception." %}

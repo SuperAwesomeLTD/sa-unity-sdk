@@ -1,23 +1,23 @@
 # To run locally use:
 # bundle exec jekyll serve
 
-title: Android Publisher SDK
+title: Unity Publisher SDK
 email: awesomeads-support@superawesome.com
 author: SuperAwesome Ltd
 description: >
-  AwesomeAds Android Publisher SDK
+  AwesomeAds Unity Publisher SDK
 
-baseurl: "/sa-mobile-sdk-android"
+baseurl: "/sa-unity-sdk"
 
 # This is mostly for testing
-url: "http://superawesomeltd.github.io/sa-mobile-sdk-android"
+url: "http://superawesomeltd.github.io/sa-unity-sdk"
 
 latest_version: 7.2.7
-changelog_url: https://github.com/SuperAwesomeLTD/sa-mobile-sdk-android/blob/master/CHANGELOG.md
-licence_url: https://github.com/SuperAwesomeLTD/sa-mobile-sdk-android/blob/master/LICENSE
-repo: "https://github.com/SuperAwesomeLTD/sa-mobile-sdk-android"
+changelog_url: https://github.com/SuperAwesomeLTD/sa-unity-sdk/blob/master/CHANGELOG.md
+licence_url: https://github.com/SuperAwesomeLTD/sa-unity-sdk/blob/master/LICENSE
+repo: "https://github.com/SuperAwesomeLTD/sa-unity-sdk"
 github_user: "SuperAwesomeLTD"
-github_repo: "sa-mobile-sdk-android"
+github_repo: "sa-unity-sdk"
 
 # Optional
 # twitter: vsoch
@@ -35,8 +35,7 @@ feedback: false
 # If commented, will use material hat theme
 # logo: "assets/img/logo/SRCC-square-red.png"
 logo_pixels: 34
-color: "#256EFF"
-# color: "#8c1515" # primary color for header, buttons
+color: "#256EFF" # primary color for header, buttons
 
 # Build settings
 markdown: kramdown

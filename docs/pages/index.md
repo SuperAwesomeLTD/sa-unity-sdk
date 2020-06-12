@@ -10,8 +10,8 @@ The {{ site.title }} (Software Development Kit) lets you to easily add COPPA com
 
 | Info    | Contents  |
 |---------|-----------|
-| Version   |    ![Version](https://img.shields.io/github/v/tag/SuperAwesomeLTD/sa-mobile-sdk-android?style=social) ([Changelog]({{ site.changelog_url }}))   |
-| Support   |   Android 4.1+ (API 16)         |
+| Version   |    ![Version](https://img.shields.io/github/v/tag/SuperAwesomeLTD/sa-unity-sdk) ([Changelog]({{ site.changelog_url }}))   |
+| Support   |   iOS 10.0+, Android 4.1+ (API 16)         |
 | GitHub    |   [{{ site.repo }}]({{ site.repo }})         |
 | Contact   |   [{{ site.email }}]({{ site.email }})        |
 | License   |   [GNU Lesser General Public License Version 3]({{ site.license_url }})           |

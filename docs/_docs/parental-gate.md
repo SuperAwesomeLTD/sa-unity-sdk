@@ -11,7 +11,7 @@ Its role is to prevent very young users from simply clicking on an ad and instea
 
 You can enable it like so:
 
-{% highlight java %}
+```c#
 // enable Parental gate on one banner placement
 mybanner.enableParentalGate();
 
@@ -20,7 +20,7 @@ SAInterstitialAd.enableParentalGate();
 
 // enable Parental gate on all video ads
 SAVideoAd.enableParentalGate();
-{% endhighlight %}
+```
 
 The final result will look something similar to this:
 

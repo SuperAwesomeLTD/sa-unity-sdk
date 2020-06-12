@@ -7,83 +7,61 @@ description: Examples
 
 The first example shows how you can add a banner ad in your app with just a few lines of code.
 
-`activity_main.xml`
+```c#
+using tv.superawesome.sdk.publisher;
 
-{% highlight xml %}
-<tv.superawesome.sdk.publisher.SABannerAd
-    android:id="@+id/mybanner"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"/>
-{% endhighlight %}
-
-`MainActivity.java`
-
-{% highlight java %}
-// imports ...
-import tv.superawesome.sdk.publisher.*;
-
-public class MainActivity extends Activity {
+public class MainScript : MonoBehaviour {
 
     private SABannerAd banner = null;
 
-    @Override
-    protected void onCreate (Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.activity_main);
+    // initialization
+    void Start () {
 
-        // get the banner
-        bannerAd = (SABannerAd) findViewById (R.id.mybanner);
+        // create a new banner
+        banner = SABannerAd.createInstance ();
 
         // setup the banner
-        bannerAd.disableParentalGate ();
-        bannerAd.enableBumperPage ();
+        banner.disableParentalGate ();
+        banner.enableBumperPage ();
 
         // add a callback
-        SAVideoAd.setListener(new SAInterface () {
-            @Override
-            public void onEvent(int placementId, SAEvent event) {
-                if (event == SAEvent.adLoaded) {
-                    bannerAd.play (MainActivity.this);
-                }
+        banner.setCallback ((placementId, evt) => {
+
+            // when the ad loads, play it directly
+            if (evt == SAEvent.adLoaded) {
+                banner.play ();
             }
         });
 
         // start the loading process
-        bannerAd.load (30471);
+        banner.load (30471);
     }
 }
-{% endhighlight %}
+```
 
 ## Complex example
 
 This example shows how you can add different types of ads and make them respond to multiple callbacks.
 
-{% highlight java %}
-// imports ...
-import tv.superawesome.sdk.publisher.*;
+```c#
+using tv.superawesome.sdk.publisher;
 
-public class MainActivity extends Activity {
+public class MainScript : MonoBehaviour {
 
-    // private SALoader class member
-    private SALoader loader = null;
+    private SABannerAd banner = null;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.activity_main);
+    // initialization
+    void Start () {
 
-        // set app context
-        SuperAwesome.getInstance ().setApplicationContext( getApplicationContext ());
-
-        // get the banner
-        bannerAd = (SABannerAd) findViewById (R.id.mybanner);
+        // create a new banner
+        banner = SABannerAd.createInstance ();
 
         // setup the banner
-        bannerAd.enableParentalGate ();
-        bannerAd.disableBumperPage();
+        banner.enableParentalGate ();
+        banner.disableBumperPage ();
 
         // and load it
-        bannerAd.load (30471);
+        banner.load (30471);
 
         // setup the video
         SAVideoAd.disableParentalGate ();
@@ -91,28 +69,30 @@ public class MainActivity extends Activity {
         SAVideoAd.disableCloseButton ();
 
         // load
-        SAVideoAd.load (30479, MainActivity.this);
-        SAVideoAd.load (30480, MainActivity.this);
+        SAVideoAd.load (30479);
+        SAVideoAd.load (30480);
     }
 
-    public void playBanner (View view) {
-        if (banner.hasAdAvailable ()) {
-            banner.play (MainActivity.this);
+    public void playBanner () {
+
+        if (banner.hasAdAvailable()) {
+            banner.play();
         }
     }
 
-    public void playVideo1 (View view) {
+    public void playVideo1 () {
+
         if (SAVideoAd.hasAdAvailable (30479)) {
 
             // do some last minute setup
             SAVideoAd.setOrientationLandscape ();
 
             // and play
-            SAVideoAd.play (30479, MainActivity.this);
+            SAVideoAd.play (30479);
         }
     }
 
-    public void playVideo2 (View view) {
+    public void playVideo2 () {
 
         if (SAVideoAd.hasAdAvailable (30480)) {
 
@@ -120,8 +100,8 @@ public class MainActivity extends Activity {
             SAVideoAd.setOrientationAny ();
 
             // and play
-            SAVideoAd.play (30480, MainActivity.this);
+            SAVideoAd.play (30480);
         }
     }
 }
-{% endhighlight %}
+```

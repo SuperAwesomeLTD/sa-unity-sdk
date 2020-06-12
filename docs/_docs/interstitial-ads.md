@@ -7,15 +7,13 @@ description: Interstitial Ads
 
 The following code block sets up an interstitial ad and loads it:
 
-{% highlight java %}
-public class MainActivity extends Activity {
+```c#
+public class MainScript : MonoBehaviour {
 
-    @Override
-    protected void onCreate (Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.activity_main);
+    // initialization
+    void Start () {
 
-        // set configuration to production
+        // set configuration production
         SAInterstitialAd.setConfigurationProduction ();
 
         // to display test ads
@@ -28,24 +26,24 @@ public class MainActivity extends Activity {
         SAInterstitialAd.enableBackButton ();
 
         // start loading ad data for a placement
-        SAInterstitialAd.load (30473, MainActivity.this);
+        SAInterstitialAd.load (30473);
     }
 }
-{% endhighlight %}
+```
 
 Once you’ve loaded an ad, you can also display it:
 
-{% highlight java %}
-public void onClick (View view) {
+```c#
+public void playInterstitial () {
 
     // check if ad is loaded
     if (SAInterstitialAd.hasAdAvailable (30473)) {
 
         // display the ad
-        SAInterstitialAd.play (30473, MainActivity.this);
+        SAInterstitialAd.play (30473);
     }
 }
-{% endhighlight %}
+```
 
 These are the default values:
 
@@ -54,3 +52,4 @@ These are the default values:
 | Configuration | Production |
 | Test mode | Disabled |
 | Orientation | Any | 
+| Back button | Enabled |
