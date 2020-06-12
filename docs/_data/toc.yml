@@ -1,0 +1,61 @@
+# Left sidebar menu items
+- title: Home
+  url: ""
+  links:
+    - title: Preparing
+      url: "docs/prepare"
+      children:
+        - title: Create apps
+          url: "docs/prepare#create-apps"
+        - title: Add placements
+          url: "docs/prepare#add-placements"
+    - title: Add the SDK
+      url: "docs/add-sdk"
+    - title: Initial Setup
+      url: "docs/initial-setup"
+    - title: Banner Ads
+      url: "docs/banner-ads"
+    - title: Interstitial Ads
+      url: "docs/interstitial-ads"
+    - title: Video Ads
+      url: "docs/video-ads"
+    - title: Parental Gate
+      url: "docs/parental-gate"
+    - title: Bumper Page
+      url: "docs/bumper-page"
+      children:
+        - title: Bumper Customisation
+          url: "docs/bumper-page#bumper-customisation"
+        - title: Forcing the Bumper
+          url: "docs/bumper-page#forcing-the-bumper"
+    - title: Ad Callbacks
+      url: "docs/ad-callbacks"
+    - title: Integrate with MoPub
+      url: "docs/mopub-integration"
+      children:
+        - title: Add the Plugin
+          url: "docs/mopub-integration#add-the-mopub-plugin"
+        - title: Setup Custom Networks
+          url: "docs/mopub-integration#setup-mopub-custom-networks"
+        - title: Implement Ads
+          url: "docs/mopub-integration#implement-ads"
+    - title: Integrate with AdMob
+      url: "docs/admob-integration"
+      children:
+        - title: Add the Plugin
+          url: "docs/admob-integration#add-the-admob-plugin"
+        - title: Setup Mediation Groups
+          url: "docs/admob-integration#setup-admob-mediation-groups"
+        - title: Implement Ads
+          url: "docs/admob-integration#implement-ads"
+        - title: Customise the Experience
+          url: "docs/admob-integration#customise-the-experience"
+    - title: Verifying User's Age
+      url: "docs/verify-user-age"
+    - title: Examples
+      url: "docs/examples"
+      children:
+        - title: Simple example
+          url: "docs/examples#simple-example"
+        - title: Complex example
+          url: "docs/examples#complex-example"
