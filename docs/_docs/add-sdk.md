@@ -68,3 +68,72 @@ Go to:
 `Unity-iPhone target -> Build Phases -> Embed Frameworks`
 
 ![image-title-here]({{ site.baseurl }}/assets/img/IMG_ADD_7.png){:class="img-responsive"}
+
+## Remove Unsupported Architectures for App Store
+
+SuperAwesome SDK framework for Unity contains both `arm` and `x86_64` code which allows running it on a physical device and on a simulator at the same time.
+
+However to publish your app to the App Store the unused architectures(simulator) should be removed from the binary before publishing.
+
+<strong>(Option 1): Selecting supported architectures</strong>
+
+In the `Target > Build Settings > Valid Architectures` menu, make sure `i386` and `x86_64` is not in the list.
+
+![image-title-here]({{ site.baseurl }}/assets/img/add-sdk-valid-archs.png){:class="img-responsive"}
+
+
+{% include alert.html type="info" title="Note" content="After removing <strong>x86_64</strong> you’re no longer to run your app in the simulator. However, ideal solution would be to remove unused architectures only on `Release` mode." %}
+
+<strong>(Option 2): Removing inactive code using a Run Script</strong>
+
+After the frameworks are embedded to the binary, the unused code can be thinned using `lipo` command to create a new binary without simulator architecture codes.
+
+1. Select your project file
+2. Select the main target i.e. `Unity-iPhone`
+3. Click <strong>Build Phases</strong>.
+4. Click <strong>+</strong> (add) button on the top left corner, and select <strong>New Run Script Phase</strong>
+    Note: A new run script added to the list
+![image-title-here]({{ site.baseurl }}/assets/img/add-sdk-run-script-2.png){:class="img-responsive"}
+5. Expand the new run script and copy the following script in it
+
+```shell
+# Signs a framework with the provided identity
+code_sign() {
+  # Use the current code_sign_identitiy
+  echo "Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
+  echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements $1"
+  /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements "$1"
+}
+
+echo "Stripping frameworks"
+cd "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}"
+
+for file in $(find . -type f -perm +111); do
+  # Skip non-dynamic libraries
+  if ! [[ "$(file "$file")" == *"dynamically linked shared library"* ]]; then
+    continue
+  fi
+  # Get architectures for current file
+  archs="$(lipo -info "${file}" | rev | cut -d ':' -f1 | rev)"
+  stripped=""
+  for arch in $archs; do
+    if ! [[ "${VALID_ARCHS}" == *"$arch"* ]]; then
+      # Strip non-valid architectures in-place
+      lipo -remove "$arch" -output "$file" "$file" || exit 1
+      stripped="$stripped $arch"
+    fi
+  done
+  if [[ "$stripped" != "" ]]; then
+    echo "Stripped $file of architectures:$stripped"
+    if [ "${CODE_SIGNING_REQUIRED}" == "YES" ]; then
+      code_sign "${file}"
+    fi
+  fi
+done
+echo "Stripping done"
+
+```
+
+<strong>Note:</strong> Make sure the newly added run script is at the end of the list in the build phases
+
+<strong>Note 2:</strong> Select `Run script only when installing` to only use this script for archiving 
