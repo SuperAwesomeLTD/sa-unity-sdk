@@ -5,7 +5,7 @@ description: Integrate with AdMob
 
 # Integrate with AdMob
 
-If you already have AdMob ads serving in your app, but want to integrate AwesomeAds as well, without having to directly use the Android Publisher SDK, you can follow the steps below:
+If you already have AdMob ads serving in your app, but want to integrate AwesomeAds as well, without having to directly use the Unity Publisher SDK, you can follow the steps below:
 
 ## Add the AdMob plugin
 
