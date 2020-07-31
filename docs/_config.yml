@@ -9,7 +9,7 @@ baseurl: "/sa-unity-sdk"
 # This is mostly for testing
 url: "http://superawesomeltd.github.io/sa-unity-sdk"
 
-latest_version: 7.2.9
+latest_version: 7.2.11
 changelog_url: https://github.com/SuperAwesomeLTD/sa-unity-sdk/blob/master/CHANGELOG.md
 licence_url: https://github.com/SuperAwesomeLTD/sa-unity-sdk/blob/master/LICENSE
 repo: "https://github.com/SuperAwesomeLTD/sa-unity-sdk"
