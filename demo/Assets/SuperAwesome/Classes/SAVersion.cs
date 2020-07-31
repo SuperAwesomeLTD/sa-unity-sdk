@@ -18,7 +18,7 @@ namespace tv {
 #endif
 
 					// sdk & version
-					private static string version = "7.2.9";
+					private static string version = "7.2.11";
 					private static string sdk = "unity";
 
 					// getters
