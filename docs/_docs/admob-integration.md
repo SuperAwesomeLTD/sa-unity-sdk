@@ -21,3 +21,13 @@ For iOS platform use: [iOS Guidelines](https://superawesomeltd.github.io/sa-mobi
 ## Implement Ads
 
 Please follow the official [AdMob Unity](https://developers.google.com/admob/unity/quick-start) guidelines to implement the ads. 
+
+## Use Resolver to Download Dependencies
+
+SuperAwesomeAdMob SDK internally uses the [External Dependency Manager](https://github.com/googlesamples/unity-jar-resolver).
+
+In Unity Editor, go to:
+
+On the top menu -> Assets > External Dependency Manager -> Android Resolver -> Force Resolve
+
+EDM will download the neccesarry Android dependencies.
