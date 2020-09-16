@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+7.2.12
+ - Includes a post build proccessor which ads a run script phase for Unity iOS builds
+
 7.0.1
  - Transitioned to a non-scaling WebView to display banner & interstitial type ads
 
