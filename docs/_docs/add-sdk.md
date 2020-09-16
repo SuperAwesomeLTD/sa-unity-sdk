@@ -76,9 +76,11 @@ SuperAwesome SDK framework for Unity contains both `arm` and `x86_64` code which
 However to publish your app to the App Store the unused architectures(simulator) should be removed from the binary before publishing.
 
 <string>(Option 1): Using version 7.2.12 and above</strong>
+
 We have added a post build proccessor script which automatically removes Simulator architecture codes from the binary when uploading to App Store.
 When you build the Unity project for the first time, the `SuperAwesome` SDK will a build phase called `SuperAwesome Strip Frameworks` into yhe build phases.
 That script is only activated when the Xcode project is archived.
+
 
 <strong>(Option 2): Selecting supported architectures</strong>
 
