@@ -20,6 +20,10 @@ public class SuperAwesomeBuildProcessor
         }
     }
 
+    /// <summary>
+    /// Adds a run script to the Xcode project 
+    /// </summary>
+    /// <param name="path">Path of the Xcode project</param>
     private static void AddRunScript(string path)
     {
         var projectPath = PBXProject.GetPBXProjectPath(path);
@@ -27,17 +31,18 @@ public class SuperAwesomeBuildProcessor
         project.ReadFromFile(projectPath);
 
         var mainTarget = project.GetUnityMainTargetGuid();
-        var scriptName = "SuperAwesome Strip Frameworks";
+        var buildPhaseName = "SuperAwesome Strip Frameworks";
 
         // Only add when the script has not added yet
-        if (FindBuildPhaseByName(project, mainTarget, scriptName) == null)
+        if (FindBuildPhaseByName(project, mainTarget, buildPhaseName) == null)
         {
-            // Add new phase
-            Debug.Log(scriptName + " is added now");
+            Debug.Log(buildPhaseName + " is added now");
             var fileName = "strip-frameworks.sh";
             var filePath = "Assets/SuperAwesome/Editor/" + fileName;
             var shellScript = "./" + fileName;
-            project.AddShellScriptBuildPhase(mainTarget, scriptName, "/bin/sh", shellScript);
+
+            // Add new phase to the Xcode project
+            project.AddShellScriptBuildPhase(mainTarget, buildPhaseName, "/bin/sh", shellScript);
 
             // Copy the script file to the project
             File.Copy(filePath, Path.Combine(path, fileName), true);
@@ -47,12 +52,12 @@ public class SuperAwesomeBuildProcessor
             // Update Project
             project.WriteToFile(PBXProject.GetPBXProjectPath(path));
 
-            EnableRunOnlyWhenInstalling(path, scriptName);
+            EnableRunOnlyWhenInstalling(path, buildPhaseName);
         }
         else
         {
             // Phase is already there
-            Debug.Log(scriptName + " already added");
+            Debug.Log(buildPhaseName + " already added");
         }
     }
 
@@ -70,28 +75,33 @@ public class SuperAwesomeBuildProcessor
         return null;
     }
 
-    private static void EnableRunOnlyWhenInstalling(string path, string scriptName)
+    /// <summary>
+    /// Enables `Run script only when installing` option for a build phase
+    /// </summary>
+    /// <param name="path">Path for the Xcode project</param>
+    /// <param name="buildPhaseName">The name of the build phase to be updated</param>
+    private static void EnableRunOnlyWhenInstalling(string path, string buildPhaseName)
     {
         var pbxProjContents = File.ReadAllText(PBXProject.GetPBXProjectPath(path));
 
-        var pattern = GetPattern(scriptName, "0");
+        var pattern = GetPattern(buildPhaseName, "0");
         var regex = new Regex(pattern);
         var match = regex.Match(pbxProjContents);
 
         if (match.Success)
         {
-            pbxProjContents = regex.Replace(pbxProjContents, GetPattern(scriptName, "1"));
+            pbxProjContents = regex.Replace(pbxProjContents, GetPattern(buildPhaseName, "1"));
             File.WriteAllText(PBXProject.GetPBXProjectPath(path), pbxProjContents);
-            Debug.Log(scriptName + " is updated to enable run only");
+            Debug.Log(buildPhaseName + " is updated to enable run only");
         }
         else
         {
-            Debug.Log(scriptName + " could not be enabled");
+            Debug.Log(buildPhaseName + " could not be enabled");
         }
     }
 
-    private static string GetPattern(string scriptName, string value)
+    private static string GetPattern(string buildPhaseName, string value)
     {
-        return string.Format("name = \"{0}\";\n\t\t\trunOnlyForDeploymentPostprocessing = {1};", scriptName, value);
+        return string.Format("name = \"{0}\";\n\t\t\trunOnlyForDeploymentPostprocessing = {1};", buildPhaseName, value);
     }
 }
