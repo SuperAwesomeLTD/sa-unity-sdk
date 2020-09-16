@@ -132,7 +132,7 @@ namespace tv {
 							}));
 
 #else
-						Debug.Log ("SAInterstitialAd Play");
+						Debug.Log ("SAInterstitialAd Play has not implemented");
 #endif
 					}
 
@@ -152,10 +152,9 @@ namespace tv {
 						return saplugin.CallStatic<bool>("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", context, placementId);
 
 #else 
-						Debug.Log ("SAInterstitialAd HasAdAvailable");
+						Debug.Log ("SAInterstitialAd HasAdAvailable has not implemented");
 						return false;
 #endif
-						return false;
 					}
 
 					////////////////////////////////////////////////////////////////////

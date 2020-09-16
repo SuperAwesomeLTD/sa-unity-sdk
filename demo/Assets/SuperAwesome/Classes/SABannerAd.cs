@@ -134,7 +134,7 @@ namespace tv {
 						}));
 
 #else 
-						Debug.Log (this.name + " Play");
+						Debug.Log (this.name + " Play has not implemented");
 #endif
 
 					}
@@ -152,10 +152,9 @@ namespace tv {
 
 						return saplugin.CallStatic<bool> ("SuperAwesomeUnitySABannerAdHasAdAvailable", context, nameL);
 #else 
-						Debug.Log (this.name + " HasAdAvailable");
-#endif
+						Debug.Log (this.name + " HasAdAvailable has not implemented");
 						return false;
-
+#endif
 					}
 
 					public void close () {

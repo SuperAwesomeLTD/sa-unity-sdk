@@ -155,10 +155,9 @@ namespace tv {
 
 						return saplugin.CallStatic<bool>("SuperAwesomeUnitySAVideoAdHasAdAvailable", context, placementId);
 #else 
-						Debug.Log ("SAVideoAd Has Ad Available");
+						Debug.Log ("SAVideoAd hasAdAvailable has not implemented");
 						return false;
 #endif
-						return false;
 					}
 
 					////////////////////////////////////////////////////////////////////
