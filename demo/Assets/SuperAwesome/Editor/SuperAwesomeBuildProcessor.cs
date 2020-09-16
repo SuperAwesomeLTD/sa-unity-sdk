@@ -6,7 +6,7 @@ using UnityEditor.iOS.Xcode;
 using System.Text.RegularExpressions;
 
 /// <summary>
-/// Helps to automatically adda a run script for the Xcode build phases
+/// Helps to automatically add a run script for the Xcode build phases
 /// which strips the simulator architecture codes when archiving 
 /// </summary>
 public class SuperAwesomeBuildProcessor
@@ -29,6 +29,7 @@ public class SuperAwesomeBuildProcessor
         var mainTarget = project.GetUnityMainTargetGuid();
         var scriptName = "SuperAwesome Strip Frameworks";
 
+        // Only add when the script has not added yet
         if (FindBuildPhaseByName(project, mainTarget, scriptName) == null)
         {
             // Add new phase
