@@ -39,6 +39,7 @@ namespace tv {
 					private static bool isParentalGateEnabled 			= SADefines.defaultParentalGate ();
 					private static bool isBumperPageEnabled 			= SADefines.defaultBumperPage ();
 					private static bool shouldShowCloseButton 			= SADefines.defaultCloseButton ();
+					private static bool shouldShowCloseWarning			= SADefines.defaultCloseWarning(); 
 					private static bool shouldShowSmallClickButton 		= SADefines.defaultSmallClick ();
 					private static bool shouldAutomaticallyCloseAtEnd 	= SADefines.defaultCloseAtEnd ();
 					private static bool isTestingEnabled 				= SADefines.defaultTestMode ();
@@ -113,7 +114,7 @@ namespace tv {
 						// create an instrance of an SAVideoAd (for callbacks)
 						createInstance ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 						SAVideoAd.SuperAwesomeUnitySAVideoAdPlay(placementId, isParentalGateEnabled, isBumperPageEnabled, shouldShowCloseButton, shouldShowSmallClickButton, shouldAutomaticallyCloseAtEnd, (int)orientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
@@ -131,10 +132,11 @@ namespace tv {
 								shouldShowSmallClickButton, 
 								shouldAutomaticallyCloseAtEnd, 
 								(int)orientation,
-								isBackButtonEnabled);
+								isBackButtonEnabled,
+								shouldShowCloseWarning);
 							}));
 
-#else 
+#else
 						Debug.Log ("SAVideoAd Play");
 #endif
 
@@ -243,6 +245,11 @@ namespace tv {
 
 					public static void enableBackButton () {
 						isBackButtonEnabled = true;
+					}
+
+					public static void enableCloseButtonWithWarning() {
+						shouldShowCloseButton = true;
+						shouldShowCloseWarning = true;
 					}
 
 					public static void disableBackButton () {

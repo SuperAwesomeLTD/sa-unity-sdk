@@ -97,6 +97,11 @@ namespace tv {
 						return false;
 					}
 
+					public static bool defaultCloseWarning()
+					{
+						return false;
+					}
+
 					public static SABannerPosition defaultBannerPosition () {
 						return SABannerPosition.BOTTOM;
 					}
