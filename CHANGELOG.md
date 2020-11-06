@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+7.2.17
+ - Added a feature to warn user before they close the Video Ads.
+ - SAVideoAd.enableCloseButtonWithWarning(); 
+
 7.2.12
  - Includes a post build proccessor which ads a run script phase for Unity iOS builds
 
