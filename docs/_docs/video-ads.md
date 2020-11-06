@@ -30,6 +30,9 @@ public class MainScript : MonoBehaviour {
 
         // enable or disable a close button
         SAVideoAd.enableCloseButton ();
+        
+        // enable close button and warn user before closing
+        SAVideoAd.enableCloseButtonWithWarning();
 
         // enable or disable auto-closing at the end
         SAVideoAd.disableCloseAtEnd ();
