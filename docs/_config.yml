@@ -7,7 +7,7 @@ description: >
 baseurl: "/sa-unity-sdk"
 
 # This is mostly for testing
-url: "http://superawesomeltd.github.io/sa-unity-sdk"
+url: "http://superawesomeltd.github.io"
 
 latest_version: 7.2.17
 changelog_url: https://github.com/SuperAwesomeLTD/sa-unity-sdk/blob/master/CHANGELOG.md
