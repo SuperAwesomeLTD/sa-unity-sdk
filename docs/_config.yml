@@ -4,7 +4,7 @@ author: SuperAwesome Ltd
 description: >
   AwesomeAds Unity Publisher SDK
 
-baseurl: "/sa-unity-sdk"
+baseurl: "/"
 
 # This is mostly for testing
 url: "http://superawesomeltd.github.io"
