@@ -7,7 +7,7 @@ description: >
 baseurl: "/"
 
 # This is mostly for testing
-url: "http://superawesomeltd.github.io"
+url: "https://sa-unity-sdk.superawesome.tv"
 
 latest_version: 7.2.17
 changelog_url: https://github.com/SuperAwesomeLTD/sa-unity-sdk/blob/master/CHANGELOG.md
