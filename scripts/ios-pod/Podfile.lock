@@ -1,0 +1,23 @@
+PODS:
+  - SuperAwesome (7.2.16):
+    - SuperAwesome/Full (= 7.2.16)
+  - SuperAwesome/Base (7.2.16)
+  - SuperAwesome/Full (7.2.16):
+    - SuperAwesome/Base
+    - SuperAwesome/Moat
+  - SuperAwesome/Moat (7.2.16):
+    - SuperAwesome/Base
+
+DEPENDENCIES:
+  - SuperAwesome
+
+SPEC REPOS:
+  trunk:
+    - SuperAwesome
+
+SPEC CHECKSUMS:
+  SuperAwesome: 2e41e32ed96ae657c6273a094ed7ea6c2821d25d
+
+PODFILE CHECKSUM: 0869647a04e4b2072fa39276c8308e9df3ca7218
+
+COCOAPODS: 1.10.0

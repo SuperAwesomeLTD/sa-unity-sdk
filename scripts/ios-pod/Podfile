@@ -1,0 +1,21 @@
+platform :ios, '10.0'
+
+plugin 'cocoapods-rome', { 
+    :pre_compile => Proc.new { |installer|
+        installer.pods_project.targets.each do |target|
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = '4.2'
+		config.build_settings['BITCODE_GENERATION_MODE'] = 'bitcode'
+            end
+        end
+
+        installer.pods_project.save
+    },
+
+    dsym: false,
+    configuration: 'Release'
+}
+
+target 'caesar' do
+  pod 'SuperAwesome'
+end
