@@ -142,6 +142,38 @@ namespace tv {
 
 					}
 
+					public static void applySettings () {
+
+						// create an instrance of an SAVideoAd (for callbacks)
+						createInstance ();
+
+#if (UNITY_IPHONE && !UNITY_EDITOR)
+						SAVideoAd.SuperAwesomeUnitySAVideoAdApplySettings(isParentalGateEnabled, isBumperPageEnabled, shouldShowCloseButton, shouldShowSmallClickButton, shouldAutomaticallyCloseAtEnd, (int)orientation, isTestingEnabled);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+
+						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+
+						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityVideoAd");
+						saplugin.CallStatic("SuperAwesomeUnitySAVideoAdApplySettings",
+								isParentalGateEnabled, 
+								isBumperPageEnabled,
+								shouldShowCloseButton, 
+								shouldShowSmallClickButton, 
+								shouldAutomaticallyCloseAtEnd, 
+								(int)orientation,
+								isBackButtonEnabled,
+								shouldShowCloseWarning,
+								isTestingEnabled);
+							}));
+
+#else
+						Debug.Log ("SAVideoAd applySettings");
+#endif
+
+					}
+
 					public static bool hasAdAvailable (int placementId) {
 
 						// create an instrance of an SAVideoAd (for callbacks)
