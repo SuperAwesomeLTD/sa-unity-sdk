@@ -136,6 +136,34 @@ namespace tv {
 #endif
 					}
 
+					public static void applySettings () {
+
+						// create an instrance of an SAInterstitialAd (for callbacks)
+						createInstance ();
+
+#if (UNITY_IPHONE && !UNITY_EDITOR)
+						SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdApplySettings(isParentalGateEnabled, isBumperPageEnabled, (int)orientation, isTestingEnabled);
+#elif (UNITY_ANDROID && !UNITY_EDITOR)
+
+						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
+
+						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
+						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
+						saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdApplySettings",
+								isParentalGateEnabled, 
+								isBumperPageEnabled,
+								(int)orientation,
+								isBackButtonEnabled,
+								isTestingEnabled);
+							}));
+
+#else
+						Debug.Log ("SAInterstitialAd applySettings");
+#endif
+
+					}
+
 					public static bool hasAdAvailable (int placementId) {
 
 						// create an instrance of an SAInterstitialAd (for callbacks)
