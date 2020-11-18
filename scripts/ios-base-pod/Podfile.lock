@@ -1,5 +1,5 @@
 PODS:
-  - SuperAwesome/Base (7.2.16)
+  - SuperAwesome/Base (7.2.17)
 
 DEPENDENCIES:
   - SuperAwesome/Base
@@ -9,7 +9,7 @@ SPEC REPOS:
     - SuperAwesome
 
 SPEC CHECKSUMS:
-  SuperAwesome: 2e41e32ed96ae657c6273a094ed7ea6c2821d25d
+  SuperAwesome: 77baeb43a49a72cba723429d1bd19d54c4f154c7
 
 PODFILE CHECKSUM: 6f418a593695b4910699d86941990477595e04a8
 
