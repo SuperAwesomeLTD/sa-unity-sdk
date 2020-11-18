@@ -31,3 +31,20 @@ In Unity Editor, go to:
 On the top menu -> Assets > External Dependency Manager -> Android Resolver -> Force Resolve
 
 EDM will download the neccesarry Android dependencies.
+
+## Customisation
+
+Make your customisations first:
+
+```c#
+SAVideoAd.enableCloseButton();
+SAVideoAd.enableParentalGate();
+SAVideoAd.enableBackButton();
+```
+
+After you make the changes for the settings for `Video` or `Interstitial` ads, call `applySettings()` right before calling the `show()` method:
+
+```c#
+SAVideoAd.applySettings();
+this.rewardedAd.Show();
+```
