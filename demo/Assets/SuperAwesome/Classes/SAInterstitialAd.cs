@@ -29,6 +29,13 @@ namespace tv {
 					int lockOrientation);
 
 					[DllImport ("__Internal")]
+					private static extern void SuperAwesomeUnitySAInterstitialAdApplySettings(
+					bool isParentalGateEnabled,
+					bool isBumperPageEnabled,
+					int lockOrientation,
+					bool isTestingEnabled);
+
+					[DllImport ("__Internal")]
 					private static extern bool SuperAwesomeUnitySAInterstitialAdHasAdAvailable(int placementId);
 #endif
 

@@ -25,6 +25,9 @@ namespace tv {
 					private static extern void SuperAwesomeUnitySAVideoAdPlay(int placementId, bool isParentalGateEnabled, bool isBumperPageEnabled, bool shouldShowCloseButton, bool shouldShowSmallClickButton, bool shouldAutomaticallyCloseAtEnd, int lockOrientation);
 
 					[DllImport ("__Internal")]
+					private static extern void SuperAwesomeUnitySAVideoAdApplySettings(bool isParentalGateEnabled, bool isBumperPageEnabled, bool shouldShowCloseButton, bool shouldShowSmallClickButton, bool shouldAutomaticallyCloseAtEnd, int lockOrientation, bool isTestingEnabled);
+
+					[DllImport ("__Internal")]
 					private static extern bool SuperAwesomeUnitySAVideoAdHasAdAvailable(int placementId);
 #endif
 
