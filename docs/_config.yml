@@ -9,7 +9,7 @@ baseurl: "/"
 # This is mostly for testing
 url: "https://sa-unity-sdk.superawesome.tv"
 
-latest_version: 7.2.18
+latest_version: 7.2.19
 changelog_url: https://github.com/SuperAwesomeLTD/sa-unity-sdk/blob/master/CHANGELOG.md
 licence_url: https://github.com/SuperAwesomeLTD/sa-unity-sdk/blob/master/LICENSE
 repo: "https://github.com/SuperAwesomeLTD/sa-unity-sdk"
