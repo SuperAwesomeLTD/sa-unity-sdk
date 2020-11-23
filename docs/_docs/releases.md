@@ -9,6 +9,9 @@ Below is the list of available releases for {{ site.title }}
 
 | Version | Name | Unity | Download |
 |---------|--------|------|------|
+|7.2.19|Full|2019.3.11f1|[SuperAwesomeSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.19/SuperAwesomeSDK-7.2.19.unitypackage)|
+|7.2.19|Base|2019.3.11f1|[SuperAwesomeBaseSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.19/SuperAwesomeBaseSDK-7.2.19.unitypackage)|
+|7.2.19|Full + AdMob|2019.3.11f1|[SuperAwesomeAdMobSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.19/SuperAwesomeAdMobSDK-7.2.19.unitypackage)|
 |7.2.18|Full|2019.3.11f1|[SuperAwesomeSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.18/SuperAwesomeSDK-7.2.18.unitypackage)|
 |7.2.18|Base|2019.3.11f1|[SuperAwesomeBaseSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.18/SuperAwesomeBaseSDK-7.2.18.unitypackage)|
 |7.2.18|Full + AdMob|2019.3.11f1|[SuperAwesomeAdMobSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.18/SuperAwesomeAdMobSDK-7.2.18.unitypackage)|
