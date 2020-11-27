@@ -13,10 +13,6 @@ namespace tv {
 
 				public class AwesomeAds: MonoBehaviour {
 
-					// define a default callback so that it's never null and I don't have
-					// to do a check every time I want to call it
-					private static Action <GetIsMinorModel> 		callback = (model) => {};
-
 					// the video ad static instance
 					private static AwesomeAds staticInstance = null;
 
@@ -35,9 +31,6 @@ namespace tv {
 #if (UNITY_IPHONE && !UNITY_EDITOR)
 					[DllImport ("__Internal")]
 					private static extern void SuperAwesomeUnityAwesomeAdsInit (bool loggingEnabled);
-
-					[DllImport ("__Internal")]
-					private static extern void SuperAwesomeUnityAwesomeAdsTriggerAgeCheck (string age);
 #endif
 
 					public static void init (bool loggingEnabled) {
@@ -61,46 +54,6 @@ namespace tv {
 #else
 						Debug.Log ("Initialising SDK");
 #endif
-					}
-
-					public static void triggerAgeCheck (string age, Action<GetIsMinorModel> value) {
-
-						createInstance ();
-
-						callback = value;
-
-#if (UNITY_IPHONE && !UNITY_EDITOR)
-						var ageL = age;
-						AwesomeAds.SuperAwesomeUnityAwesomeAdsTriggerAgeCheck (ageL);
-#elif (UNITY_ANDROID && !UNITY_EDITOR)
-
-						var ageL = age;
-
-						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
-
-						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityAwesomeAds");
-							saplugin.CallStatic("SuperAwesomeUnityAwesomeAdsTriggerAgeCheck", context, ageL);
-						}));
-#else
-						Debug.Log ("triggerAgeCheck for " + age);
-#endif
-					}
-
-					////////////////////////////////////////////////////////////////////
-					// Native callbacks
-					////////////////////////////////////////////////////////////////////
-
-					public void nativeCallback(string payload) {
-						// try to get payload and type data
-						try {
-							GetIsMinorModel model = JsonUtility.FromJson<GetIsMinorModel>(payload);
-							callback(model);
-						} catch {
-							Debug.Log ("Error parsing GetIsMinorModel");
-							return;
-						}
 					}
 				}
 			}
