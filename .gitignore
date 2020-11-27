@@ -23,12 +23,22 @@ sysinfo.txt
 
 ios_unity4_demo/*
 android_unity4_demo/*
+
 demo/Assets/Plugins/Android
 demo/Assets/Plugins/iOS
+
+
 scripts/outputs
 scripts/ios-base-pod/Pods
 scripts/ios-base-pod/Rome
+scripts/ios-base-pod/Podfile.lock
+
 scripts/ios-admob-pod/Rome
 scripts/ios-admob-pod/Pods
+scripts/ios-admob-pod/Podfile.lock
+
 scripts/ios-pod/Rome
 scripts/ios-pod/Pods
+scripts/ios-pod/Podfile.lock
+
+tester/Logs
