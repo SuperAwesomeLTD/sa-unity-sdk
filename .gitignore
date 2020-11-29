@@ -42,3 +42,11 @@ scripts/ios-pod/Pods
 scripts/ios-pod/Podfile.lock
 
 tester/Logs
+scripts/refactor/ios-admob-pod/Pods
+scripts/refactor/ios-admob-pod/Rome
+Podfile.lock
+scripts/refactor/ios-base-pod/Pods
+scripts/refactor/ios-base-pod/Rome
+scripts/refactor/ios-pod/Pods
+scripts/refactor/ios-pod/Rome
+scripts/refactor/outputs

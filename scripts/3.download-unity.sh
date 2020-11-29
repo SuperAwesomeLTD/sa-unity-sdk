@@ -10,4 +10,4 @@ mkdir source/unity/sa-unity-sdk
 source=sa-unity-sdk
 repository=https://github.com/SuperAwesomeLTD/$source.git
 destination=source/unity/$source
-git clone -b master $repository $destination
+git clone -b refactor $repository $destination

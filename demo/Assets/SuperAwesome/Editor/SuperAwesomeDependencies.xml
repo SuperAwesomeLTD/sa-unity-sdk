@@ -1,14 +1,6 @@
 <dependencies>
+<!--    This file will be overriden-->
   <androidPackages>
-    <repositories>
-      <repository>https://repo.maven.apache.org/maven2</repository>
-      <repository>http://dl.bintray.com/superawesome/SuperAwesomeSDK</repository>
-    </repositories>
-<!--    <androidPackage spec="org.jetbrains.kotlin:kotlin-stdlib:1.3.72" />-->
-    <androidPackage spec="tv.superawesome.sdk.publisher:superawesome-base:8.0.0-alpha3" />
+    <androidPackage spec="org.jetbrains.kotlin:kotlin-stdlib:1.3.72" />
   </androidPackages>
-    
-  <iosPods>
-    <iosPod name="SuperAwesome" version="~> 8.0" bitcodeEnabled="true" minTargetSdk="10.0" />
-  </iosPods>
 </dependencies>
