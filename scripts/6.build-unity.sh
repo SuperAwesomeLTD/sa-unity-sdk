@@ -13,7 +13,7 @@ mkdir build/unity/$source/demo/Assets/Plugins/iOS
 mkdir build/unity/$source/demo/Assets/Plugins/Android
 mkdir build/unity/$source/demo/Assets/Plugins/Android/SuperAwesome_lib
 
-# Add Dependency xml for the Universal-Jar-Resolver
+# Add SuperAwesomeDependencies.xml for the Universal-Jar-Resolver
 
 dependencyFile=build/unity/$source/demo/Assets/SuperAwesome/Editor/"SuperAwesomeDependencies.xml"
 echo "<dependencies>" > $dependencyFile

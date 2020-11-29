@@ -27,7 +27,7 @@ echo "    <androidPackage spec=\"tv.superawesome.sdk.publisher:superawesome-base
 echo "  </androidPackages>" >> $dependencyFile
 
 echo "  <iosPods>" >> $dependencyFile
-echo "    <iosPod name=\"SuperAwesome\" version=\"~> $iosSdkVersion\" bitcodeEnabled=\"true\" minTargetSdk=\"10.0\" />" >> $dependencyFile
+echo "    <iosPod name=\"SuperAwesome/Base\" version=\"~> $iosSdkVersion\" bitcodeEnabled=\"true\" minTargetSdk=\"10.0\" />" >> $dependencyFile
 echo "  </iosPods>" >> $dependencyFile
 echo "</dependencies>" >> $dependencyFile
 
