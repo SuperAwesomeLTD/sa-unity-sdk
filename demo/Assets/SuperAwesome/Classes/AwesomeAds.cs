@@ -48,8 +48,9 @@ namespace tv {
 						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityAwesomeAds");
-							saplugin.CallStatic("SuperAwesomeUnityAwesomeAdsInit", context, loggingEnabledL);
+							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityAwesomeAds");
+							var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+							instance.Call("SuperAwesomeUnityAwesomeAdsInit", context, loggingEnabledL);
 						}));
 #else
 						Debug.Log ("Initialising SDK");

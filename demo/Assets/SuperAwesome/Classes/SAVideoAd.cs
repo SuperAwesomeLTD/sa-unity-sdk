@@ -63,7 +63,7 @@ namespace tv {
 							// set native version
 							SAVersion.setVersionInNative ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 							SAVideoAd.SuperAwesomeUnitySAVideoAdCreate ();
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
@@ -71,11 +71,12 @@ namespace tv {
 							var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 							context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityVideoAd");
-								saplugin.CallStatic("SuperAwesomeUnitySAVideoAdCreate", context);
+								var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityVideoAd");
+								var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+								instance.Call("SuperAwesomeUnitySAVideoAdCreate", context);
 							}));
 
-#else 
+#else
 							Debug.Log ("SAVideoAd Create");
 #endif
 						}
@@ -90,7 +91,7 @@ namespace tv {
 						// create an instrance of an SAVideoAd (for callbacks)
 						createInstance ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 						SAVideoAd.SuperAwesomeUnitySAVideoAdLoad(placementId, (int)configuration, isTestingEnabled, 0);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
@@ -99,7 +100,8 @@ namespace tv {
 
 						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityVideoAd");
-						saplugin.CallStatic("SuperAwesomeUnitySAVideoAdLoad", 
+						var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+						instance.Call("SuperAwesomeUnitySAVideoAdLoad", 
 								context, 
 								placementId, 
 								(int)configuration, 
@@ -126,7 +128,8 @@ namespace tv {
 
 						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityVideoAd");
-						saplugin.CallStatic("SuperAwesomeUnitySAVideoAdPlay", 
+						var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+						instance.Call("SuperAwesomeUnitySAVideoAdPlay", 
 								context, 
 								placementId, 
 								isParentalGateEnabled, 
@@ -159,7 +162,8 @@ namespace tv {
 
 						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityVideoAd");
-						saplugin.CallStatic("SuperAwesomeUnitySAVideoAdApplySettings",
+						var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+						instance.Call("SuperAwesomeUnitySAVideoAdApplySettings",
 								isParentalGateEnabled, 
 								isBumperPageEnabled,
 								shouldShowCloseButton, 
@@ -182,16 +186,16 @@ namespace tv {
 						// create an instrance of an SAVideoAd (for callbacks)
 						createInstance ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 						return SAVideoAd.SuperAwesomeUnitySAVideoAdHasAdAvailable(placementId);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
 						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityVideoAd");
-
-						return saplugin.CallStatic<bool>("SuperAwesomeUnitySAVideoAdHasAdAvailable", context, placementId);
-#else 
+						var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+						return instance.Call<bool>("SuperAwesomeUnitySAVideoAdHasAdAvailable", context, placementId);
+#else
 						Debug.Log ("SAVideoAd hasAdAvailable has not implemented");
 						return false;
 #endif

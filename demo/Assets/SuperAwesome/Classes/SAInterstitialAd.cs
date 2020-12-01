@@ -67,7 +67,7 @@ namespace tv {
 							// set native version
 							SAVersion.setVersionInNative ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 							SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdCreate ();
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
@@ -75,11 +75,12 @@ namespace tv {
 							var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 							context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
-								saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdCreate", context);
+								var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
+								var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+								instance.Call("SuperAwesomeUnitySAInterstitialAdCreate", context);
 							}));
 
-#else 
+#else
 							Debug.Log("SAInterstitialAd Create");
 #endif
 						}
@@ -94,7 +95,7 @@ namespace tv {
 						// create an instrance of an SAInterstitialAd (for callbacks)
 						createInstance ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 						SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdLoad(placementId, (int)configuration, isTestingEnabled);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
@@ -102,8 +103,9 @@ namespace tv {
 						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
-							saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdLoad", 
+							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
+							var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+							instance.Call("SuperAwesomeUnitySAInterstitialAdLoad", 
 								context, 
 								placementId, 
 								(int)configuration, 
@@ -120,7 +122,7 @@ namespace tv {
 						// create an instrance of an SAInterstitialAd (for callbacks)
 						createInstance ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 						SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdPlay(placementId, isParentalGateEnabled, isBumperPageEnabled, (int)orientation);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
@@ -128,8 +130,9 @@ namespace tv {
 						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
-							saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdPlay", 
+							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
+							var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+							instance.Call("SuperAwesomeUnitySAInterstitialAdPlay", 
 								context, 
 								placementId, 
 								isParentalGateEnabled, 
@@ -156,8 +159,9 @@ namespace tv {
 						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 
 						context.Call("runOnUiThread", new AndroidJavaRunnable(() => {
-						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
-						saplugin.CallStatic("SuperAwesomeUnitySAInterstitialAdApplySettings",
+							var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
+							var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+							instance.Call("SuperAwesomeUnitySAInterstitialAdApplySettings",
 								isParentalGateEnabled, 
 								isBumperPageEnabled,
 								(int)orientation,
@@ -176,17 +180,17 @@ namespace tv {
 						// create an instrance of an SAInterstitialAd (for callbacks)
 						createInstance ();
 
-#if (UNITY_IPHONE && !UNITY_EDITOR) 
+#if (UNITY_IPHONE && !UNITY_EDITOR)
 						return SAInterstitialAd.SuperAwesomeUnitySAInterstitialAdHasAdAvailable(placementId);
 #elif (UNITY_ANDROID && !UNITY_EDITOR)
 
 						var unityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 						var context = unityClass.GetStatic<AndroidJavaObject> ("currentActivity");
 						var saplugin = new AndroidJavaClass ("tv.superawesome.plugins.publisher.unity.SAUnityInterstitialAd");
+						var instance = saplugin.GetStatic<AndroidJavaObject>("INSTANCE");
+						return instance.Call<bool>("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", context, placementId);
 
-						return saplugin.CallStatic<bool>("SuperAwesomeUnitySAInterstitialAdHasAdAvailable", context, placementId);
-
-#else 
+#else
 						Debug.Log ("SAInterstitialAd HasAdAvailable has not implemented");
 						return false;
 #endif

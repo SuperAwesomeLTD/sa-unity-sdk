@@ -11,11 +11,11 @@ public class SAMainAdController : MonoBehaviour, IAdController
 
     private int bannerPlacementId = 44258;
     private int interstitialPlacementId = 44259;
-    private int videoPlacementId = 39318;
+    private int videoPlacementId = 44262;
 
     private SABannerAd banner = null;
-    private bool enableTestMode = true;
-    private Action<int, SAEvent> callback;
+    private bool enableTestMode = false;
+    private Action<int, SAEvent> bannerCallback, interstitialCallback, videoCallback;
 
     // Start is called before the first frame update
     void Start()
@@ -31,36 +31,45 @@ public class SAMainAdController : MonoBehaviour, IAdController
 
     void prepareCallback()
     {
-        callback = (placementId, evt) =>
+        bannerCallback = (placementId, evt) =>
         {
-            switch (evt)
+            if (evt == SAEvent.adLoaded)
             {
+                // set a size template
+                banner.setSize_320_50();
 
-                case SAEvent.adLoaded:
-                    statusText.text = String.Format("adLoaded: {0}", placementId);
-                    break;
-                case SAEvent.adEmpty:
-                    statusText.text = String.Format("adEmpty: {0}", placementId);
-                    break;
-                case SAEvent.adFailedToLoad:
-                    statusText.text = String.Format("adFailedToLoad: {0}", placementId);
-                    break;
-                case SAEvent.adShown:
-                    statusText.text = String.Format("adShown: {0}", placementId);
-                    break;
-                case SAEvent.adFailedToShow:
-                    statusText.text = String.Format("adFailedToShow: {0}", placementId);
-                    break;
-                case SAEvent.adClicked:
-                    statusText.text = String.Format("adClicked: {0}", placementId);
-                    break;
-                case SAEvent.adEnded:
-                    statusText.text = String.Format("adEnded: {0}", placementId);
-                    break;
-                case SAEvent.adClosed:
-                    statusText.text = String.Format("adClosed: {0}", placementId);
-                    break;
+                // set a background color
+                banner.setColorGray();
+
+                // choose between top or bottom
+                banner.setPositionTop();
+
+                // display the ad
+                banner.play();
             }
+
+            statusText.text = String.Format("Banner event: {0}", evt);
+        };
+
+        interstitialCallback = (placementId, evt) =>
+        {
+            if (evt == SAEvent.adLoaded)
+            {
+                // display the ad
+                SAInterstitialAd.play(interstitialPlacementId);
+            }
+
+            statusText.text = String.Format("Interstitial event: {0}", evt);
+        };
+
+        videoCallback = (placementId, evt) =>
+        {
+            if (evt == SAEvent.adLoaded)
+            {
+                SAVideoAd.play(videoPlacementId);
+            }
+
+            statusText.text = String.Format("Video event: {0}", evt);
         };
     }
 
@@ -78,10 +87,7 @@ public class SAMainAdController : MonoBehaviour, IAdController
         // ask users to add two numbers when clicking on an ad
         banner.enableParentalGate();
 
-        // start loading ad data for a placement
-        banner.load(bannerPlacementId);
-
-        banner.setCallback(callback);
+        banner.setCallback(bannerCallback);
     }
 
     void ConfigureInterstitialAd()
@@ -102,10 +108,7 @@ public class SAMainAdController : MonoBehaviour, IAdController
         // enable or disable the android back button
         SAInterstitialAd.enableBackButton();
 
-        // start loading ad data for a placement
-        SAInterstitialAd.load(interstitialPlacementId);
-
-        SAInterstitialAd.setCallback(callback);
+        SAInterstitialAd.setCallback(interstitialCallback);
     }
 
     void ConfigureVideoAd()
@@ -136,63 +139,26 @@ public class SAMainAdController : MonoBehaviour, IAdController
         // enable or disable auto-closing at the end
         SAVideoAd.disableCloseAtEnd();
 
-        // start loading ad data for a placement
-        SAVideoAd.load(videoPlacementId);
-
-        SAVideoAd.setCallback(callback);
+        SAVideoAd.setCallback(videoCallback);
     }
 
     public void OnBannerClick()
     {
         Debug.Log("OnBannerClick");
-        // check if ad is loaded
-        if (banner.hasAdAvailable())
-        {
-
-            // set a size template
-            banner.setSize_320_50();
-
-            // set a background color
-            banner.setColorGray();
-
-            // choose between top or bottom
-            banner.setPositionTop();
-
-            // display the ad
-            banner.play();
-        } else
-        {
-            statusText.text = String.Format("OnBannerClick ad not available");
-        }
+        // start loading ad data for a placement
+        banner.load(bannerPlacementId);
     }
 
     public void OnInterstitialClick()
     {
-
-        // check if ad is loaded
-        if (SAInterstitialAd.hasAdAvailable(interstitialPlacementId))
-        {
-
-            // display the ad
-            SAInterstitialAd.play(interstitialPlacementId);
-        }else
-        {
-            statusText.text = String.Format("OnInterstitialClick ad not available");
-        }
+        // start loading ad data for a placement
+        SAInterstitialAd.load(interstitialPlacementId);
     }
 
     public void OnVideoClick()
     {
-        // check if ad is loaded
-        if (SAVideoAd.hasAdAvailable(videoPlacementId))
-        {
-
-            // display the ad
-            SAVideoAd.play(videoPlacementId);
-        }else
-        {
-            statusText.text = String.Format("OnVideoClick ad not available");
-        }
+        // start loading ad data for a placement
+        SAVideoAd.load(videoPlacementId);
     }
 
     public string Name()
