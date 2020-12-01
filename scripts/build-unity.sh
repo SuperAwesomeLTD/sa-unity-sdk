@@ -11,7 +11,6 @@ cp -r source/unity/* build/unity/
 mkdir build/unity/$source/demo/Assets/Plugins/
 mkdir build/unity/$source/demo/Assets/Plugins/iOS
 mkdir build/unity/$source/demo/Assets/Plugins/Android
-mkdir build/unity/$source/demo/Assets/Plugins/Android/SuperAwesome_lib
 
 # Add SuperAwesomeDependencies.xml for the Universal-Jar-Resolver
 
@@ -24,19 +23,13 @@ echo "      <repository>http://dl.bintray.com/superawesome/SuperAwesomeSDK</repo
 echo "    </repositories>" >> $dependencyFile
 
 echo "    <androidPackage spec=\"tv.superawesome.sdk.publisher:superawesome:$androidSdkVersion\" />" >> $dependencyFile
+echo "    <androidPackage spec=\"tv.superawesome.sdk.publisher:superawesome-unity:$androidSdkVersion\" />" >> $dependencyFile
 echo "  </androidPackages>" >> $dependencyFile
 
 echo "  <iosPods>" >> $dependencyFile
 echo "    <iosPod name=\"SuperAwesome\" version=\"~> $iosSdkVersion\" bitcodeEnabled=\"true\" minTargetSdk=\"10.0\" />" >> $dependencyFile
 echo "  </iosPods>" >> $dependencyFile
 echo "</dependencies>" >> $dependencyFile
-
-# add android sources
-
-projectProperties=build/unity/$source/demo/Assets/Plugins/Android/SuperAwesome_lib/"project.properties"
-echo "# Project target." > $projectProperties
-echo "target=android-11" >> $projectProperties
-echo "android.library=true" >> $projectProperties
 
 # build as UnityPackage
 /Applications/Unity/Hub/Editor/$unityVersion/Unity.app/Contents/MacOS/Unity \
