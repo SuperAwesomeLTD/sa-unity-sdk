@@ -13,9 +13,11 @@ do
 done
 
 # give final name to output
+mkdir ../releases || 'releases folder already exists'
 if [[ $version -eq '' ]]
 then
   echo 'No version specified, leaving as is'.
 else 
-  mv output/SuperAwesomeSDK.Unity.full.unitypackage output/SuperAwesomeSDK-$version.Unity.full.unitypackage
+  mv output/SuperAwesomeSDK.Unity.full.unitypackage ../releases/SuperAwesomeSDK-$version.Unity.full.unitypackage
+  rm -rf output
 fi

@@ -9,6 +9,7 @@ Below is the list of available releases for {{ site.title }}
 
 | Version | Name | Unity | Download |
 |---------|--------|------|------|
+|8.0.5|Full|2020.3.8f1|SuperAwesomeSDK.unitypackage|(https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.19/SuperAwesomeSDK-7.2.19.unitypackage)|
 |7.2.19|Full|2019.3.11f1|[SuperAwesomeSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.19/SuperAwesomeSDK-7.2.19.unitypackage)|
 |7.2.19|Base|2019.3.11f1|[SuperAwesomeBaseSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.19/SuperAwesomeBaseSDK-7.2.19.unitypackage)|
 |7.2.19|Full + AdMob|2019.3.11f1|[SuperAwesomeAdMobSDK.unitypackage](https://github.com/SuperAwesomeLTD/sa-unity-sdk/releases/download/7.2.19/SuperAwesomeAdMobSDK-7.2.19.unitypackage)|

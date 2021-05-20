@@ -28,6 +28,34 @@ using tv.superawesome.sdk.publisher;
 ```
 ## Additional steps for Android builds
 
+{% include alert.html type="warning" title="Warning" content="You will need to add Kotlin support for your Android project if you haven't done so already" %}
+
+To do so you'll first need to add the following repository to the list of repositoies
+
+```gradle
+repositories {
+  maven { url "https://plugins.gradle.org/m2/" } // New repo
+  google()
+  jcenter()
+  ...
+}
+```
+
+Then you'll need to add a new `classpath` entry
+
+```gradle
+dependencies {
+  "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+}
+```
+
+Finally, in the `android.launcher` gradle file, you'll need to add this
+
+```gradle
+apply plugin 'kotlin-android'
+apply plugin 'kotlin-android-extensions'
+```
+
 {% include alert.html type="warning" title="Warning" content="Please remember that for Android you also need to add <strong>Google Play Services</strong> and an <strong>App Compat</strong> library. These are needed for correct viewability metrics." %}
 
 ```gradle
