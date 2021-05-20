@@ -1,23 +1,23 @@
 #!/bin/bash -ex
 
+############################################################ 
+# step 1: cleanup old build folder
+############################################################
+
 rm -rf build/android/*
+mkdir build/android
 
-sources=(
-	"sa-mobile-sdk-android"
-    "sa-mobile-lib-android-videoplayer"
-)
+############################################################ 
+# step 2: setup liraries, outputs, sources, etc for Android
+############################################################
 
-outputs=(
-	"superawesome-base"
-	"saunity"
-	"savideoplayer"
-	"saadmob"
-)
+sources=("sa-mobile-sdk-android" "sa-mobile-lib-android-videoplayer")
+outputs=("superawesome-base" "saunity" "savideoplayer")
+libraries=("moatlib.jar" "unity-classes.jar")
 
-libraries=(
-	"moatlib.jar"
-	"unity-classes.jar"
-)
+############################################################ 
+# step 3: actually build everything
+############################################################
 
 for source in ${sources[*]}
 do
@@ -26,11 +26,11 @@ do
 
 	# write local properties
 	localProperties="$sourceFolder/local.properties"
-	echo "sdk.dir=/Users/gunhan.sancar/Library/Android/sdk" >> $localProperties
+	echo "sdk.dir=/Users/gabriel.coman/Library/Android/sdk" >> $localProperties
 
 	# build the actual thing
 	cd $sourceFolder
-	./gradlew assemble
+	./gradlew build
 	cd ../../..
 
 	# copy all outputs over

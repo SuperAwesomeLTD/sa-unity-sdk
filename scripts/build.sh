@@ -1,11 +1,23 @@
-#!/bin/bash -ex
+############################################################ 
+# step 1: download the iOS, Android & Unity source code
+############################################################
 
-./1.download-android.sh
-./2.download-ios.sh
-./3.download-unity.sh
-./4.build-android.sh
-./5.build-ios.sh
-./6.build-unity.sh
-./7.build-admob-unity.sh
-./8.build-base-unity.sh
-./9.package-unity.sh
+./0.download.sources.sh
+
+############################################################ 
+# step 2: Build Android & move result to correct build folder
+############################################################
+
+./1.prepare.android.sh 
+
+############################################################ 
+# step 3: Build iOS & move result to correct build folder
+############################################################
+
+./2.prepare.ios.sh
+
+############################################################ 
+# step 4: Build Unity & move result to correct build folder
+############################################################
+
+./3.build.unity.sh
