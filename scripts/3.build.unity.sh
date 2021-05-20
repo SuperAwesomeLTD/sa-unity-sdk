@@ -59,6 +59,6 @@ cp -r build/ios/* build/unity/$source/demo/Assets/Plugins/iOS/
 	-exportPackage \
 		"Assets/Plugins" \
 		"Assets/SuperAwesome" \
-		"$(pwd)/build/unity/SuperAwesomeSDK.Unity.full.unitypackage" \
+		"$(pwd)/output/SuperAwesomeSDK.Unity.full.unitypackage" \
 	-logFile -\
 	-quit

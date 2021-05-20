@@ -32,3 +32,6 @@ scripts/ios-admob-pod/Rome
 scripts/ios-admob-pod/Pods
 scripts/ios-pod/Rome
 scripts/ios-pod/Pods
+scripts/build/
+scripts/output/
+scripts/source/
