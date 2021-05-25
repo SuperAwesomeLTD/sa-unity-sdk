@@ -11,7 +11,7 @@ CHANGELOG
  - Added support for new formats: 3rd party programmatic display and interstitials
  - Added measurement logs for Moat for better discrepancy investigation
  - Removed ASIdentifier wholely from the project. The code was not in use. (IOS)
- - Initial functionality added for the IsonSource integration
+ - Initial functionality added for IronSource integration
 
 7.2.17
  - Added a feature to warn user before they close the Video Ads.
