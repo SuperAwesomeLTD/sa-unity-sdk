@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+8.0.5
+ - Fixed XCode build errors on newer versions of Unity
+ - Updated to Unity 2020.3.8f1
+ - Updated Android library to self-hosted location post Bintray deprecation
+ - Added Dwell Time
+ - Cleaned up and updated dependencies across the board, including Admob, Mopub and Kotlin (Android) 
+ - Fixed viewable impression calculation on IOS
+ - Added support for new formats: 3rd party display and interstitials
+ - Added measurement logs for Moat for better discrepancy investigation
+ - Removed ASIdentifier wholely from the project. The code was not in use. (IOS)
+ - Initial functionality added for selection of a specific creative based on request parameters
+
 7.2.17
  - Added a feature to warn user before they close the Video Ads.
  - SAVideoAd.enableCloseButtonWithWarning(); 
