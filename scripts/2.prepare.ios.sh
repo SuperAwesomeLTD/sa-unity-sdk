@@ -18,7 +18,6 @@ cp -r source/ios/sa-mobile-sdk-ios/Pod/Plugin/Unity/ build/ios/
 # step 3: cleanup some files that will make the build fail
 ############################################################
 
-rm -rf source/ios/sa-mobile-sdk-ios/Pod/Libraries/*
 rm -rf source/ios/sa-mobile-sdk-ios/Pod/Plugin/Moat2/*
 
 ############################################################ 
