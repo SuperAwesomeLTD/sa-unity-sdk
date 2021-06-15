@@ -5,7 +5,7 @@
 ############################################################
 
 rm -rf build/ios/* || echo 'Already cleared'
-mkdir build/ios/
+mkdir build/ios/ || echo 'Already exists'
 
 ############################################################ 
 # step 2: copy .mm source files & Moat library from project
@@ -56,39 +56,38 @@ xcodebuild \
   build \
   || echo 'Build for iOS Simulator pseudo-failed. Moving on.'
 
-# remove the arm64 architecture from the simulator build
-# it's weird that it's there to begin with, but oh well
-cd build/ios-simulator/SuperAwesome.framework/
-lipo -remove arm64 SuperAwesome -o SuperAwesome || echo 'Arch already removed'
-cd ../../..
+# ############################################################ 
+# step 5: generate fat frameworks
+# ############################################################
 
-############################################################ 
-# step 5: use lipo to join the sim & phone libs into one binary
-############################################################
+rm -rf build/fat || "already deleted" 
+mkdir build/fat || "already created"
+cd ../../../..
+pwd
 
-lipo -create build/ios/SuperAwesome.framework/SuperAwesome build/ios-simulator/SuperAwesome.framework/SuperAwesome -output build/SuperAwesome
+./2.1.prepare.all.ios.fat.sh -n "Moya"
+./2.1.prepare.all.ios.fat.sh -n "Alamofire"
+./2.1.prepare.all.ios.fat.sh -n "SwiftyXMLParser"
+./2.1.prepare.all.ios.fat.sh -n "SuperAwesome"
 
-############################################################ 
-# step 6: merge files from the sim & phone libs into one fat one and do some final prep
-############################################################
+# ############################################################ 
+# step 6: ulterior change to SuperAwesome lib
+# ############################################################
 
-# merge the sim & phone libraries
-rm -rf build/fat 
-mkdir build/fat
-mkdir build/fat/SuperAwesome.framework
-cp -r build/ios-simulator/SuperAwesome.framework/ build/fat/SuperAwesome.framework/
-cp build/SuperAwesome build/fat/SuperAwesome.framework/SuperAwesome
-rm -rf build/ios/SuperAwesome.framework/Modules/SuperAwesome.swiftmodule/Project
-cp -r build/ios/SuperAwesome.framework/Modules/SuperAwesome.swiftmodule/* build/fat/SuperAwesome.framework/Modules/SuperAwesome.swiftmodule/
+cd source/ios/sa-mobile-sdk-ios/Example/
 
 # add a webkit import to the -Swift.h header file 
 cd build/fat/SuperAwesome.framework/Headers
-echo -e "#import <WebKit/WebKit.h>\n$(cat SuperAwesome-Swift.h)" > SuperAwesome-Swift.h
+echo '#import <AVFoundation/AVFoundation.h>' | cat - SuperAwesome-Swift.h > temp && mv temp SuperAwesome-Swift.h
+echo '#import <WebKit/WebKit.h>' | cat - SuperAwesome-Swift.h > temp && mv temp SuperAwesome-Swift.h
 cd ../../../..
 
-############################################################ 
-# step 7: finally, copy the new fat framework into the build folder
-############################################################
+# ############################################################ 
+# # step 7: finally, copy the new fat framework into the build folder
+# ############################################################
 
 cd ../../../..
 cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/SuperAwesome.framework build/ios/
+cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/Moya.framework build/ios/
+cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/Alamofire.framework build/ios/
+cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/SwiftyXMLParser.framework build/ios/
