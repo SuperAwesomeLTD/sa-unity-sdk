@@ -11,8 +11,8 @@ Run `./build.sh -v x.y.z` to generate a new `.unitypackage` in `scripts/output/`
 
 Setup iOS
 =========
-To finish the setup once you build the Unity project as an iOS application, you also need to add the `SuperAwesomme.framework` into:
-`Build Phases` -> `Embed Framework`. 
+To finish the setup once you build the Unity project as an iOS application, you also need to add the following frameworks into:
+`Build Phases` -> `Embed Framework`.
 
 ![ios setup](img/ios-setup.png "Finalise iOS Setup")
 
@@ -26,7 +26,7 @@ Add this repository to the list of repositoies
 
 ![android setup 1](img/android-setup-1.png "Finalise Androi Setup Part 1")
 
-Then add this classpath 
+Then add this classpath
 
 `classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"`
 
@@ -35,5 +35,3 @@ Then add this classpath
 The finally add the `kotlin plugins`
 
 ![android setup 3](img/android-setup-3.png "Finalise Androi Setup Part 2")
-
-
