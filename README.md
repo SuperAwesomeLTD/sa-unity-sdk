@@ -14,7 +14,7 @@ Setup iOS
 To finish the setup once you build the Unity project as an iOS application, you also need to add the following frameworks into:
 `Build Phases` -> `Embed Framework`.
 
-![ios setup](img/ios-setup.png "Finalise iOS Setup")
+![ios setup](img/ios-setup-new.png "Finalise iOS Setup")
 
 Setup Android
 =============
