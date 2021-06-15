@@ -13,7 +13,9 @@ do
 done
 
 # give final name to output
-mkdir ../releases || 'releases folder already exists'
+mkdir ../releases/ || echo "folder already exists"
+
+# version
 if [[ $version -eq '' ]]
 then
   echo 'No version specified, leaving as is'.
