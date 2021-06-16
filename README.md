@@ -5,9 +5,15 @@ SuperAwesome Unity SDK
 
 For more information check out the [SuperAwesome Developer Portal](https://superawesomeltd.github.io/sa-unity-sdk/).
 
+
 New version
 ===========
 Run `./build.sh -v x.y.z` to generate a new `.unitypackage` in `scripts/output/`.
+
+Setup
+=====
+Add this environment variable to bash/zsh profile, replacing the path with the location of your Android SDK:
+`export ANDROID_SDK_ROOT="path/to/Android/sdk"`
 
 Setup iOS
 =========
