@@ -26,7 +26,7 @@ do
 
 	# write local properties
 	localProperties="$sourceFolder/local.properties"
-	echo "sdk.dir=/Users/gabriel.coman/Library/Android/sdk" >> $localProperties
+	echo "sdk.dir=$ANDROID_SDK_ROOT" >> $localProperties
 
 	# build the actual thing
 	cd $sourceFolder
