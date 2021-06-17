@@ -41,7 +41,7 @@ mkdir build/unity/$source/demo/Assets/Plugins/Android/SuperAwesome.androidlib/
 cp -r build/unity/$source/demo/Assets/Plugins/Android/SuperAwesome_lib/* build/unity/$source/demo/Assets/Plugins/Android/SuperAwesome.androidlib/
 
 # copy jar files
-cp -r build/android/*.jar build/unity/$source/demo/Assets/Plugins/Android/
+cp -r build/android/*.jar build/unity/$source/demo/Assets/Plugins/Android/ || echo "No .jar files"
 
 ############################################################ 
 # step 3: add ios resources

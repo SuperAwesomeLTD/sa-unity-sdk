@@ -4,7 +4,7 @@
 # step 1: cleanup old build folder
 ############################################################
 
-rm -rf build/android/*
+rm -rf build/android/
 mkdir build/android
 
 ############################################################ 
