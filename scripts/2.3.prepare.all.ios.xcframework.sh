@@ -10,6 +10,11 @@ done
 
 path=source/ios/sa-mobile-sdk-ios/Example
 
+xcodebuild -create-xcframework \
+    -framework $path/build/ios/SuperAwesome-iphoneos.xcarchive/Products/Library/Frameworks/$name.framework \
+    -framework $path/build/ios/SuperAwesome-iphonesimulator.xcarchive/Products/Library/Frameworks/$name.framework \
+    -output $path/build/$name.xcframework
+
 # # cleanup pre-existing
 # rm -rf $path/build/fat/$name.framework
 # # re-create framework folder
@@ -23,8 +28,3 @@ path=source/ios/sa-mobile-sdk-ios/Example
 # lipo -create $path/build/ios/$name.framework/$name $path/build/ios-simulator/$name.framework/$name -output $path/build/fat/$name.framework/$name
 # # copy swiftmodule file
 # cp -r $path/build/ios/$name.framework/Modules/$name.swiftmodule/* $path/build/fat/$name.framework/Modules/$name.swiftmodule/
-
-xcodebuild -create-xcframework \
-    -framework $path/build/ios/$name.framework \
-    -framework $path/build/ios-simulator/$name.framework \
-    -output $path/build/$name.xcframework

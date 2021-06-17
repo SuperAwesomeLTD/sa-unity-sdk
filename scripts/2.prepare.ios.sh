@@ -52,6 +52,7 @@ xcodebuild \
   -configuration 'Release' \
   -destination 'generic/platform=iOS Simulator' \
   SKIP_INSTALL=NO \
+  BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
   CONFIGURATION_BUILD_DIR='../build/ios-simulator/' \
   build \
   || echo 'Build for iOS Simulator pseudo-failed. Moving on.'
@@ -60,8 +61,8 @@ xcodebuild \
 # step 5: generate fat frameworks
 # ############################################################
 
-rm -rf build/fat || "already deleted" 
-mkdir build/fat || "already created"
+# rm -rf build/fat || "already deleted" 
+# mkdir build/fat || "already created"
 cd ../../../..
 pwd
 
@@ -76,18 +77,33 @@ pwd
 
 cd source/ios/sa-mobile-sdk-ios/Example/
 
+# # add a webkit import to the -Swift.h header file 
+# cd build/fat/SuperAwesome.framework/Headers
+# echo '#import <AVFoundation/AVFoundation.h>' | cat - SuperAwesome-Swift.h > temp && mv temp SuperAwesome-Swift.h
+# echo '#import <WebKit/WebKit.h>' | cat - SuperAwesome-Swift.h > temp && mv temp SuperAwesome-Swift.h
+# cd ../../../..
+
 # add a webkit import to the -Swift.h header file 
-cd build/fat/SuperAwesome.framework/Headers
+cd build/SuperAwesome.xcframework/ios-arm64_armv7/SuperAwesome.framework/Headers
 echo '#import <AVFoundation/AVFoundation.h>' | cat - SuperAwesome-Swift.h > temp && mv temp SuperAwesome-Swift.h
 echo '#import <WebKit/WebKit.h>' | cat - SuperAwesome-Swift.h > temp && mv temp SuperAwesome-Swift.h
-cd ../../../..
+cd ../../../../..
+
+cd build/SuperAwesome.xcframework/ios-i386_x86_64-simulator/SuperAwesome.framework/Headers
+echo '#import <AVFoundation/AVFoundation.h>' | cat - SuperAwesome-Swift.h > temp && mv temp SuperAwesome-Swift.h
+echo '#import <WebKit/WebKit.h>' | cat - SuperAwesome-Swift.h > temp && mv temp SuperAwesome-Swift.h
+cd ../../../../..
 
 # ############################################################ 
 # # step 7: finally, copy the new fat framework into the build folder
 # ############################################################
 
 cd ../../../..
-cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/SuperAwesome.framework build/ios/
-cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/Moya.framework build/ios/
-cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/Alamofire.framework build/ios/
-cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/SwiftyXMLParser.framework build/ios/
+# cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/SuperAwesome.framework build/ios/
+# cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/Moya.framework build/ios/
+# cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/Alamofire.framework build/ios/
+# cp -r source/ios/sa-mobile-sdk-ios/Example/build/fat/SwiftyXMLParser.framework build/ios/
+cp -r source/ios/sa-mobile-sdk-ios/Example/build/SuperAwesome.xcframework build/ios/
+cp -r source/ios/sa-mobile-sdk-ios/Example/build/Moya.xcframework build/ios/
+cp -r source/ios/sa-mobile-sdk-ios/Example/build/Alamofire.xcframework build/ios/
+cp -r source/ios/sa-mobile-sdk-ios/Example/build/SwiftyXMLParser.xcframework build/ios/
