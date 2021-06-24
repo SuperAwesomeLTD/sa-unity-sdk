@@ -15,11 +15,11 @@ This version will contain everything you need in order to load and display banne
 
 You can then import it into your Unity project as a custom assets package. You should see an image similar to this:
 
-![image-title-here]({{ site.baseurl }}/assets/img/IMG_02_Import.png){:class="img-responsive"}
+![import-step]({{ site.baseurl }}/assets/img/IMG_02_Import.png){:class="img-responsive"}
 
 Select all the files, and click Import. If all goes well you should have a series of new folders and files in your Assets directory.
 
-![image-title-here]({{ site.baseurl }}/assets/img/IMG_03_Assets.png){:class="img-responsive"}
+![assets-step]({{ site.baseurl }}/assets/img/IMG_03_Assets.png){:class="img-responsive"}
 
 Once you’ve integrated the SuperAwesome SDK, you can access it by:
 
@@ -28,12 +28,25 @@ using tv.superawesome.sdk.publisher;
 ```
 ## Additional steps for Android builds
 
-{% include alert.html type="warning" title="Warning" content="You will need to add Kotlin support for your Android project if you haven't done so already" %}
+### Unity build settings
+As of Unity 2020 you must enable the `Export Project` option in the Android build settings and `Export` the project prior to building.
 
-To do so you'll first need to add the following repository to the list of repositoies
+### Android Manifest
+The flag `unityplayer.ForwardNativeEventsToDalvik` should be enabled. Open the `AndroidManifest.xml` file and add the following line
+```xml
+<meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="true" />
+```
+
+### Kotlin support
+
+{% include alert.html type="warning" title="Warning" content="Kotlin support must be added to the Android project as the SDK relies on it. Without Kotlin, your app may install and load without issue, but the SDK will fail to display an ad." %}
+
+To add Kotlin, you'll first need to include the following entries in the list of repositories in the `android` gradle file
 
 ```gradle
 repositories {
+  ...
+  maven { url "https://maven.google.com" } // New repo
   maven { url "https://plugins.gradle.org/m2/" } // New repo
   google()
   jcenter()
@@ -45,57 +58,51 @@ Then you'll need to add a new `classpath` entry
 
 ```gradle
 dependencies {
-  "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+  ...
+  classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
+  ...
 }
 ```
 
-Finally, in the `android.launcher` gradle file, you'll need to add this
+Include the Kotlin plugins in the `android.launcher` gradle file
 
 ```gradle
 apply plugin 'kotlin-android'
 apply plugin 'kotlin-android-extensions'
 ```
 
-{% include alert.html type="warning" title="Warning" content="Please remember that for Android you also need to add <strong>Google Play Services</strong> and an <strong>App Compat</strong> library. These are needed for correct viewability metrics." %}
+<!-- {% include alert.html type="warning" title="Warning" content="Please remember that for Android you also need to add <strong>Google Play Services</strong> and an <strong>App Compat</strong> library. These are needed for correct viewability metrics." %}
 
 ```gradle
 dependencies {
     implementation 'com.android.support:appcompat-v7:+'
     implementation 'com.google.android.gms:play-services-ads:+'
 }
-```
-
-{% include alert.html type="warning" title="Warning" content="When exporting for Android as an Android Studio project you’ll need to set the <strong>unityplayer.ForwardNativeEventsToDalvik</strong> entry to <strong>true</strong>" %}
-
-```xml
-<meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="true" />
-```
+``` -->
 
 ## Additional steps for iOS builds
 
-Set swift version to 4.2, if not already set
+<!-- Set swift version to 4.2, if not already set
 
-![image-title-here]({{ site.baseurl }}/assets/img/IMG_ADD_1.png){:class="img-responsive"}
+![image-title-here]({{ site.baseurl }}/assets/img/IMG_ADD_1.png){:class="img-responsive"} -->
 
-Add runpaths @executable_path/Frameworks to runpaths
+In the `Build Settings` for `Unity-iPhone target`, ensure `@executable_path/Frameworks` exists in runpaths...
 
-![image-title-here]({{ site.baseurl }}/assets/img/IMG_ADD_2.png){:class="img-responsive"}
+![update-runpaths-step]({{ site.baseurl }}/assets/img/IMG_ADD_2.png){:class="img-responsive"}
 
-Set C lang dialect to gnu99, if not already set
+... set C lang dialect to `gnu99`, if not already set...
 
-![image-title-here]({{ site.baseurl }}/assets/img/IMG_ADD_4.png){:class="img-responsive"}
+![set-c-lang-dialect-step]({{ site.baseurl }}/assets/img/IMG_ADD_4.png){:class="img-responsive"}
 
-Enable modules (C and Obj-C), if not already enabled
+... enable modules (C and Obj-C), if not already enabled.
 
-![image-title-here]({{ site.baseurl }}/assets/img/IMG_ADD_5.png){:class="img-responsive"}
+![enable-modules-step]({{ site.baseurl }}/assets/img/IMG_ADD_5.png){:class="img-responsive"}
 
 Make sure `SuperAwesome.framework` is in the `Embed Frameworks` list and `Code Sign on Copy` is selected.
 
-Go to:
+In the `Build Phases` for `Unity-iPhone target`, find the `Embed Frameworks` options and add the `SuperAwesome` framework.
 
-`Unity-iPhone target -> Build Phases -> Embed Frameworks`
-
-![image-title-here]({{ site.baseurl }}/assets/img/IMG_ADD_7.png){:class="img-responsive"}
+![embed-frameworks-step]({{ site.baseurl }}/assets/img/IMG_ADD_7.png){:class="img-responsive"}
 
 ## Remove Unsupported Architectures for App Store
 
@@ -116,7 +123,7 @@ That script is only activated when the Xcode project is archived.
 
 In the `Target > Build Settings > Valid Architectures` menu, make sure `i386` and `x86_64` is not in the list.
 
-![image-title-here]({{ site.baseurl }}/assets/img/add-sdk-valid-archs.png){:class="img-responsive"}
+![select-supported-architectures-step]({{ site.baseurl }}/assets/img/add-sdk-valid-archs.png){:class="img-responsive"}
 
 
 {% include alert.html type="info" title="Note" content="After removing <strong>x86_64</strong> you’re no longer to run your app in the simulator. However, ideal solution would be to remove unused architectures only on `Release` mode." %}
