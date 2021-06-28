@@ -67,8 +67,8 @@ dependencies {
 Include the Kotlin plugins in the `android.launcher` gradle file
 
 ```gradle
-apply plugin 'kotlin-android'
-apply plugin 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 ```
 
 <!-- {% include alert.html type="warning" title="Warning" content="Please remember that for Android you also need to add <strong>Google Play Services</strong> and an <strong>App Compat</strong> library. These are needed for correct viewability metrics." %}
@@ -81,6 +81,8 @@ dependencies {
 ``` -->
 
 ## Additional steps for iOS builds
+
+{% include alert.html type="warning" title="Warning" content="SDK version 8.0.5 or older are incompatible with Xcode's New Build System. Please switch the build system from New to Legacy by going to File -> Project Settings and changing the Build System drop down." %}
 
 <!-- Set swift version to 4.2, if not already set
 
