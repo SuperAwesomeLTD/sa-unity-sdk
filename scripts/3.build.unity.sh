@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-############################################################ 
+############################################################
 # step 1: cleanup old build folder
 ############################################################
 
@@ -14,7 +14,7 @@ mkdir build/unity/$source/demo/Assets/Plugins/iOS
 mkdir build/unity/$source/demo/Assets/Plugins/Android
 mkdir build/unity/$source/demo/Assets/Plugins/Android/SuperAwesome_lib
 
-############################################################ 
+############################################################
 # step 2: add android resources
 ############################################################
 
@@ -43,17 +43,17 @@ cp -r build/unity/$source/demo/Assets/Plugins/Android/SuperAwesome_lib/* build/u
 # copy jar files
 cp -r build/android/*.jar build/unity/$source/demo/Assets/Plugins/Android/ || echo "No .jar files"
 
-############################################################ 
+############################################################
 # step 3: add ios resources
 ############################################################
 
 cp -r build/ios/* build/unity/$source/demo/Assets/Plugins/iOS/
 
-############################################################ 
+############################################################
 # step 4: build as UnityPackage
 ############################################################
 
-/Applications/Unity/Hub/Editor/2019.3.10f1/Unity.app/Contents/MacOS/Unity \
+/Applications/Unity/Hub/Editor/2019.4.28f1/Unity.app/Contents/MacOS/Unity \
 	-batchmode \
 	-projectPath "$(pwd)/build/unity/$source/demo" \
 	-exportPackage \
