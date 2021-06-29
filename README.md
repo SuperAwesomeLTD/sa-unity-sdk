@@ -3,41 +3,38 @@ SuperAwesome Unity SDK
 
 [![GitHub tag](https://img.shields.io/github/tag/SuperAwesomeLTD/sa-unity-sdk.svg)]() [![GitHub contributors](https://img.shields.io/github/contributors/SuperAwesomeLTD/sa-unity-sdk.svg)]() [![license](https://img.shields.io/github/license/SuperAwesomeLTD/sa-unity-sdk.svg)]() [![Language](https://img.shields.io/badge/language-csharp-f48041.svg?style=flat)]() [![Platform](https://img.shields.io/badge/platform-android-lightgrey.svg)]() [![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)]()
 
-For more information check out the [SuperAwesome Developer Portal](https://superawesomeltd.github.io/sa-unity-sdk/).
+Unity SDK Integration Documentation: [SuperAwesome Developer Portal](https://superawesomeltd.github.io/sa-unity-sdk/).
 
 
-New version
-===========
-Run `./build.sh -v x.y.z` to generate a new `.unitypackage` in `scripts/output/`.
-
-Setup
-=====
-Add this environment variable to your shell profile, replacing the path with the location of your Android SDK:
+Setup Build Environment
+=======================
+- Install [Unity Hub](https://unity3d.com/get-unity/download)
+- Install [XCode](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
+- Install [Android Studio](https://developer.android.com/studio)
+- Install Cocoapods `brew install cocoapods`
+- In Unity Hub download 2019 LTS and 2020 LTS
+- In Android Studio -> SDK Manager -> Download Android 29
+- Set up your IOS Developer Profile in XCode
+`Xcode -> Preferences -> Account -> Add Apple ID w/ Password -> Verify with Device* -> Add a development certificate`  
+The account information will be shared internally via LastPass.
+- Run: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
+- Restart your terminal
+- Add this environment variable to your shell profile, replacing the path with the location of your Android SDK. This path can be found in the Android SDK Manager when installing SDK versions.
 `export ANDROID_SDK_ROOT="path/to/Android/sdk"`
 
-Setup iOS
-=========
-To finish the setup once you build the Unity project as an iOS application, you also need to add the following frameworks into:
-`Build Phases` -> `Embed Framework`.
+Building a new version
+======================
+Run `./build.sh` to generate a new `.unitypackage` in `scripts/output/`.
 
-![ios setup](img/ios-setup-new.png "Finalise iOS Setup")
+Optional params to the build script:
+- `-v`  version; tag the build with a version number. Default is empty.
+- `-b`  branch; use a different branch of the ios and android sdk. Default is `master`
+- `-p`  platform; one of `android`, `ios` or `all`. Default is `all`.
 
-Setup Android
-=============
-To finish the setup once you build the Unity project as an Android applicatiom, you will need to add `Kotlin` support as part of your `gradle` setup, if you haven't already added it.
+Using your iOS build in Unity
+=============================
+See the integration documentation for Unity setup
 
-Add this repository to the list of repositoies
-
-`maven { url "https://plugins.gradle.org/m2/" }`
-
-![android setup 1](img/android-setup-1.png "Finalise Androi Setup Part 1")
-
-Then add this classpath
-
-`classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"`
-
-![android setup 2](img/android-setup-2.png "Finalise Androi Setup Part 2")
-
-The finally add the `kotlin plugins`
-
-![android setup 3](img/android-setup-3.png "Finalise Androi Setup Part 2")
+Using your Android build in Unity
+=================================
+See the integration documentation for Unity setup
